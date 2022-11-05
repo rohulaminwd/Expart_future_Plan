@@ -1,31 +1,24 @@
 import React, { useEffect } from 'react';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import auth from '../../firebase.init'
 import { useForm } from "react-hook-form";
 import Loading from '../../Share/Loading';
 import {Link, useLocation, useNavigate,} from 'react-router-dom';
 import signInBg from '../../assets/images/signIn-bg.jpg'
 import { AiOutlineGoogle, AiFillApple, AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 import { FaFacebookF } from 'react-icons/fa'
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 const SignIn = () => {
-    
+    const [error, setError] = useState();
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const [
-        signInWithEmailAndPassword,
-        user,
-        loading,
-        error,
-      ] = useSignInWithEmailAndPassword(auth);
+    const [loading, setLoading] = useState(false)
+    const [value, setValue] = useState()
+
     let signInError; 
     const navigate = useNavigate()
-    const location = useLocation() 
-    let from = location.state?.from?.pathname || '/';
-
-    if(user){
-        navigate(from, { replace: true })
-        navigate('/dashboard')
-    }  
+ 
 
     if(loading){
         return <Loading></Loading>
@@ -35,42 +28,81 @@ const SignIn = () => {
         signInError = <p className='text-red-500 mb-2'><small>{error?.message}</small></p>
     }
 
-    const onSubmit = data => {
-        signInWithEmailAndPassword(data.email, data.password)
+    const onSubmit = i => {
+        const userInfo = {
+            phoneNumber: i.phone,
+            password: i.password,
+        }
+        console.log(userInfo)
+        setLoading(true)
+        fetch('http://localhost:5000/api/v1/user/login', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(userInfo)
+        })
+        .then(res => res.json())
+        .then( status => {
+            setLoading(false)
+            if(status.data){
+                navigate('/dashboard')
+                toast.success('Well come to dashboard');
+                const accessToken = status.data.token;
+                localStorage.setItem('accessToken', accessToken);
+                console.log('success', accessToken, )
+            }
+            if(error){
+                setError('something is wrong plz try again')
+            }
+            console.log(status.data, "data success")
+            console.log(status);
+        })
     }
     return (
         <div style={{ backgroundImage: `url(${signInBg})` }} className='bg-cover  h-screen'>
             <div className='h-screen bg-[#111f3b75] flex items-end sm:items-center justify-center w-full'>
             <div className="w-full sm:w-[500px] bg-base-100 rounded-3xl sm:rounded-b-3xl rounded-b-none p-5 sm:p-8 shadow-md" data-aos="zoom-in-down" data-aos-delay="100" data-aos-duration="800">
                 <div className="text-center">
-                    <h2 className="text-3xl font-bold text-center">Agent Login</h2>
+                    <h2 className="text-3xl font-bold text-center">Login</h2>
                     <h6 className='text-center mb-3 leading-normal font-bold mx-auto sm:w-[80%]'>Hey Enter Your Details to get sign in to your account</h6>
                     <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-control w-full">
                         <input 
-                            type="email" 
-                            placeholder="Your Email" 
+                            type="tel" 
+                            placeholder="Enter phone number" 
                             className="input input-bordered input-success w-full" 
-                            {...register("email", {
+                            {...register("phone", {
                                 required: {
                                   value: true,
-                                  message: 'Email is required'  
+                                  message: 'Phone Number is required'  
                                 },
-                                pattern: {
-                                  value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                  message: 'provide a valid email..'
-                                }
                               })}
                         />
+
+                        {/* <PhoneInput
+                            placeholder="Enter phone number"
+                            className="input input-bordered outline-0 input-success w-full"
+                            value={value}
+                            defaultCountry="BD"
+                            onChange={setValue}
+                            {...register("phone", {
+                                required: {
+                                  value: true,
+                                  message: 'Phone Number is required'  
+                                },
+                              })}
+                            /> */}
+                    
                         <label className="label">
-                        {errors.email?.type === 'required' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
-                        {errors.email?.type === 'pattern' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
+                        {errors.phone?.type === 'required' && <span className="label-text-alt text-red-500">{errors.phone.message}</span>}
+                        {errors.phone?.type === 'pattern' && <span className="label-text-alt text-red-500">{errors.phone.message}</span>}
                         </label>
                     </div>
                     <div className="form-control w-full">
                         <input 
                             type="password" 
-                            placeholder="Your Password" 
+                            placeholder="Enter Your Password" 
                             className="input input-bordered input-success w-full" 
                             {...register("password", {
                                 required: {

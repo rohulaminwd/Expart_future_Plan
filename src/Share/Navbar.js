@@ -1,20 +1,23 @@
-import { signOut } from 'firebase/auth';
+
 import React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { NavLink } from 'react-router-dom';
-import auth from '../firebase.init';
-import { AiOutlineHome } from 'react-icons/ai'
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
+
+import { AiOutlineHome, AiOutlineWallet } from 'react-icons/ai'
 import { FaBlogger } from 'react-icons/fa'
-import { MdOutlineDashboard } from 'react-icons/md'
 import {BiMessageSquareDetail} from 'react-icons/bi'
-import profile from '../assets/images/rohul.png'
+import logo from '../assets/images/logo1.png'
+import useMe from '../Hooks/useMe';
+import Loading from './Loading';
+import LogOutModule from '../Modale/LogOutModule';
+import { useState } from 'react';
 
 const Navbar = ({userClass}) => {
-    const [user, loading, error] = useAuthState(auth);
+    const usertoken = localStorage.getItem('accessToken')
+    const [openLogOutModule, setOpenLogOutModule] = useState(null)
 
-    const logOut = () => {
-        signOut(auth)
-        localStorage.removeItem('accessToken');
+    const [me, setMe, loading] = useMe()
+    if(loading){
+        <Loading />
     }
 
     if(window.scrollY > 200){
@@ -63,33 +66,67 @@ const Navbar = ({userClass}) => {
     const ProfileItems = <>
         <li className='pl-2 ml-0 list-none'>
           {
-              user?
+              usertoken?
               <div className="dropdown p-0 dropdown-end">
                     <label tabindex="0" className="btn btn-ghost btn-circle online avatar">
-                        <div className="w-8 sm:w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-1">
-                         { userClass?.image? <img src={userClass?.image} alt='profile' /> : <img src={profile} alt='profile' />}
+                        <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-1">
+                         { me?.image && <img src={me?.image} alt='profile' />}
+                         { !me?.image &&
+                         <div className='w-full'>
+                            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center ring ring-[#91f2dc] ring-offset-base-100 ring-offset-2">
+                                <h2 className='text-xl uppercase font-bold text-white'>{me?.firstName?.slice(0, 1)}{me?.lastName?.slice(0, 1)}</h2>
+                            </div>
+                        </div>
+                        }
                         </div>
                     </label>
-                    <ul tabindex="0" className="p-2 shadow-md border text-cyan-800 border-blue-200 top-[60px] menu menu-compact dropdown-content bg-base-100 rounded-box w-48">
+                    <ul tabindex="0" className="p-2 py-3 shadow-md border text-cyan-800 bg-[#fafbfbbc] border-[#9dbcd5a1] top-[60px] menu menu-compact dropdown-content bg-base-100 rounded-box w-48">
                         <div className="text-center border-b-2 border-blue-200 mb-3">
                             <div className="avatar online">
-                                <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                 { userClass?.image? <img src={userClass?.image} alt='profile' /> : <img src={profile} alt='profile' />}
+                                <div className="w-14 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                 {/* { me?.image? <img src={me?.image} alt='profile' /> : <img src={profile} alt='profile' />} */}
+                                 { me &&
+                                <div className='w-full'>
+                                    <div className="w-14 h-14 bg-primary rounded-full flex items-center justify-center ring ring-[#91f2dc] ring-offset-base-100 ring-offset-2">
+                                        <h2 className='text-3xl uppercase font-bold text-white'>{me?.firstName?.slice(0, 1)}{me?.lastName?.slice(0, 1)}</h2>
+                                    </div>
+                                </div>
+                                }
                                 </div>
                             </div>
-                            <h1 className='mb-2 text-blue-900'>{userClass?.name}</h1>
+                            <h1 className='text-xl py-1 text-blue-900'>{me?.firstName} {me?.lastName}</h1>
                         </div>
-                        <li className='mx-1'>
-                            <NavLink className='' to='/dashboard' >
-                                <div className='sm:flex justify-center sm:items-center'>
-                                    <div className='font-bold fontSize text-[18px] sm:block flex justify-center'><MdOutlineDashboard /></div>
-                                    <span className='ml-1 mt-0 hide-p sm:text-[18px] text-sm'>Dashboard</span>
-                                </div>
+                        <li className='font-bold'>
+                            <NavLink to='/dashboard/'
+                                className={({ isActive }) =>
+                                isActive ? 'border-r-[4px] border-primary rounded-l-md text-[#156c65] bg-[#d6f8f5]' : 'hover:bg-[#d6f8f5]'
+                                }
+                            >
+                                <AiOutlineWallet size={'20px'} /> 
+                                <h1 className={`origin-left whitespace-nowrap duration-300 font-medium`}>Dashboard</h1>
                             </NavLink>
                         </li>
-                        <li><a>Update Profile</a></li>
-                        <li><a>Settings</a></li>
-                        <li onClick={logOut}><a>Sign Out</a></li>
+                        <li className='font-bold'>
+                            <NavLink to='/dashboard/'
+                                className={({ isActive }) =>
+                                isActive ? 'border-r-[4px] border-primary rounded-l-md text-[#156c65] bg-[#d6f8f5]' : 'hover:bg-[#d6f8f5]'
+                                }
+                            >
+                                <AiOutlineWallet size={'20px'} /> 
+                                <h1 className={`origin-left whitespace-nowrap duration-300 font-medium`}>Update Profile</h1>
+                            </NavLink>
+                        </li>
+                        <li className='font-bold'>
+                            <NavLink to='/dashboard/'
+                                className={({ isActive }) =>
+                                isActive ? 'border-r-[4px] border-primary rounded-l-md text-[#156c65] bg-[#d6f8f5]' : 'hover:bg-[#d6f8f5]'
+                                }
+                            >
+                                <AiOutlineWallet size={'20px'} /> 
+                                <h1 className={`origin-left whitespace-nowrap duration-300 font-medium`}>Sitting</h1>
+                            </NavLink>
+                        </li>
+                        <li onClick={() => setOpenLogOutModule("logout")} for="Logout-modal"><a>Sign Out</a></li>
                     </ul>
                 </div>
               :
@@ -107,7 +144,8 @@ const Navbar = ({userClass}) => {
         <div className={` ${(window.scrollY > 100)? "bg-[#111f3bad]" : "bg-[#111f3bad]"} fixed top-0 left-0 z-50 font-bold text-cyan-900 w-full`}>
             <div className="navbar px-xl max-w-7xl flex items-center justify-between mx-auto">
                 <div className="">
-                <h1 className='text-xl text-white uppercase font-bold'>E.F.p USA</h1>
+                {/* <h1 className='text-xl text-white uppercase font-bold'>E.F.p USA</h1> */}
+                <img src={logo} className='w-[80px]' alt="logo" />
                 </div>
                 <div className="">
                     <div className="flex">
@@ -120,6 +158,9 @@ const Navbar = ({userClass}) => {
                 {ProfileItems}
                 </div>
             </div>
+            { 
+                openLogOutModule && <LogOutModule />
+            }
         </div>
     );
 };

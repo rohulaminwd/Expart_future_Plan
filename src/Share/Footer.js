@@ -1,5 +1,6 @@
 import React from 'react';
 import banner from '../assets/images/banks.jpg'
+import logo from '../assets/images/logo1.png'
 
 const Footer = () => {
     return (
@@ -20,7 +21,10 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className='w-full max-w-7xl mx-auto grid grid-clos-1 sm:grid-cols-2 py-16 text-white gap-5'>
+            <div className='text-center mt-5'>
+                <img src={logo} className='w-[100px] mx-auto' alt="logo" />
+            </div>
+            <div className='w-full max-w-7xl mx-auto grid grid-clos-1 sm:grid-cols-2 pb-16 pt-5 text-white gap-5'>
                 <div>
                     <h1 className="text-2xl sm:text-3xl my-5 md:text-4xl text-white font-bold">Expert Future Plan USA</h1>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur, repudiandae quasi repellat ad reprehenderit deleniti est porro molestiae nulla quam?</p>

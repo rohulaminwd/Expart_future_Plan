@@ -1,45 +1,69 @@
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
-import auth from '../../firebase.init'
+
 import { useForm } from "react-hook-form";
 import Loading from '../../Share/Loading';
 import { Link, useNavigate } from 'react-router-dom';
 import signInBg from '../../assets/images/signIn-bg.jpg'
 import { AiOutlineGoogle, AiFillApple, AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 import { FaFacebookF } from 'react-icons/fa'
+import { useQuery } from 'react-query';
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
-    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-    const [updateProfile, updating, updateeError] = useUpdateProfile(auth);
+    const [error, setError] = useState();
+
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const [
-        createUserWithEmailAndPassword,
-        user,
-        loading,
-        error,
-      ] = useCreateUserWithEmailAndPassword(auth);
 
-    const navigate = useNavigate()  
-    let signInError;  
 
-    if(loading || gLoading || updating){
-        return <Loading></Loading>
-    }
 
-    if(error || gError || updateeError){
-        signInError = <p className='text-red-500 mb-2'><small>{error?.message || gError?.message || updateeError.message}</small></p>
-    }
+    const navigate = useNavigate()   
 
-    if(user || gUser){
-        navigate('/dashboard')
-    }
+    // if(loading || gLoading || updating){
+    //     return <Loading></Loading>
+    // }
+
+    // if(user || gUser){
+    //     navigate('/dashboard')
+    // }
     
 
     const onSubmit = async data => {
-        // console.log(data);
-        await createUserWithEmailAndPassword(data.email, data.password);
-        await updateProfile({ displayName: data.firstName});
-        console.log('update name done', data);
+
+        const user = {
+            firstName : data.firstName,
+            lastName: data.lastName,
+            password: data.password,
+            confirmPassword: data.confirmPassword,
+            phoneNumber: data.phone,
+        }
+        console.log(user);
+        if(data.password !== data.confirmPassword){
+            setError("Password not match")
+        }
+        
+        fetch('http://localhost:5000/api/v1/user/signup', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then( status => {
+            if(status.status === 'success'){
+                navigate('/signIn')
+                toast.success('Sign up success please login now');
+            }
+            if(status.status === 'fail'){
+                setError('something is wrong plz try again')
+            }
+            console.log(status.status)
+            console.log(status)
+        })
     }
+
+
 
     return (
         <div style={{ backgroundImage: `url(${signInBg})` }} className='bg-cover  h-screen'>
@@ -48,15 +72,15 @@ const SignUp = () => {
                     <div className="text-center">
                         <h2 className="text-2xl font-bold text-center">New Account</h2>
                         <h6 className='text-center mb-3 leading-normal font-bold mx-auto sm:w-[80%]'>Hey Enter Your Details to create a account</h6>
+
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            
                             <div className='w-full flex items-center justify-between gap-3'>
                                 <div className="form-control w-full">
                                     <input 
-                                        type="firstName" 
+                                        type="text" 
                                         placeholder="First Name" 
                                         className="input input-bordered input-success w-full" 
-                                        {...register("name", {
+                                        {...register("firstName", {
                                             required: {
                                             value: true,
                                             message: 'Name is required'  
@@ -68,16 +92,16 @@ const SignUp = () => {
                                         })}
                                     />
                                     <label className="label">
-                                    {errors.name?.type === 'required' && <span className="label-text-alt text-red-500">{errors.name.message}</span>}
-                                    {errors.name?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.name.message}</span>}
+                                    {errors.firstName?.type === 'required' && <span className="label-text-alt text-red-500">{errors.firstName.message}</span>}
+                                    {errors.firstName?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.firstName.message}</span>}
                                     </label>
                                 </div>
                                 <div className="form-control w-full">
                                     <input 
-                                        type="lastName" 
+                                        type="text" 
                                         placeholder="Last Name" 
                                         className="input input-bordered input-success w-full" 
-                                        {...register("name", {
+                                        {...register("lastName", {
                                             required: {
                                             value: true,
                                             message: 'Name is required'  
@@ -96,23 +120,19 @@ const SignUp = () => {
                             </div>
                             <div className="form-control w-full">
                                 <input 
-                                    type="email" 
-                                    placeholder="Your Email" 
+                                    type="tel" 
+                                    placeholder="Your Phone Number" 
                                     className="input input-bordered input-success w-full" 
-                                    {...register("email", {
+                                    {...register("phone", {
                                         required: {
                                         value: true,
                                         message: 'Email is required'  
                                         },
-                                        pattern: {
-                                        value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                        message: 'provide a valid email..'
-                                        }
                                     })}
                                 />
                                 <label className="label">
-                                {errors.email?.type === 'required' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
-                                {errors.email?.type === 'pattern' && <span className="label-text-alt text-red-500">{errors.email.message}</span>}
+                                {errors.phone?.type === 'required' && <span className="label-text-alt text-red-500">{errors.phone.message}</span>}
+                                {errors.phone?.type === 'pattern' && <span className="label-text-alt text-red-500">{errors.phone.message}</span>}
                                 </label>
                             </div>
                             <div className='w-full flex items-center justify-between gap-3'>
@@ -139,10 +159,10 @@ const SignUp = () => {
                                 </div>
                                 <div className="form-control w-full">
                                     <input 
-                                        type="ConformPassword" 
+                                        type="password" 
                                         placeholder="Conform password" 
                                         className="input input-bordered input-success w-full" 
-                                        {...register("password", {
+                                        {...register("confirmPassword", {
                                             required: {
                                             value: true,
                                             message: 'Password is required'  
@@ -154,17 +174,18 @@ const SignUp = () => {
                                         })}
                                     />
                                     <label className="label">
-                                    {errors.ConformPassword?.type === 'required' && <span className="label-text-alt text-red-500">{errors.ConformPassword.message}</span>}
-                                    {errors.ConformPassword?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.ConformPassword.message}</span>}
+                                    {errors.confirmPassword?.type === 'required' && <span className="label-text-alt text-red-500">{errors.confirmPassword.message}</span>}
+                                    {errors.confirmPassword?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.confirmPassword.message}</span>}
                                     </label>
                                 </div>
                             </div>
-                            {signInError}
+                            { error && <p className='text-red-500 mb-2'><small>{error}</small></p>}
                             <input className='btn w-full text-white uppercase font-bold bg-gradient-to-r from-[#2091d9] to-[#13b38f] hover:from-[#13b38f] hover:to-[#2091d9] duration-300 border-0' type="submit" value="Create Account"  />
                         </form>
+
                         <div className="divider">OR</div>
                         <div className='flex items-center justify-around'>
-                            <div onClick={() => signInWithGoogle()} className='border hover:border-primary cursor-pointer hover:text-primary rounded-lg p-2'>
+                            <div className='border hover:border-primary cursor-pointer hover:text-primary rounded-lg p-2'>
                                 <p className='flex items-center gap-1'><AiOutlineGoogle size={20} /> <span className='hidden sm:block'>Google</span></p>
                             </div>
                             <div className='border hover:border-primary cursor-pointer hover:text-primary rounded-lg p-2'>

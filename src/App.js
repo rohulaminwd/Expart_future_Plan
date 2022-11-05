@@ -16,10 +16,21 @@ import Wallet from './Pages/Dashboard/Wallet';
 import Team from './Pages/Dashboard/Team';
 import Work from './Pages/Dashboard/Work';
 import Profile from './Pages/Dashboard/Profile';
+import WorkAbout from './Pages/Dashboard/WorkAbout';
+import PlanDetails from './Pages/Dashboard/PlanDetails.';
+import { useState } from 'react';
+import useMe from './Hooks/useMe';
+import Loading from './Share/Loading';
+
 
 
 function App() {
   AOS.init();
+  const [me, setMe, loading] = useMe();
+  if(loading){
+    <Loading />
+  }
+  console.log(me)
   return (
     <div className=''>
       <Routes>
@@ -36,8 +47,10 @@ function App() {
         }>
           <Route index element={<Wallet />}></Route>
           <Route path='team' element={<Team />}></Route>
+          <Route path='about' element={<WorkAbout />}></Route>
           <Route path='work' element={<Work />}></Route>
           <Route path='me' element={<Profile />}></Route>
+          <Route path='planDetails' element={<PlanDetails />}></Route>
         </Route>
       </Routes>
       <ToastContainer />

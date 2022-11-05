@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Open+Sans:wght@400;500&family=Oswald:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Teko:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Open+Sans:wght@400;500&family=Oswald:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Shalimar&family=Teko:wght@500&display=swap');
 .bg{
     background-color: #2533503a;
 }
@@ -17,3 +18,7 @@ body, p{
 .tako{
     font-family: 'Teko', sans-serif;
 }
+.shalimar{
+    font-family: 'Shalimar', cursive !important;
+}
+
