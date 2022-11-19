@@ -1,9 +1,8 @@
 import React from "react";
-// import loading from '../assets/images/loding.jfif'
 
 function Loading() {
   return (
-    <div className="h-screen w-full bg-cover flex justify-between items-center">
+    <div className="h-screen flex justify-between items-center">
       <div className="mx-auto" role="status">
         <svg
           className="inline mr-2 w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

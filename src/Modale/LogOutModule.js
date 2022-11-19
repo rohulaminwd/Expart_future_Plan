@@ -2,17 +2,17 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast} from 'react-toastify';
 
-const LogOutModule = ({logout, setlogut}) => {
+const LogOutModule = ({logout, setLogout}) => {
 
     const navigate = useNavigate()
     const logOut = () => {
         navigate('/')
+        setLogout(null)
         localStorage.removeItem('accessToken');
     }
 
     return (
         <div>
-
             <input type="checkbox" id="Logout-modal" className="modal-toggle" />
             <div className="modal modal-middle">
                 <div className="modal-box bg-primary">

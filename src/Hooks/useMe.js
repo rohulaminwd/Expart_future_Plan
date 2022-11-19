@@ -13,14 +13,14 @@ const useMe = () => {
             }
         }).then(res => res.json())
         .then(data => {
-            if(data.data){
-                setMe(data.data)
+            if(data){
+                setMe(data)
                 setLoading(false)
             }
             console.log(data, 'success');
         });
     }, [])
 
-    return [me, setMe, loading];
+    return [me, loading, setMe] ;
 }
 export default useMe;

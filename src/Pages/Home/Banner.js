@@ -22,7 +22,7 @@ const Banner = () => {
                             </div>
                          </>
                         }
-                        {usertoken && 
+                        { usertoken && 
                         <div className='w-full'>
                             <Link to='/dashboard' className="btn border-[3px] btn-primary rounded-[50px] w-full font-bold hover:shadow-md hover:shadow-primary text-white md:btn-lg btn-md"  data-aos="zoom-in-left" data-aos-delay="700" data-aos-duration="800">Start Now</Link>
                         </div>

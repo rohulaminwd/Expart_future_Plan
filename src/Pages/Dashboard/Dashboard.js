@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import './dashboard.css'
 import { motion } from "framer-motion"
 import {FaChevronLeft} from 'react-icons/fa'
-import {BsPerson} from 'react-icons/bs'
+import {BsChatLeftDots, BsPerson} from 'react-icons/bs'
 import {HiArrowSmLeft} from 'react-icons/hi'
-import {MdWorkOutline, MdNotificationsNone, MdDetails} from 'react-icons/md'
+import {MdWorkOutline, MdDetails} from 'react-icons/md'
 import {AiOutlineWallet, AiOutlineTeam, AiOutlineArrowLeft} from 'react-icons/ai'
 import { NavLink, Link, Outlet } from 'react-router-dom';
 
@@ -93,7 +93,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                         </div>
                         <h1 className='text-primary text-sm sm:text-lg md:text-2xl font-bold'>Expert Future Plan USA</h1>         
                         <div>
-                            <MdNotificationsNone size={24} />
+                            <BsChatLeftDots size={24} />
                         </div>         
                     </div>
                 </div>

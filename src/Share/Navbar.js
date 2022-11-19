@@ -10,14 +10,20 @@ import useMe from '../Hooks/useMe';
 import Loading from './Loading';
 import LogOutModule from '../Modale/LogOutModule';
 import { useState } from 'react';
+import { HiOutlineLogout } from 'react-icons/hi';
 
 const Navbar = ({userClass}) => {
     const usertoken = localStorage.getItem('accessToken')
-    const [openLogOutModule, setOpenLogOutModule] = useState(null)
+    const [logout, setLogout] = useState(null)
 
     const [me, setMe, loading] = useMe()
     if(loading){
         <Loading />
+    }
+    const navigate = useNavigate()
+    const logOut = () => {
+        navigate('/')
+        localStorage.removeItem('accessToken');
     }
 
     if(window.scrollY > 200){
@@ -126,7 +132,7 @@ const Navbar = ({userClass}) => {
                                 <h1 className={`origin-left whitespace-nowrap duration-300 font-medium`}>Sitting</h1>
                             </NavLink>
                         </li>
-                        <li onClick={() => setOpenLogOutModule("logout")} for="Logout-modal"><a>Sign Out</a></li>
+                        <label onClick={() => setLogout("logout")} for="Logout-modal" className='px-5 hover:text-accent flex items-center gap-2 cursor-pointer'><HiOutlineLogout size={'20px'} /> Sign Out</label>
                     </ul>
                 </div>
               :
@@ -159,7 +165,10 @@ const Navbar = ({userClass}) => {
                 </div>
             </div>
             { 
-                openLogOutModule && <LogOutModule />
+                logout && <LogOutModule
+                logout = { logout}
+                setLogout = {setLogout}
+                 />
             }
         </div>
     );

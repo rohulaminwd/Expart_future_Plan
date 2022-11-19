@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import signInBg from '../../assets/images/signIn-bg.jpg'
 import { AiOutlineGoogle, AiFillApple, AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 import { FaFacebookF } from 'react-icons/fa'
-import { useQuery } from 'react-query';
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -13,22 +12,18 @@ const SignUp = () => {
     const [error, setError] = useState();
 
     const { register, formState: { errors }, handleSubmit } = useForm();
-
+    const [loading, setLoading] = useState(false)
 
 
     const navigate = useNavigate()   
 
-    // if(loading || gLoading || updating){
-    //     return <Loading></Loading>
-    // }
+    if(loading){
+        return <Loading></Loading>
+    }
 
-    // if(user || gUser){
-    //     navigate('/dashboard')
-    // }
-    
 
     const onSubmit = async data => {
-
+        setLoading(true)
         const user = {
             firstName : data.firstName,
             lastName: data.lastName,
@@ -51,14 +46,15 @@ const SignUp = () => {
         })
         .then(res => res.json())
         .then( status => {
+            setLoading(false)
             if(status.status === 'success'){
                 navigate('/signIn')
                 toast.success('Sign up success please login now');
             }
             if(status.status === 'fail'){
-                setError('something is wrong plz try again')
+                setError('Some this is wrong please try again')
             }
-            console.log(status.status)
+            // console.log(status.status)
             console.log(status)
         })
     }

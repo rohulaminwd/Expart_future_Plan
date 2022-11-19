@@ -50,13 +50,10 @@ const SignIn = () => {
                 toast.success('Well come to dashboard');
                 const accessToken = status.data.token;
                 localStorage.setItem('accessToken', accessToken);
-                console.log('success', accessToken, )
             }
-            if(error){
-                setError('something is wrong plz try again')
+            if(status.status === 'fail'){
+                setError(status.error);
             }
-            console.log(status.data, "data success")
-            console.log(status);
         })
     }
     return (
@@ -120,7 +117,7 @@ const SignIn = () => {
                         {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
                         </label>
                     </div>
-                    {signInError}
+                    { error && <p className='text-red-500 mb-2'><small>{error}</small></p>}
                     <input className='btn w-full text-white uppercase font-bold bg-gradient-to-r from-[#2091d9] to-[#13b38f] hover:from-[#13b38f] hover:to-[#2091d9] duration-300 border-0' type="submit" value="Login"  />
                     </form>
                     <div className="divider">OR</div>

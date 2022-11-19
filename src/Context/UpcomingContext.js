@@ -1,18 +1,19 @@
 
-import React, { createContext, useContext } from "react";
-import useMe from "../Hooks/useMe";
+// import React, { createContext, useContext } from "react";
+// import useMe from "../Hooks/useMe";
 
 
-const MeContext = createContext();
+// const MeContext = createContext();
 
-export const StateContext = ({ children }) => {
-  const [me, setMe, loading] = useMe();
+// export const StateContext = ({ children }) => {
+//   const [me,] = useMe();
+//   const name = 'rohul amin'
 
-  return (
-    <MeContext.Provider value={[me, setMe, loading]}>
-         {children}
-    </MeContext.Provider>
-  );
-};
+//   return (
+//     <MeContext.Provider value={[name, 'this is name']}>
+//          {children}
+//     </MeContext.Provider>
+//   );
+// };
 
-export const UseMeContext = () => useContext(MeContext);
+// export const UseMeContext = () => useContext(MeContext);
