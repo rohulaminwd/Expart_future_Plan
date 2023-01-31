@@ -51,7 +51,7 @@ const Wallet = () => {
     return (
         <div className='w-full sm:p-0 sm:pb-3 p-2'>
             <div style={{ backgroundImage: `url(${bg2})` }} className="bg-cover rounded-2xl">
-                <div className='text-center cursor-pointer px-3 py-8 sm:py-12 bg-[#334469a6] text-white rounded-2xl'>
+                <div className='text-center cursor-pointer px-3 py-8 sm:py-12 bg-[#33446929] text-white rounded-2xl'>
                     <h3 className='text-5xl sm:text-8xl font-bold'>{me?.balance} ৳</h3>
                     <p className='text-3xl sm:text-5xl text-[#9cabc9] sm:mt-4 mt-2'>Total Balance</p>
                 </div>

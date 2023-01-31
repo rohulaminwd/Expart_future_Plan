@@ -1,27 +1,31 @@
 
 import { useForm } from "react-hook-form";
 import Loading from '../../Share/Loading';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate} from 'react-router-dom';
 import signInBg from '../../assets/images/signIn-bg.jpg'
-import { AiOutlineGoogle, AiFillApple, AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
+import { AiOutlineGoogle, AiFillApple, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineCodeSandbox } from 'react-icons/ai'
 import { FaFacebookF } from 'react-icons/fa'
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 const SignUp = () => {
-    const [error, setError] = useState();
 
+    const search = useLocation().search;
+    let refer = new URLSearchParams(search).get('refer');
+
+    const [error, setError] = useState();
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loading, setLoading] = useState(false)
-
 
     const navigate = useNavigate()   
 
     if(loading){
         return <Loading></Loading>
     }
-
-
+    if(refer === null){
+        refer = undefined
+    }
+    console.log(refer);
     const onSubmit = async data => {
         setLoading(true)
         const user = {
@@ -30,6 +34,7 @@ const SignUp = () => {
             password: data.password,
             confirmPassword: data.confirmPassword,
             phoneNumber: data.phone,
+            referCode: refer,
         }
         console.log(user);
         if(data.password !== data.confirmPassword){
@@ -182,13 +187,7 @@ const SignUp = () => {
                         <div className="divider">OR</div>
                         <div className='flex items-center justify-around'>
                             <div className='border hover:border-primary cursor-pointer hover:text-primary rounded-lg p-2'>
-                                <p className='flex items-center gap-1'><AiOutlineGoogle size={20} /> <span className='hidden sm:block'>Google</span></p>
-                            </div>
-                            <div className='border hover:border-primary cursor-pointer hover:text-primary rounded-lg p-2'>
-                                <p className='flex items-center gap-1'><AiFillApple size={20} /> <span className='hidden sm:block'>Apple</span></p>
-                            </div>
-                            <div className='border hover:border-primary cursor-pointer hover:text-primary rounded-lg p-2'>
-                                <p className='flex items-center gap-1'><FaFacebookF size={20} /> <span className='hidden sm:block'>Facebook</span></p>
+                                <p className='flex items-center gap-1'><AiOutlineCodeSandbox size={20} /> <span className=''>Referral Code: {refer}</span></p>
                             </div>
                         </div>
                         <div className='flex mt-5 items-center font-bold justify-between'>     

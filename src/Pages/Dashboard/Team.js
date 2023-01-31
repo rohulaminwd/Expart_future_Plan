@@ -7,8 +7,11 @@ import taka3 from '../../assets/icons/taka1 (3).png'
 import reffer from '../../assets/icons/refer.png'
 import taka5 from '../../assets/icons/taka1 (5).png'
 import taka6 from '../../assets/icons/taka1 (1).png'
+import useMe from '../../Hooks/useMe';
 
 const Team = () => {
+    const [me] = useMe();
+    const referCode = me?.firstName?.slice(0, 1) + me?.lastName?.slice(0,1) + me?.phoneNumber?.slice(2, )
     return (
         <div className='w-full p-2 sm:py-3 sm:px-0'>
             <div className='flex justify-between gap-3 sm:gap-5 items-center'>
@@ -63,16 +66,16 @@ const Team = () => {
             <div className='mt-5'>
                 <div className='text-center text-gray-800 p-3 py-5 sm:p-5 shadow-md rounded-lg bg-white'>
                 <div className='w-full mb-5'>
-                    <img src={reffer} className='w-[32] mx-auto' alt="taka" />
+                    <img src={reffer} className='w-[104px] mx-auto' alt="taka" />
                 </div>
                     <h2 className='text-xl sm:text-3xl'>বোন্ধুকে এই এপে রেফার করুন</h2>
-                    <p className='text-[12px] sm:text-[16px] mx-auto mt-2 sm:mt-3 sm:w-[60%] text-gray-700'>এই রেফার লিংক/কোড ব্যাবহার করে আপনার বন্ধুকে এই আপে আমন্ত্রন জানান। প্রতি সকল রেফারে আপনি পাবেন দারুন অফার।</p>
+                    <p className='text-[12px] sm:text-[16px] mx-auto mt-2 sm:mt-3 sm:w-[60%] text-gray-700'>এই রেফার লিংক শেয়ার করে আপনার বন্ধুকে এই আপে আমন্ত্রন জানান। প্রতি সকল রেফারে আপনি পাবেন দারুন অফার।</p>
                     <div className='flex mx-auto rounded-lg sm:mt-5 mt-2 gap-2 sm:gap-3 max-w-[500px] items-center'>
-                        <div className='p-1 sm:p-2 border shadow-md w-full rounded-md'>
-                            <p className='max-w-[300px]'>https://expartfutureplan.com</p>
+                        <div className='p-1 sm:p-2 border w-full rounded-md'>
+                            <p className='max-w-[500px] text-[14px]'>http://localhost:3000/signUp?refer={referCode}</p>
                         </div>
                         <div className=''>
-                            <CopyButton value="https://expartfutureplan.com">
+                            <CopyButton value={`http://localhost:3000/signUp?refer=${referCode}`}>
                                 {({ copied, copy }) => (
                                     <Button className={`${copied ? 'bg-[#177865]' : 'bg-[#174e78]'}`} onClick={copy}>
                                     {copied ? 'Copied' : 'Copy'}

@@ -107,9 +107,9 @@ const Dashboard = ({applyUsers, userClass}) => {
                             }
                             >
                                 <div className='flex justify-center'>
-                                    <AiOutlineWallet size={'24px'} /> 
+                                    <MdDetails size={'24px'} /> 
                                 </div>
-                                <p className={`text-[12px] font-bold`}>Wallet</p>
+                                <p className={`text-[12px] font-bold`}>Dashboard</p>
                             </NavLink>
                         </li>
                         <li className=''>

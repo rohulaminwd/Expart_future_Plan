@@ -10,6 +10,7 @@ import ActivePlan from '../../Modale/ActivePlan';
 import { useContext } from 'react';
 import { Context } from '../../App';
 import { toast } from 'react-toastify';
+import { AnimatePresence, motion } from "framer-motion"
 
 
 const PlanDetails = () => {
@@ -37,6 +38,7 @@ const PlanDetails = () => {
 	};
 	// Using the hook
 	const {data, error, refetch, isLoading} = useQuery('allTask', getFacts);
+    console.log(data)
 
     if(isLoading){
         return <Loading />
@@ -47,6 +49,7 @@ const PlanDetails = () => {
         const date = new Date(PlanDate);
         const expireDate = date.setDate(date.getDate() + 15);
         const expire = expireDate - new Date(); 
+        console.log(expireDate, "expire")
         const dateExpr = format(new Date(expireDate), 'PP');
         if(expire < 0){
             return expire
@@ -152,7 +155,7 @@ const PlanDetails = () => {
                                     <h1 className='text-[12px] border-r pr-2 flex items-center gap-2'>Unit Price: <p>{FreePlan?.unitPrice}</p></h1>
                                     <h1 className='text-[12px] pl-2 flex items-center gap-2'>Daily Task: <p>{FreePlan?.dailyTask}</p></h1>
                                 </div>
-                                {(me?.FreePlan === 'inactive') && <label onClick={() => setActivePlan(FreePlan)} for='active-plan' className="btn w-[100px] btn-accent text-white btn-sm" disabled={(isDate(me?.FreePlanDate) < 0) || (me?.LifeTimePlan === 'active') || (me?.PlanInTime?.length > -1)}>Start</label>}
+                                {(me?.FreePlan === 'inactive') && <label onClick={() => setActivePlan(FreePlan)} for='active-plan' className="btn w-[100px] btn-accent text-white btn-sm" disabled={(me?.LifeTimePlan === 'active') || (me?.PlanInTime?.length > 0)}>Start</label>}
                                 {(me?.FreePlan === 'active') && <button onClick={() => planAlert(FreePlan)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Actived</button>}
                             </div>
                         </div>
@@ -218,10 +221,17 @@ const PlanDetails = () => {
                         </div>
                     </div> 
                 </div>
-                <div className='md:mt-5 md:grid grid-cols-2 gap-5 mt-3'>
+                <motion.div layout className='md:mt-5 md:grid grid-cols-2 gap-5 mt-3'>
+                <AnimatePresence>
                     {
                         planDays.map((i) => <>
-                        <div key={i?._id} className={`
+                        <motion.div
+                        layout
+                        animate={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, scale: 0 }}
+                        exit={{ opacity: 0, scale: 0 }}
+                        key={i?._id} 
+                        className={`
                         ${(planTime === '7-Days')? "text-[#156c65] border-[#abf98d] bg-[#dbfbd7]" : "bg-primary text-white border-[#9df1e5]"} 
                         ${(planTime === '14-Days')? "text-[#156c65] border-[#8df3f9] bg-[#c2f7f6]" : "bg-primary text-white border-[#9df1e5]"} 
                         ${(planTime === '30-Days')? "text-white border-[#81a7fa] bg-[#2d4069]" : "bg-primary text-white border-[#9df1e5]"} 
@@ -256,10 +266,11 @@ const PlanDetails = () => {
                                 {(isActive(i?._id) !== i?._id) && <label onClick={() => setActivePlan(i)} for='active-plan' className="btn w-[100px] btn-accent text-white btn-sm">Start</label>}
                                 {(isActive(i?._id) === i?._id) && <button onClick={() => planAlert(i)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Actived</button>}
                             </div>
-                        </div>
+                        </motion.div>
                     </>)
                     }
-                </div>
+                </AnimatePresence>  
+                </motion.div>
             </div> 
             { activePlan && <ActivePlan 
                 activePlan={activePlan}
