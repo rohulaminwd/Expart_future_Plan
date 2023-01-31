@@ -27,7 +27,7 @@ const CreateTask = ({setOpenTask, refetch, openTask}) => {
         }
 
         if(openTask[0] === "create"){
-            fetch('http://localhost:5000/api/v1/task/create', {
+            fetch('https://efp-usa-server-site.vercel.app/api/v1/task/create', {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json',
@@ -50,7 +50,7 @@ const CreateTask = ({setOpenTask, refetch, openTask}) => {
                 setLoading(false)
             })
         }else{
-            fetch(`http://localhost:5000/api/v1/task/${openTask[0]?._id}`, {
+            fetch(`https://efp-usa-server-site.vercel.app/api/v1/task/${openTask[0]?._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',  

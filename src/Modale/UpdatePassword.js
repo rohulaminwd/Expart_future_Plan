@@ -27,7 +27,7 @@ const UpdatePassword = ({setUpdateModal, updateModal}) => {
           newPass : data.newPass,
         }
         if(updateModal === 'bankCard'){
-            fetch(`http://localhost:5000/api/v1/account/${me?._id}`, {
+            fetch(`https://efp-usa-server-site.vercel.app/api/v1/account/${me?._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',  
@@ -48,7 +48,7 @@ const UpdatePassword = ({setUpdateModal, updateModal}) => {
         
         if(updateModal === 'wallet'){
 
-            fetch(`http://localhost:5000/api/v1/accoun/${me?._id}`, {
+            fetch(`https://efp-usa-server-site.vercel.app/api/v1/accoun/${me?._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',  
@@ -67,7 +67,7 @@ const UpdatePassword = ({setUpdateModal, updateModal}) => {
         })
         }
         if(updateModal === 'account'){
-            fetch(`http://localhost:5000/api/v1/accoun/${me?._id}`, {
+            fetch(`https://efp-usa-server-site.vercel.app/api/v1/accoun/${me?._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',  

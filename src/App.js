@@ -15,7 +15,7 @@ export const Context = createContext();
 function App() {
   AOS.init();
     const getFacts = async () => {
-      const res = await fetch('http://localhost:5000/api/v1/user/me', {
+      const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/user/me', {
               method: 'GET',
               headers: {
                   'authorization': `Bearer ${localStorage.getItem('accessToken')}`

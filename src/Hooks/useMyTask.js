@@ -8,7 +8,7 @@ const useMyTask = () => {
     useEffect(() => {
         setLoading(true)
 
-        fetch(`http://localhost:5000/api/v1/task/complete`, {
+        fetch(`https://efp-usa-server-site.vercel.app/api/v1/task/complete`, {
                 method: "GET",
                 headers: {
                     'content-type': 'application/json',

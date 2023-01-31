@@ -30,7 +30,7 @@ const CreatePlan = ({setOpenPlan, refetch, openPlan}) => {
         console.log(TaskInfo)
 
         if(openPlan[0] === "create"){
-            fetch('http://localhost:5000/api/v1/plan/create', {
+            fetch('https://efp-usa-server-site.vercel.app/api/v1/plan/create', {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json',
@@ -54,7 +54,7 @@ const CreatePlan = ({setOpenPlan, refetch, openPlan}) => {
             })
         }else{
             console.log(openPlan[0]?._id)
-            fetch(`http://localhost:5000/api/v1/plan/${openPlan[0]?._id}`, {
+            fetch(`https://efp-usa-server-site.vercel.app/api/v1/plan/${openPlan[0]?._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',  

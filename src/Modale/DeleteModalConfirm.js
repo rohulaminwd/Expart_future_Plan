@@ -11,7 +11,7 @@ const DeleteModalConfirm = ({deleteModule, refetch, method, setDeletingModal}) =
     }
     const handleDelete = () => {
         setLoading(true)
-        fetch(`http://localhost:5000/api/v1/${method}/${deleteModule?._id}`, {
+        fetch(`https://efp-usa-server-site.vercel.app/api/v1/${method}/${deleteModule?._id}`, {
             method: 'DELETE',
             headers: {
                 'authorization': `Bearer ${localStorage.getItem('accessToken')}`

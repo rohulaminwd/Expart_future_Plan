@@ -13,7 +13,7 @@ const StatusUpdate = ({setUpdateStatus, updateStatus}) => {
             sector: i?.sector
         }
         
-    fetch(`http://localhost:5000/api/v1/request/${i?._id}`, {
+    fetch(`https://efp-usa-server-site.vercel.app/api/v1/request/${i?._id}`, {
         method: 'PATCH',
         headers: {
             'content-type': 'application/json',  

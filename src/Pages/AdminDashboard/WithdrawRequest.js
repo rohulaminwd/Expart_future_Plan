@@ -18,7 +18,7 @@ const WithdrawRequest = () => {
     const method = 'request'
 
     const getFacts = async () => {
-		const res = await fetch('http://localhost:5000/api/v1/request', {
+		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/request', {
             method: 'GET',
             headers: {
                 'authorization': `Bearer ${localStorage.getItem('accessToken')}`

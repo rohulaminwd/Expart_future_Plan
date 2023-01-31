@@ -28,7 +28,7 @@ const PlanDetails = () => {
    }
 
     const getFacts = async () => {
-		const res = await fetch('http://localhost:5000/api/v1/plan', {
+		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/plan', {
             method: 'GET',
             headers: {
                 'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -63,7 +63,7 @@ const PlanDetails = () => {
         const expireDate = date.setDate(date.getDate() + 15);
         const expire = expireDate - new Date(); 
         if((expire < 0) && (me?.FreePlan === 'active') ){
-            fetch(`http://localhost:5000/api/v1/User/FreePlanInactive/${me?._id}`, {
+            fetch(`https://efp-usa-server-site.vercel.app/api/v1/User/FreePlanInactive/${me?._id}`, {
                 method: 'PATCH',
                 headers: {
                     'content-type': 'application/json',  
@@ -99,7 +99,7 @@ const PlanDetails = () => {
         const PlanId = {_id: id}
 
         if(expire < 0){
-        fetch(`http://localhost:5000/api/v1/User/planDelete/${me?._id}`, {
+        fetch(`https://efp-usa-server-site.vercel.app/api/v1/User/planDelete/${me?._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',  

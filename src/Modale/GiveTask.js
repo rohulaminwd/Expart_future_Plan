@@ -9,7 +9,7 @@ const GiveTask = ({setGiveTask, giveTask, refetch}) => {
         i.date = new Date()
         console.log(i)
 
-        fetch(`http://localhost:5000/api/v1/task/${i?._id}`, {
+        fetch(`https://efp-usa-server-site.vercel.app/api/v1/task/${i?._id}`, {
         method: 'PATCH',
         headers: {
             'content-type': 'application/json',  

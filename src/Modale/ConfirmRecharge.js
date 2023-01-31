@@ -33,7 +33,7 @@ const ConfirmRecharge = ({setRecharge, refetch, setRechargeConfirm, rechargeConf
         }
         console.log(requestInfo, 'dta data');
         
-        fetch('http://localhost:5000/api/v1/request/add', {
+        fetch('https://efp-usa-server-site.vercel.app/api/v1/request/add', {
             method: "POST",
             headers: {
                 'content-type': 'application/json',

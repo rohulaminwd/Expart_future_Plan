@@ -12,7 +12,7 @@ const Users = () => {
     const method = 'user'
 
     const getFacts = async () => {
-		const res = await fetch('http://localhost:5000/api/v1/user');
+		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/user');
 		return res.json();
 	};
 	// Using the hook

@@ -11,7 +11,7 @@ const ActivePlan = ({setActivePlan, activePlan}) => {
     const handlePlanActive = () => {
         activePlan.date = new Date();
         console.log(activePlan)
-        fetch(`http://localhost:5000/api/v1/User/plan/${me?._id}`, {
+        fetch(`https://efp-usa-server-site.vercel.app/api/v1/User/plan/${me?._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',  

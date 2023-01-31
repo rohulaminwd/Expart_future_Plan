@@ -41,7 +41,7 @@ const SignUp = () => {
             setError("Password not match")
         }
         
-        fetch('http://localhost:5000/api/v1/user/signup', {
+        fetch('https://efp-usa-server-site.vercel.app/api/v1/user/signup', {
             method: "POST",
             headers: {
                 'content-type': 'application/json',

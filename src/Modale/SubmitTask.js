@@ -35,7 +35,7 @@ const SubmitTask = ({setSubmitTask, refetch, submitTask, me,}) => {
             id: submitTask?._id
         }
 
-        fetch(`http://localhost:5000/api/v1/task/submit/${submitTask?._id}`, {
+        fetch(`https://efp-usa-server-site.vercel.app/api/v1/task/submit/${submitTask?._id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',  
@@ -49,7 +49,7 @@ const SubmitTask = ({setSubmitTask, refetch, submitTask, me,}) => {
                     toast.success('Your task submit success'); 
                     refetch();
                     const completeTask = setTimeout(() => {
-                        fetch(`http://localhost:5000/api/v1/user/CompleteTask/${me?._id}`, {
+                        fetch(`https://efp-usa-server-site.vercel.app/api/v1/user/CompleteTask/${me?._id}`, {
                         method: 'PATCH',
                         headers: {
                             'content-type': 'application/json',  

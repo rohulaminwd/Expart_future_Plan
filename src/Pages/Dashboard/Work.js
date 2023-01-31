@@ -28,7 +28,7 @@ const Work = () => {
 
 
     const getFacts = async () => {
-		const res = await fetch("http://localhost:5000/api/v1/task/user", {
+		const res = await fetch("https://efp-usa-server-site.vercel.app/api/v1/task/user", {
             method: 'GET',
             headers: {
                 'authorization': `Bearer ${localStorage.getItem('accessToken')}`
