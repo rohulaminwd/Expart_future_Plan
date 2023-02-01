@@ -56,62 +56,80 @@ const Wallet = () => {
                     <p className='text-3xl sm:text-5xl text-[#9cabc9] sm:mt-4 mt-2'>Total Balance</p>
                 </div>
             </div>
-            <div className='flex items-center my-4 sm:my-6 justify-between gap-2 sm:gap-6'>
-                <div className='p-2 gap-1 sm:p-3 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
-                    <div className='w-12 sm:w-16 -ml-1'>
-                        <img src={taka} className='w-full' alt="taka" />
+            <div className='flex items-center my-3 sm:my-6 justify-between gap-2 sm:gap-6'>
+                <div className='p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
+                    <div className='gap-1 flex items-center justify-between sm:justify-start sm:gap-2'>
+                        <div className='w-9 sm:w-16 -ml-1'>
+                            <img src={taka} className='w-full' alt="taka" />
+                        </div>
+                        <div className=''>
+                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(1)} ৳</h3>
+                            <h1 className='text-[12px] hidden sm:block text-[#727988] sm:text-xl'>Yesterday Income</h1>
+                        </div>
                     </div>
-                    <div className=''>
-                        <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(1)} ৳</h3>
-                        <h1 style={{lineHeight: '16px'}} className='text-[12px] text-[#727988] sm:text-xl'>Yesterday Income</h1>
-                    </div>
+                    <h1 className='text-[12px] sm:hidden block text-[#727988] sm:text-xl'>Yesterday Income</h1>
                 </div>
-                <div className='p-2 gap-1 sm:p-3 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
-                    <div className='w-12 sm:w-16 -ml-1'>
-                        <img src={taka5} className='w-full' alt="taka" />
+                <div className='p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
+                    <div className='gap-1 flex items-center justify-between sm:justify-start sm:gap-2'>
+                        <div className='w-9 sm:w-16 -ml-1'>
+                            <img src={taka5} className='w-full' alt="taka" />
+                        </div>
+                        <div className=''>
+                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{me?.balance} ৳</h3>
+                            <h1 className='text-[12px] hidden sm:block text-[#727988] sm:text-xl'>Available Balance</h1>
+                        </div>
                     </div>
-                    <div className=''>
-                        <h3 className='font-bold sm:mb-1 sm:text-2xl'>{me?.balance}৳</h3>
-                        <h1 style={{lineHeight: '16px'}} className='text-[12px] text-[#727988] sm:text-xl'>Available Balance</h1>
-                    </div>
+                    <h1 className='text-[12px] sm:hidden block text-[#727988] sm:text-xl'>Available Balance</h1>
                 </div>
-                <div className='p-2 gap-1 sm:p-3 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
-                    <div className='w-12 h-full sm:mb-1 sm:w-16 -ml-1'>
-                        <img src={taka3} className='w-full' alt="taka" />
+                <div className='p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
+                    <div className='gap-1 flex items-center justify-between sm:justify-start sm:gap-2'>
+                        <div className='w-9 sm:w-16 -ml-1'>
+                            <img src={taka3} className='w-full' alt="taka" />
+                        </div>
+                        <div className=''>
+                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(1)} ৳</h3>
+                            <h1 className='text-[12px] hidden sm:block text-[#727988] sm:text-xl'>Today Income</h1>
+                        </div>
                     </div>
-                    <div className=''>
-                        <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(1)} ৳</h3>
-                        <h1 style={{lineHeight: '16px'}} className='text-[12px] text-[#727988] sm:text-xl'>Today Income</h1>
-                    </div>
+                    <h1 className='text-[12px] sm:hidden block text-[#727988] sm:text-xl'>Today Income</h1>
                 </div>
             </div>
-            <div className='flex items-center my-4 justify-between gap-2 sm:gap-6'>
-                <div className='p-2 gap-1 sm:p-3 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
-                    <div className='w-12 sm:w-16 -ml-1'>
-                        <img src={taka6} className='w-full' alt="taka" />
+            <div className='flex items-center my-3 justify-between gap-2 sm:gap-6'>
+                <div className='p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
+                    <div className='gap-1 flex items-center justify-between sm:justify-start sm:gap-2'>
+                        <div className='w-9 sm:w-16 -ml-1'>
+                            <img src={taka6} className='w-full' alt="taka" />
+                        </div>
+                        <div className=''>
+                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(7)} ৳</h3>
+                            <h1 className='text-[12px] hidden sm:block text-[#727988] sm:text-xl'>Weekly Income</h1>
+                        </div>
                     </div>
-                    <div className=''>
-                        <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(7)} ৳</h3>
-                        <h1 style={{lineHeight: '16px'}} className='text-[12px] text-[#727988] sm:text-xl'>Weekly Income</h1>
-                    </div>
+                    <h1 className='text-[12px] sm:hidden block text-[#727988] sm:text-xl'>Weekly Income</h1>
                 </div>
-                <div className='p-2 gap-1 sm:p-3 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
-                    <div className='w-12 sm:w-16 -ml-1'>
-                        <img src={taka4} className='w-full' alt="taka" />
+                <div className='p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
+                    <div className='gap-1 flex items-center justify-between sm:justify-start sm:gap-2'>
+                        <div className='w-9 sm:w-16 -ml-1'>
+                            <img src={taka4} className='w-full' alt="taka" />
+                        </div>
+                        <div className=''>
+                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(30)} ৳</h3>
+                            <h1 className='text-[12px] hidden sm:block text-[#727988] sm:text-xl'>Monthly Income</h1>
+                        </div>
                     </div>
-                    <div className=''>
-                        <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(30)} ৳</h3>
-                        <h1 style={{lineHeight: '16px'}} className='text-[12px] text-[#727988] sm:text-xl'>Monthly Income</h1>
-                    </div>
+                    <h1 className='text-[12px] sm:hidden block text-[#727988] sm:text-xl'>Monthly Income</h1>
                 </div>
-                <div className='p-2 gap-1 sm:p-3 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
-                    <div className='w-12 h-full sm:w-16 -ml-1'>
-                        <img src={taka2} className='w-full' alt="taka" />
+                <div className='p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
+                    <div className='gap-1 flex items-center justify-between sm:justify-start sm:gap-2'>
+                        <div className='w-9 sm:w-16 -ml-1'>
+                            <img src={taka2} className='w-full' alt="taka" />
+                        </div>
+                        <div className=''>
+                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>12 ৳</h3>
+                            <h1 className='text-[12px] hidden sm:block text-[#727988] sm:text-xl'>Company Bunas</h1>
+                        </div>
                     </div>
-                    <div className=''>
-                        <h3 className='font-bold sm:mb-1 sm:text-2xl'>12 ৳</h3>
-                        <h1 style={{lineHeight: '16px'}} className='text-[12px] text-[#727988] sm:text-xl'>Company Bunas</h1>
-                    </div>
+                    <h1 className='text-[12px] sm:hidden block text-[#727988] sm:text-xl'>Company Bunas</h1>
                 </div>
             </div>
             <div className='border-t-2 sm:mt-8 mt-5 border-primary'>

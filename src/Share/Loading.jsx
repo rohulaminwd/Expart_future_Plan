@@ -1,20 +1,28 @@
 
 import React from 'react';
-import { FidgetSpinner } from 'react-loader-spinner'
+import { FidgetSpinner, Dna } from 'react-loader-spinner'
 
 const Loading = () => {
   return (
     <div className="h-screen flex justify-center items-center">
-      <div className='pb-[200px]'>
-        <FidgetSpinner
+      <div className='text-center'>
+        {/* <FidgetSpinner
           visible={true}
-          height="150"
-          width="150"
+          height="120"
+          width="120"
           ariaLabel="dna-loading"
           wrapperStyle={{}}
           wrapperClass="dna-wrapper"
           ballColors={['#ff0000', '#00ff00', '#0000ff']}
           backgroundColor="#F4442E"
+        /> */}
+        <Dna
+          visible={true}
+          height="200"
+          width="200"
+          ariaLabel="dna-loading"
+          wrapperStyle={{}}
+          wrapperClass="dna-wrapper"
         />
       </div>
     </div>
