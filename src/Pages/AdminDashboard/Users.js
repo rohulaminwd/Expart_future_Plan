@@ -11,12 +11,20 @@ const Users = () => {
     const [deleteModule, setDeletingModal] = useState(false);
     const method = 'user'
 
+    const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearch = event => {
+    setSearchTerm(event.target.value);
+  };
+
     const getFacts = async () => {
 		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/user');
 		return res.json();
 	};
 	// Using the hook
 	const {data, error, refetch, isLoading} = useQuery('allUsers', getFacts);
+
+    const filteredUsers = data?.data?.filter(user => user.firstName.toLowerCase().startsWith(searchTerm.toLowerCase()));
 
     if(isLoading){
         return <Loading></Loading>
@@ -26,13 +34,13 @@ const Users = () => {
         <div className='p-2 sm:p-0'>
             <div className='text-center w-full flex items-center justify-between p-3 py-4 shadow-md sm:mb-5 mb-3 rounded-md bg-white'>
                 <div className=''>
-                    <input type="search" className='border rounded-3xl w-[150px] sm:w-auto ring-primary-focus ring-2 outline-0 p-1 px-3' placeholder='Search User' name="" id="" />
+                    <input type="search" value={searchTerm} onChange={handleSearch} className='border rounded-3xl w-[150px] sm:w-auto ring-primary-focus ring-2 outline-0 p-1 px-3' placeholder='Search User' name="" id="" />
                 </div>
                 <h1 className='font-bold text-xl'>Users: <span className='text-accent '>{data?.data?.length}</span></h1>
             </div> 
             <div className='grid grid-cols-1 sm:gap-5 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
             {
-                data?.data?.map( user => <>
+                filteredUsers.map( user => <>
                     <motion.div 
                         initial={{ y: "20vw", transition: { type: "spring", duration: .1 } }}
                         animate={{ y: 0, transition: { type: "spring", duration: 2 } }}

@@ -35,13 +35,13 @@ const WithdrawRequest = () => {
         }
     }, [data])
 
-    if(isLoading){
-        return <Loading />
-    }
-
     const handleState = (i, x) => {
         setPlanTime(i);
         setDesign(x)
+    }
+
+    if(isLoading || !planTime){
+        return <Loading />
     }
 
     const recharge = data?.filter(i => i?.sector?.includes('recharge'));
