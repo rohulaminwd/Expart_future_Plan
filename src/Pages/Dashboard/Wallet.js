@@ -56,7 +56,7 @@ const Wallet = () => {
                     <p className='text-3xl sm:text-5xl text-[#9cabc9] sm:mt-4 mt-2'>Total Balance</p>
                 </div>
             </div>
-            <div className='flex items-center my-3 sm:my-6 justify-between gap-2 sm:gap-6'>
+            <div className='flex items-center my-2 sm:my-6 justify-between gap-2 sm:gap-6'>
                 <div className='p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
                     <div className='gap-1 flex items-center justify-between sm:justify-start sm:gap-2'>
                         <div className='w-9 sm:w-16 -ml-1'>
@@ -94,7 +94,7 @@ const Wallet = () => {
                     <h1 className='text-[12px] sm:hidden block text-[#727988] sm:text-xl'>Today Income</h1>
                 </div>
             </div>
-            <div className='flex items-center my-3 justify-between gap-2 sm:gap-6'>
+            <div className='flex items-center my-2 justify-between gap-2 sm:gap-6'>
                 <div className='p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg'>
                     <div className='gap-1 flex items-center justify-between sm:justify-start sm:gap-2'>
                         <div className='w-9 sm:w-16 -ml-1'>
