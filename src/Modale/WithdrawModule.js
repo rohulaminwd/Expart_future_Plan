@@ -66,7 +66,7 @@ const WithdrawModule = ({setWithdraw, withdraw}) => {
         <div>
             <input type="checkbox" id="withdraw" className="modal-toggle" />
             <div  className={`${(withdraw === 'hidden') && 'hidden'} modal h-screen modal-bottom sm:modal-middle`}>
-                <div className="modal-box bg-blue-100 h-screen sm:h-auto px-2 py-4 sm:py-8 sm:px-4">
+                <div className="modal-box bg-blue-100 h-auto px-2 py-4 sm:py-8 sm:px-4">
                     <label for="withdraw" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h1 className='text-xl uppercase text-center font-bold text-primary'>Withdraw</h1>
                     <div className='text-center w-full p-2 shadow-md mt-5 rounded-md bg-white'>
@@ -84,7 +84,7 @@ const WithdrawModule = ({setWithdraw, withdraw}) => {
                         <p className='p-2 text-[16px] text-gray-700'>Withdraw Amount: <span className='text-secondary text-[14px]'>( Minimum 500 )</span></p>
                         <form className='w-full mt-4'>
                             <input type="number" placeholder="Enter Recharge Amount" onChange={e => setAmount(e.target.value)} class="input input-sm input-bordered w-full" required />
-                            <label onClick={handleState} for='confirmWithdraw' className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm" disabled={(amount < 500) || (me?.balance < 500)}>Recharge Now</label>
+                            <label onClick={handleState} for='confirmWithdraw' className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm" disabled={(amount < 500) || (me?.balance < 500)}>Withdraw Now</label>
                         </form>
                     </div> 
                     <div className=' w-full p-2 shadow-md mt-5 rounded-md bg-white'>

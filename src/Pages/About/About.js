@@ -9,7 +9,7 @@ import AboutBanner from './AboutBanner';
 
 const About = () => {
     return (
-        <div className='w-full'>
+        <div className='w-full relative bg-blue-50'>
             <Navbar />
             <AboutBanner />
             <div className='w-full max-w-7xl mx-auto'>

@@ -22,7 +22,7 @@ const ConfirmWithdraw = ({setWithdraw, setWithdrawConfirm, withdrawConfirm}) => 
                     </div>
                     <div className='w-full p-2 sm:p-3 shadow-md mt-4 rounded-md bg-white'>
                         <div className='rounded-md p-3 bg-slate-200'>
-                            <p className='s'>ধন্যবাদ আপনার রিকুয়েস্ট টি সফল হয়েছে 30 মিনিটের মধ্যে ডিপোজিট ব্যালেন্স আপনার একাউন্টে যুক্ত করে দেওয়া হবে।</p>
+                            <p className='s'>ধন্যবাদ আপনার পেমেন্ট  রিকুয়েষ্ট টি সফল হয়েছে ২৪ থেকে ৪৮ ঘন্টার ভিতরে আপনার একাউন্ট নাম্বার এ পেমেন্ট পৌছে যাবে।</p>
                         </div>
                         <form className='w-full mt-2'>
                             <label onClick={handleClose} for='confirmWithdraw' className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm">Ok</label>

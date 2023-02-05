@@ -1,9 +1,9 @@
 import React from 'react';
-import brand1 from '../../assets/images/brand1.jpg'
-import brand2 from '../../assets/images/brand4.png'
-import brand3 from '../../assets/images/brand5.png'
-import brand4 from '../../assets/images/brand6.jfif'
-import brand5 from '../../assets/images/brand7.webp'
+import brand1 from '../../assets/images/Facebook-2019.jpg'
+import brand2 from '../../assets/images/youtube.jpg'
+import brand3 from '../../assets/images/tik-tok.png'
+import brand4 from '../../assets/images/data-entry.jfif'
+import brand5 from '../../assets/images/instagram.png'
 
 const Brands = () => {
     const brands = [{img: brand1}, {img: brand2}, {img: brand3}, {img: brand4}, {img: brand5}]
@@ -13,8 +13,11 @@ const Brands = () => {
             <div className='mt-12 brand-container'>
                 {
                     brands?.map((i, index) => <>
-                        <div className='w-full border border-primary hover:shadow-[#5bb5a27e] cursor-pointer duration-300 hover:-translate-y-1 hover:shadow-lg'>
-                            <img src={i.img} alt="" />
+                        <div
+                         className='w-full border hover:shadow-lg cursor-pointer duration-300 hover:-translate-y-1'
+                         data-aos="zoom-in-up" data-aos-delay="100" data-aos-duration="800"
+                        >
+                            <img src={i.img} className='w-full h-full' alt="brands" />
                         </div>
                     </> )
                 }

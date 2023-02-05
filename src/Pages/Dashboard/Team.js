@@ -1,5 +1,5 @@
 import { Button, CopyButton } from '@mantine/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import taka from '../../assets/icons/taka (1).png'
 import taka2 from '../../assets/icons/taka1 (2).png'
@@ -8,9 +8,15 @@ import reffer from '../../assets/icons/refer.png'
 import taka5 from '../../assets/icons/taka1 (5).png'
 import taka6 from '../../assets/icons/taka1 (1).png'
 import useMe from '../../Hooks/useMe';
+import { Context } from '../../App';
+import Loading from '../../Share/Loading';
 
 const Team = () => {
-    const [me] = useMe();
+    // const [me] = useMe();
+    const [me, isLoading] = useContext(Context);
+    if(isLoading){
+        return <Loading></Loading>
+    }
     const referCode = me?.firstName?.slice(0, 1) + me?.lastName?.slice(0,1) + me?.phoneNumber?.slice(2, )
     return (
         <div className='w-full p-2 sm:py-3 sm:px-0'>

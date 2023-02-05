@@ -24,7 +24,7 @@ const Work = () => {
     const [submitTask, setSubmitTask] = useState(null);
     const [Task, setTask] = useState('running');
     const [myTask, setMYTask] = useState();
-    const [me] = useMe();
+    const [me, loading] = useMe();
 
 
     const getFacts = async () => {
@@ -55,7 +55,7 @@ const Work = () => {
     const completeTask = me?.CompleteTask?.slice(0, 5)?.reverse()
   
 
-    if(isLoading){
+    if(isLoading || loading){
         return <Loading />
     }
 

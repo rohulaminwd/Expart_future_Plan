@@ -11,7 +11,7 @@ import PlanHome from './PlanHome';
 
 const Home = () => {
     return (
-        <div className='w-full'>
+        <div className='w-full relative bg-[#d7ebe4]'>
             <Navbar />
             <Banner />
             <div className='w-full max-w-7xl mx-auto'>

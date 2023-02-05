@@ -89,9 +89,9 @@ const Dashboard = ({applyUsers, userClass}) => {
             <div className="bg-[#d7ebe4] flex-1 pb-[60px] sm:pb-0 sm:px-4 relative h-screen overflow-y-auto">
                 <div className="p-2 sm:p-3 sm:rounded-lg mb-2 sm:mb-3 shadow-md bg-white">
                     <div className="flex items-center w-full justify-between">
-                        <div>
+                        <Link to='/'>
                             <HiArrowSmLeft size={24} />
-                        </div>
+                        </Link>
                         <h1 className='text-primary text-sm sm:text-lg md:text-2xl font-bold'>Expert Future Plan USA</h1>         
                         <div>
                             <BsChatLeftDots size={24} />

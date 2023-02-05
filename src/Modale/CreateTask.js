@@ -78,7 +78,7 @@ const CreateTask = ({setOpenTask, refetch, openTask}) => {
         <div>
             <input type="checkbox" id="create-task" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
-                <form onSubmit={handleSubmit(onSubmit)} className="bg-blue-100 h-screen sm:h-auto modal-box p-3 py-5 sm:p-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="bg-blue-100 h-auto modal-box p-3 py-5 sm:p-4">
                     {(openTask[0] === "create") && 
                     <div className='w-full text-center'>
                         <img src={create2} className='w-20 mx-auto' alt="create" />

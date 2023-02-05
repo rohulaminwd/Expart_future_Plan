@@ -11,13 +11,27 @@ import Loading from './Loading';
 import LogOutModule from '../Modale/LogOutModule';
 import { useState } from 'react';
 import { HiOutlineLogout } from 'react-icons/hi';
+import { useContext } from 'react';
+import { Context } from '../App';
+import { useEffect } from 'react';
 
 const Navbar = ({userClass}) => {
     const usertoken = localStorage.getItem('accessToken')
     const [logout, setLogout] = useState(null)
+    const [me, isLoading] = useContext(Context);
+    const [stickyClass, setStickyClass] = useState("0");
+    console.log(stickyClass, "dfjdjfkjf")
 
-    const [me, setMe, loading] = useMe()
-    if(loading){
+    function stickNavbar() {
+        let windowHeight = window.scrollY;
+         windowHeight > 500 ? setStickyClass("sticky-nav") : setStickyClass("");
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", stickNavbar);
+    }, []);
+
+    if(isLoading){
         <Loading />
     }
     const navigate = useNavigate()
@@ -147,7 +161,7 @@ const Navbar = ({userClass}) => {
         </li>
     </>
     return (
-        <div className={` ${(window.scrollY > 100)? "bg-[#111f3bad]" : "bg-[#111f3bad]"} fixed top-0 left-0 z-50 font-bold text-cyan-900 w-full`}>
+        <div className={` ${stickyClass} duration-300 z-50 font-bold bg-slate-700 text-cyan-900 w-full`}>
             <div className="navbar px-xl max-w-7xl flex items-center justify-between mx-auto">
                 <div className="">
                 {/* <h1 className='text-xl text-white uppercase font-bold'>E.F.p USA</h1> */}
