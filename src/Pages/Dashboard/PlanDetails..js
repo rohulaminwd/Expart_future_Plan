@@ -155,7 +155,7 @@ const PlanDetails = () => {
                                     <h1 className='text-[12px] border-r pr-2 flex items-center gap-2'>Unit Price: <p>{FreePlan?.unitPrice}</p></h1>
                                     <h1 className='text-[12px] pl-2 flex items-center gap-2'>Daily Task: <p>{FreePlan?.dailyTask}</p></h1>
                                 </div>
-                                {(me?.FreePlan === 'inactive') && <label onClick={() => setActivePlan(FreePlan)} for='active-plan' className="btn w-[100px] btn-accent text-white btn-sm" disabled={(me?.LifeTimePlan === 'active') || (me?.PlanInTime?.length > 0)}>Start</label>}
+                                {(me?.FreePlan === 'inactive') && <label onClick={() => setActivePlan(FreePlan)} htmlFor='active-plan' className="btn w-[100px] btn-accent text-white btn-sm" disabled={(me?.LifeTimePlan === 'active') || (me?.PlanInTime?.length > 0)}>Start</label>}
                                 {(me?.FreePlan === 'active') && <button onClick={() => planAlert(FreePlan)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Actived</button>}
                             </div>
                         </div>
@@ -186,7 +186,7 @@ const PlanDetails = () => {
                                     <h1 className='text-[12px] border-r pr-2 flex items-center gap-2'>Unit Price: <p>{lifeTimePlan?.unitPrice}</p></h1>
                                     <h1 className='text-[12px] pl-2 flex items-center gap-2'>Daily Task: <p>{lifeTimePlan?.dailyTask}</p></h1>
                                 </div>
-                                {(me?.LifeTimePlan === 'inactive') && <label onClick={() => setActivePlan(lifeTimePlan)} for='active-plan' className="btn w-[100px] btn-accent text-white btn-sm">Start</label>}
+                                {(me?.LifeTimePlan === 'inactive') && <label onClick={() => setActivePlan(lifeTimePlan)} htmlFor='active-plan' className="btn w-[100px] btn-accent text-white btn-sm">Start</label>}
                                 {(me?.LifeTimePlan === 'active') && <button onClick={() => planAlert(lifeTimePlan)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Actived</button>}
                             </div>
                         </div>
@@ -263,7 +263,7 @@ const PlanDetails = () => {
                                     <h1 className='text-[12px] pl-2 flex items-center gap-2'>Daily Task: <p>{i?.dailyTask}</p></h1>
                                 </div>
                                 {(isActive(i?._id) === i?._id) && PlanDateExpire(i?._id)}
-                                {(isActive(i?._id) !== i?._id) && <label onClick={() => setActivePlan(i)} for='active-plan' className="btn w-[100px] btn-accent text-white btn-sm">Start</label>}
+                                {(isActive(i?._id) !== i?._id) && <label onClick={() => setActivePlan(i)} htmlFor='active-plan' className="btn w-[100px] btn-accent text-white btn-sm">Start</label>}
                                 {(isActive(i?._id) === i?._id) && <button onClick={() => planAlert(i)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Actived</button>}
                             </div>
                         </motion.div>

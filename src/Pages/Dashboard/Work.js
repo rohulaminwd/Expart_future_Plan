@@ -124,7 +124,7 @@ const Work = () => {
                                 </div>
                             </div>
                             <div className='flex items-center'>
-                                { (!(exsisNumber(i) === (me?.phoneNumber)) && (i?.status === 'running'))  && <label onClick={() => setSubmitTask(i)} for='submit-task' className="text-white btn btn-primary btn-outline hover:!text-white btn-xs cursor-pointer">submit</label>}
+                                { (!(exsisNumber(i) === (me?.phoneNumber)) && (i?.status === 'running'))  && <label onClick={() => setSubmitTask(i)} htmlFor='submit-task' className="text-white btn btn-primary btn-outline hover:!text-white btn-xs cursor-pointer">submit</label>}
                                 { (exsisNumber(i) === (me?.phoneNumber) && (i?.status === 'pending')) && <p className='text-[#244654] text-[16px] font-bold'>pending...</p>}
                                 { (Task === 'complete') && <p className='text-[#378230] text-[16px] font-bold'>Complete</p>}
                             </div>

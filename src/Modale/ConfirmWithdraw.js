@@ -25,7 +25,7 @@ const ConfirmWithdraw = ({setWithdraw, setWithdrawConfirm, withdrawConfirm}) => 
                             <p className='s'>ধন্যবাদ আপনার পেমেন্ট  রিকুয়েষ্ট টি সফল হয়েছে ২৪ থেকে ৪৮ ঘন্টার ভিতরে আপনার একাউন্ট নাম্বার এ পেমেন্ট পৌছে যাবে।</p>
                         </div>
                         <form className='w-full mt-2'>
-                            <label onClick={handleClose} for='confirmWithdraw' className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm">Ok</label>
+                            <label onClick={handleClose} htmlFor='confirmWithdraw' className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm">Ok</label>
                         </form>
                     </div>             
                 </div>

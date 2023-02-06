@@ -26,8 +26,6 @@ function App() {
     // Using the hook
     const {data, error, refetch, isLoading} = useQuery('allRequest', getFacts);
 
-    console.log(data, "data painai")
-
   return (
     <div className=''>
       

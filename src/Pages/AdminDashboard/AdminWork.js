@@ -50,7 +50,7 @@ const AdminWork = () => {
         <div className='p-2 pt-0 sm:p-0'>
             <div className='text-center w-full flex items-center justify-between p-3 py-4 shadow-md sm:mb-5 mb-3 rounded-md bg-white'>
                 <div className=''>
-                    <label onClick={() => setOpenTask(['create'])} for='create-task' className='btn btn-primary rounded-3xl btn-sm text-white'>Create task</label>
+                    <label onClick={() => setOpenTask(['create'])} htmlFor='create-task' className='btn btn-primary rounded-3xl btn-sm text-white'>Create task</label>
                 </div>
                 <h1 className='font-bold text-xl'>All Task: <span className='text-accent '>{data?.length}</span></h1>
             </div> 
@@ -107,12 +107,12 @@ const AdminWork = () => {
                                 </div>
                             </div>
                             <div className='flex items-center'>
-                                <label onClick={() => setGiveTask([i, me?._id])} for='give-task' className="text-primary mr-2 cursor-pointer">
+                                <label onClick={() => setGiveTask([i, me?._id])} htmlFor='give-task' className="text-primary mr-2 cursor-pointer">
                                     { i?.status === 'inactive' && <span className='text-gray-500'><MdRemoveDone size={20} /></span>}
                                 </label>
                                 { ((i?.status === 'running') || (i?.status === 'pending') || (i?.status === 'complete')) && <div className='mr-2' onClick={worrning}><span className='text-green-500'><MdDoneAll size={20} /></span></div>}
-                                <label onClick={() => setOpenTask([i, 'update'])} for='create-task' className="text-primary cursor-pointer"><BiEdit size={20} /></label>
-                                <label onClick={ () => setDeletingModal(i)}  for='delete-confirm-modal' className="text-accent ml-2 cursor-pointer"><AiOutlineDelete size={20} /></label>
+                                <label onClick={() => setOpenTask([i, 'update'])} htmlFor='create-task' className="text-primary cursor-pointer"><BiEdit size={20} /></label>
+                                <label onClick={ () => setDeletingModal(i)}  htmlFor='delete-confirm-modal' className="text-accent ml-2 cursor-pointer"><AiOutlineDelete size={20} /></label>
                             </div>
                         </div>
                     </motion.div>

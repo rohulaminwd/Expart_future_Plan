@@ -84,7 +84,7 @@ const WithdrawModule = ({setWithdraw, withdraw}) => {
                         <p className='p-2 text-[16px] text-gray-700'>Withdraw Amount: <span className='text-secondary text-[14px]'>( Minimum 500 )</span></p>
                         <form className='w-full mt-4'>
                             <input type="number" placeholder="Enter Recharge Amount" onChange={e => setAmount(e.target.value)} class="input input-sm input-bordered w-full" required />
-                            <label onClick={handleState} for='confirmWithdraw' className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm" disabled={(amount < 500) || (me?.balance < 500)}>Withdraw Now</label>
+                            <label onClick={handleState} htmlFor='confirmWithdraw' className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm" disabled={(amount < 500) || (me?.balance < 500)}>Withdraw Now</label>
                         </form>
                     </div> 
                     <div className=' w-full p-2 shadow-md mt-5 rounded-md bg-white'>

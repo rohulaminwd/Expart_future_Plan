@@ -3,14 +3,18 @@ import { toast } from 'react-toastify';
 import complete from '../assets/images/complete1.png'
 
 const StatusUpdate = ({setUpdateStatus, updateStatus}) => {
-    const {i, refetch} = updateStatus;
+    const {i, refetch, request} = updateStatus;
+    const [transCode, setTransCode] = useState()
+    const [accountNum, setAccountNum] = useState('01845389969')
 
     const handleUpdate = () => {
         const dataInfo = {
-            status: 'complete',
+            status: (request === 'return')? "cancelled" : "complete",
             phoneNumber: i?.phoneNumber,
             amount: i?.amount,
-            sector: i?.sector
+            sector: i?.sector,
+            tranId: (request === 'return')? transCode : i?.tranId,
+            accountNumber: (request === 'return')? accountNum : i?.accountNumber,
         }
         
     fetch(`https://efp-usa-server-site.vercel.app/api/v1/request/${i?._id}`, {
@@ -46,8 +50,16 @@ const StatusUpdate = ({setUpdateStatus, updateStatus}) => {
                             </h2>
                         </div>
                     </div>
+                    {(request === 'return') &&
+                        <div className='text-center w-full sm:w-[80%] mx-auto'>
+                            <form action="" className='w-full flex items-center justify-between gap-3 mt-4'>
+                             <input type="text" value={transCode} placeholder="Enter Transection Id" onChange={e => setTransCode(e.target.value)} class="input input-sm input-accent input-bordered w-full" required />
+                             <input type="text" value={accountNum} placeholder="Enter Account Number" onChange={e => setAccountNum(e.target.value)} class="input input-sm input-accent input-bordered w-full" required />
+                            </form>
+                        </div>
+                    }
                     <div className="flex items-center justify-center gap-3 mt-5">
-                        <button onClick={handleUpdate} className="btn w-[100px] btn-primary text-white btn-sm">Yes</button>
+                        <button onClick={handleUpdate} className="btn w-[100px] btn-primary text-white btn-sm" disabled={!transCode}>Yes</button>
                         <label for="update-status" className="btn btn-sm w-[100px] ">No</label>
                     </div>
                 </div>

@@ -40,7 +40,7 @@ const AdminPlan = () => {
         <div className='p-2 pt-0 sm:p-0'>
             <div className='text-center w-full flex items-center justify-between p-3 py-4 shadow-md sm:mb-5 mb-3 rounded-md bg-white'>
                 <div className=''>
-                    <label onClick={() => setOpenPlan(['create'])} for='create-plan' className='btn btn-primary rounded-3xl btn-sm text-white'>Create Plan</label>
+                    <label onClick={() => setOpenPlan(['create'])} htmlFor='create-plan' className='btn btn-primary rounded-3xl btn-sm text-white'>Create Plan</label>
                 </div>
                 <h1 className='font-bold text-xl'>All Plan: <span className='text-accent '>{data?.length}</span></h1>
             </div> 
@@ -81,8 +81,8 @@ const AdminPlan = () => {
                                 <h1 className='text-[12px] pl-2 flex items-center gap-2'>Daily Task: <p>{i?.dailyTask}</p></h1>
                             </div>
                             <div className='flex items-center'>
-                                <label onClick={() => setOpenPlan([i, 'update'])} for='create-plan' className="text-primary cursor-pointer"><BiEdit size={20} /></label>
-                                <label onClick={ () => setDeletingModal(i)}  for='delete-confirm-modal' className={`${(i?.category === 'Free Plan')? 'text-white' : 'text-accent'} cursor-pointer`}><AiOutlineDelete size={20} /></label>
+                                <label onClick={() => setOpenPlan([i, 'update'])} htmlFor='create-plan' className="text-primary cursor-pointer"><BiEdit size={20} /></label>
+                                <label onClick={ () => setDeletingModal(i)}  htmlFor='delete-confirm-modal' className={`${(i?.category === 'Free Plan')? 'text-white' : 'text-accent'} cursor-pointer`}><AiOutlineDelete size={20} /></label>
                             </div>
                         </div>
                     </motion.div>

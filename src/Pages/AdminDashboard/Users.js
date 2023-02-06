@@ -13,9 +13,9 @@ const Users = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch = event => {
-    setSearchTerm(event.target.value);
-  };
+    const handleSearch = event => {
+        setSearchTerm(event.target.value);
+    };
 
     const getFacts = async () => {
 		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/user');

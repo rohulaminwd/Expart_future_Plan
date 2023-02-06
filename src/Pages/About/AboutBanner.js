@@ -12,8 +12,6 @@ const AboutBanner = () => {
                     <p className="my-2 text-white lg:my-8 mx-auto sm:w-1/2"  data-aos="zoom-in-right" data-aos-delay="500" data-aos-duration="800">If you can dream it, you can do it.
 We are not here to show dreams, we are coming to fulfill dreams. We are not here to cheat anyone or grab a large sum of money. We are all coming together to create a community to earn money for a long time and no one should face loss.
 And it is sure that all those who will work here will be able to earn a good amount of money. And will work without fear and will create a big community. The company has a business plan  will implement it together...</p>
-                    {/* <Link to='/signUp' className="btn btn-outline border-5 rounded-2xl btn-secondary mr-5 font-bold text-white md:btn-md btn-sm"  data-aos="zoom-in-right" data-aos-delay="700" data-aos-duration="800">Register now</Link>
-                    <Link to='/signIn' className="btn btn-outline border-5 rounded-2xl btn-secondary font-bold text-white md:btn-md btn-sm"  data-aos="zoom-in-left" data-aos-delay="700" data-aos-duration="800">Sing In</Link> */}
                 </div>
             </div>
         </div>

@@ -43,7 +43,7 @@ const RechargeNow = ({setRecharge, recharge}) => {
                         <p className='p-2 text-[16px] text-gray-700'>Recharge Amount: <span className='text-secondary text-[14px]'>( Minimum 1000 )</span></p>
                         <form className='w-full mt-4'>
                             <input type="number" placeholder="Enter Recharge Amount" onChange={e => setAmount(e.target.value)} class="input input-sm input-bordered w-full" required />
-                            <label onClick={handleState} for='confirmRecharge' className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm" disabled={amount < 1000}>Recharge Now</label>
+                            <label onClick={handleState} htmlFor='confirmRecharge' className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm" disabled={amount < 1000}>Recharge Now</label>
                         </form>
                     </div> 
                     <div className=' w-full p-2 shadow-md mt-5 rounded-md bg-white'>
