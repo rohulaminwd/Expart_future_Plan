@@ -59,7 +59,7 @@ const StatusUpdate = ({setUpdateStatus, updateStatus}) => {
                         </div>
                     }
                     <div className="flex items-center justify-center gap-3 mt-5">
-                        <button onClick={handleUpdate} className="btn w-[100px] btn-primary text-white btn-sm" disabled={!transCode}>Yes</button>
+                        <button onClick={handleUpdate} className="btn w-[100px] btn-primary text-white btn-sm" disabled={(request === 'return') && !transCode}>Yes</button>
                         <label for="update-status" className="btn btn-sm w-[100px] ">No</label>
                     </div>
                 </div>

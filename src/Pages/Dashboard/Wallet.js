@@ -15,6 +15,7 @@ import UpdatePassword from '../../Modale/UpdatePassword';
 import Loading from '../../Share/Loading';
 import { useContext } from 'react';
 import { Context } from '../../App';
+import { Circles, FidgetSpinner, Watch } from 'react-loader-spinner';
 
 const Wallet = () => {
     const [me, isLoading] = useContext(Context);
@@ -148,9 +149,25 @@ const Wallet = () => {
                 </div>
             </div>
             <Link to="/dashboard/planDetails">
-                <div className='text-center border-[8px] cursor-pointer border-[#6182c9] sm:mt-8 mt-5 sm:py-12 px-3 py-8 bg-[#2d4069] text-white rounded-2xl'>
-                    <h2 className='text-5xl sm:text-8xl font-bold'>Show Plan</h2>
-                    <p className='text-2xl sm:text-4xl mt-2'>Our best plan</p>
+                <div className='border-[4px] cursor-pointer flex gap-2 sm:gap-4 items-center border-[#6182c9] sm:mt-8 mt-5 p-2 bg-[#2d4069] text-white rounded-[80px]'>
+                    <div className='w-[100px] h-[100px] grid place-content-center border-[4px] border-[#77e9d2] bg-[#cff8f7] rounded-full'>
+                        <div className='text-center'>
+                            <Circles
+                            visible={true}
+                            height="80"
+                            width="80"
+                            ariaLabel="dna-loading"
+                            wrapperStyle={{}}
+                            wrapperClass="dna-wrapper"
+                            ballColors={['#ff0000', '#00ff00', '#0000ff']}
+                            backgroundColor="#F4442E"
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className='text-4xl sm:text-6xl font-bold'>Show Plan</h2>
+                        <p className='text-2xl sm:text-3xl mt-2'>Our best plan</p>
+                    </div>
                 </div>
             </Link>
             { (me?.role === "admin") &&
