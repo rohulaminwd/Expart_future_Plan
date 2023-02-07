@@ -18,6 +18,7 @@ const WithdrawRequest = () => {
     const [deleteModule, setDeletingModal] = useState(null);
     const method = 'request'
     const request = 'return'
+    const done = 'done'
 
     const getFacts = async () => {
 		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/request', {
@@ -121,7 +122,7 @@ const WithdrawRequest = () => {
                                 <div className='flex items-center'>
                                     {((i?.status === 'pending') && (i?.sector === 'recharge')) && <label onClick={ () => setUpdateStatus({i, refetch})}  htmlFor='update-status' className="btn btn-success text-white btn-sm">add</label>}
                                     {((i?.status === 'pending') && (i?.sector === 'withdraw')) && <label onClick={ () => setUpdateStatus({i, refetch, request})}  htmlFor='update-status' className="mr-2 cursor-pointer text-red-900"><span className='text-red-900'><MdOutlineKeyboardReturn size={20} /></span></label>}
-                                    {((i?.status === 'pending') && (i?.sector === 'withdraw')) && <label onClick={ () => setUpdateStatus({i, refetch})}  htmlFor='update-status' className="cursor-pointer"><span className='text-green-500'><MdFileDownloadDone size={20} /></span></label>}
+                                    {((i?.status === 'pending') && (i?.sector === 'withdraw')) && <label onClick={ () => setUpdateStatus({i, refetch, done})}  htmlFor='update-status' className="cursor-pointer"><span className='text-green-500'><MdFileDownloadDone size={20} /></span></label>}
                                     <label onClick={ () => setDeletingModal(i)}  htmlFor='delete-confirm-modal' className="btn btn-accent ml-2 text-white btn-sm"><AiOutlineDelete size={20} /></label>
                                 </div>
                             </div>

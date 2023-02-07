@@ -156,7 +156,7 @@ const PlanDetails = () => {
                                     <h1 className='text-[12px] pl-2 flex items-center gap-2'>Daily Task: <p>{FreePlan?.dailyTask}</p></h1>
                                 </div>
                                 {(me?.FreePlan === 'inactive') && <label onClick={() => setActivePlan(FreePlan)} htmlFor='active-plan' className="btn w-[100px] btn-accent text-white btn-sm" disabled={(me?.LifeTimePlan === 'active') || (me?.PlanInTime?.length > 0)}>Start</label>}
-                                {(me?.FreePlan === 'active') && <button onClick={() => planAlert(FreePlan)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Actived</button>}
+                                {(me?.FreePlan === 'active') && <button onClick={() => planAlert(FreePlan)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Active</button>}
                             </div>
                         </div>
                     </div>
@@ -187,7 +187,7 @@ const PlanDetails = () => {
                                     <h1 className='text-[12px] pl-2 flex items-center gap-2'>Daily Task: <p>{lifeTimePlan?.dailyTask}</p></h1>
                                 </div>
                                 {(me?.LifeTimePlan === 'inactive') && <label onClick={() => setActivePlan(lifeTimePlan)} htmlFor='active-plan' className="btn w-[100px] btn-accent text-white btn-sm">Start</label>}
-                                {(me?.LifeTimePlan === 'active') && <button onClick={() => planAlert(lifeTimePlan)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Actived</button>}
+                                {(me?.LifeTimePlan === 'active') && <button onClick={() => planAlert(lifeTimePlan)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Active</button>}
                             </div>
                         </div>
                     </div>
@@ -264,7 +264,7 @@ const PlanDetails = () => {
                                 </div>
                                 {(isActive(i?._id) === i?._id) && PlanDateExpire(i?._id)}
                                 {(isActive(i?._id) !== i?._id) && <label onClick={() => setActivePlan(i)} htmlFor='active-plan' className="btn w-[100px] btn-accent text-white btn-sm">Start</label>}
-                                {(isActive(i?._id) === i?._id) && <button onClick={() => planAlert(i)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Actived</button>}
+                                {(isActive(i?._id) === i?._id) && <button onClick={() => planAlert(i)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Active</button>}
                             </div>
                         </motion.div>
                     </>)

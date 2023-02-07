@@ -150,12 +150,12 @@ const Wallet = () => {
             </div>
             <Link to="/dashboard/planDetails">
                 <div className='border-[4px] cursor-pointer flex gap-2 sm:gap-4 items-center border-[#6182c9] sm:mt-8 mt-5 p-2 bg-[#2d4069] text-white rounded-[80px]'>
-                    <div className='w-[100px] h-[100px] grid place-content-center border-[4px] border-[#77e9d2] bg-[#cff8f7] rounded-full'>
+                    <div className='w-[80px] h-[80px] grid place-content-center border-[4px] border-[#77e9d2] bg-[#cff8f7] rounded-full'>
                         <div className='text-center'>
                             <Circles
                             visible={true}
-                            height="80"
-                            width="80"
+                            height="60"
+                            width="60"
                             ariaLabel="dna-loading"
                             wrapperStyle={{}}
                             wrapperClass="dna-wrapper"
@@ -165,8 +165,30 @@ const Wallet = () => {
                         </div>
                     </div>
                     <div>
-                        <h2 className='text-4xl sm:text-6xl font-bold'>Show Plan</h2>
-                        <p className='text-2xl sm:text-3xl mt-2'>Our best plan</p>
+                        <h2 className='text-4xl sm:text-5xl font-bold'>Show Plan</h2>
+                        <p className='text-2xl sm:text-3xl'>Our best plan</p>
+                    </div>
+                </div>
+            </Link>
+            <Link to="/dashboard/history">
+                <div className='border-[4px] cursor-pointer flex gap-2 sm:gap-4 items-center border-[#e4b88c] sm:mt-8 mt-5 p-2 bg-[#965a2c] text-white rounded-[80px]'>
+                    <div className='w-[80px] h-[80px] grid place-content-center border-[4px] border-[#77e9d2] bg-[#cff8f7] rounded-full'>
+                        <div className='text-center'>
+                            <Watch
+                            visible={true}
+                            height="60"
+                            width="60"
+                            ariaLabel="dna-loading"
+                            wrapperStyle={{}}
+                            wrapperClass="dna-wrapper"
+                            ballColors={['#ff0000', '#00ff00', '#0000ff']}
+                            backgroundColor="#F4442E"
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className='text-4xl sm:text-5xl font-bold'>My History</h2>
+                        <p className='text-2xl sm:text-3xl'>My Request history</p>
                     </div>
                 </div>
             </Link>

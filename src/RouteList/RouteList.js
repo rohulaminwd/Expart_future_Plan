@@ -9,6 +9,7 @@ import Users from '../Pages/AdminDashboard/Users';
 import WithdrawRequest from '../Pages/AdminDashboard/WithdrawRequest';
 import Blog from '../Pages/Blog/Blog';
 import Dashboard from '../Pages/Dashboard/Dashboard';
+import History from '../Pages/Dashboard/History';
 import PlanDetails from '../Pages/Dashboard/PlanDetails.';
 import Profile from '../Pages/Dashboard/Profile';
 import Team from '../Pages/Dashboard/Team';
@@ -41,6 +42,7 @@ const RouteList = () => {
                     <Route path='work' element={<Work />}></Route>
                     <Route path='me' element={<Profile />}></Route>
                     <Route path='planDetails' element={<PlanDetails />}></Route>
+                    <Route path='history' element={<History />}></Route>
                 </Route>
 
                 <Route path='/admin-dashboard' element={

@@ -143,7 +143,7 @@ const Navbar = ({userClass}) => {
                                 }
                             >
                                 <AiOutlineWallet size={'20px'} /> 
-                                <h1 className={`origin-left whitespace-nowrap duration-300 font-medium`}>Sitting</h1>
+                                <h1 className={`origin-left whitespace-nowrap duration-300 font-medium`}>Setting</h1>
                             </NavLink>
                         </li>
                         <label onClick={() => setLogout("logout")} for="Logout-modal" className='px-5 hover:text-accent flex items-center gap-2 cursor-pointer'><HiOutlineLogout size={'20px'} /> Sign Out</label>

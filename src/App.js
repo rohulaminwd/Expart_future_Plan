@@ -24,7 +24,7 @@ function App() {
       return res.json();
     };
     // Using the hook
-    const {data, error, refetch, isLoading} = useQuery('allRequest', getFacts);
+    const {data, error, refetch, isLoading} = useQuery('me', getFacts);
 
   return (
     <div className=''>
