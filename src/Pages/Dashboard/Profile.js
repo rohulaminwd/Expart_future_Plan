@@ -118,7 +118,7 @@ const Profile = () => {
                 {me?.bkash? <h2 className='sm:text-2xl'>{me?.bkash}</h2> : <p>Account is not available</p>}
             </div>
             <div className='w-full mt-3 sm:mt-5 p-2 py-3 shadow-md bg-[#cef8ed] rounded-r-lg border-l-[5px] border-primary flex items-center gap-2'>
-                <h2 className='sm:text-2xl'>Nagod: </h2>
+                <h2 className='sm:text-2xl'>Nagad: </h2>
                 {me?.nagad? <h2 className='sm:text-2xl'>{me?.nagad}</h2> : <p>Account is not available</p>}
             </div>
             {

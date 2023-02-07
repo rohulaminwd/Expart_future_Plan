@@ -45,7 +45,7 @@ const StatusUpdate = ({setUpdateStatus, updateStatus}) => {
                     <div className='text-center'>
                         <img src={complete} className='w-28 mx-auto' alt="complete" />
                         <div>
-                            <h2 className='text-2xl font-bold text-[#000]'>Are you sure {i?.name} {i?.sector} Complete 
+                            <h2 className='text-2xl font-bold text-[#000]'>Are you sure {i?.name} {i?.sector} {(request === "return")? "Cancel and Return" : "Complete"}
                                 <span className='text-accent'> {i?.amount} tk</span> 
                             </h2>
                         </div>

@@ -74,7 +74,7 @@ const Team = () => {
                 <div className='w-full mb-5'>
                     <img src={reffer} className='w-[104px] mx-auto' alt="taka" />
                 </div>
-                    <h2 className='text-xl sm:text-3xl'>বোন্ধুকে এই এপে রেফার করুন</h2>
+                    <h2 className='text-xl sm:text-3xl'>Invite Your Friends</h2>
                     <p className='text-[12px] sm:text-[16px] mx-auto mt-2 sm:mt-3 sm:w-[60%] text-gray-700'>এই রেফার লিংক শেয়ার করে আপনার বন্ধুকে এই আপে আমন্ত্রন জানান। প্রতি সকল রেফারে আপনি পাবেন দারুন অফার।</p>
                     <div className='flex mx-auto rounded-lg sm:mt-5 mt-2 gap-2 sm:gap-3 max-w-[500px] items-center'>
                         <div className='p-1 sm:p-2 border w-full rounded-md'>
