@@ -72,7 +72,7 @@ const Profile = () => {
                         </div>
                         <div className=''>
                             <h1 className=''>Add Bank Card</h1>
-                            <p className='text-[10px]'>এখানে অলওয়ে পাসওয়ার্ডটি সেট করে নেন এটি উইথড্র করার সময় লাগবে</p>
+                            <p className='text-[10px]'>অবশ্যই আপনাদের একাউন্ট নম্বর টি যুক্ত করে নিবেন উইথড্র রিকুয়েষ্ট করার আগে।</p>
                         </div>
                     </div>
                     <div>
@@ -100,7 +100,7 @@ const Profile = () => {
                         </div>
                         <div className=''>
                             <h1 className=''>Update password</h1>
-                            <p className='text-[10px]'>এখানে অলওয়ে পাসওয়ার্ডটি সেট করে নেন এটি উইথড্র করার সময় লাগবে</p>
+                            <p className='text-[10px]'>আপনি চাইলে এখানে থেকে পাসওয়ার্ড পরিবর্তন করতে পারেন।</p>
                         </div>
                     </div>
                     <div>

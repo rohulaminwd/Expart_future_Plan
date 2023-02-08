@@ -11,7 +11,7 @@ const Blog = () => {
             <div className='h-screen  flex items-center justify-center bg-[#111f3bae] w-full'>
                 <div className="w-full mx-auto">
                     <h1 className='text-5xl text-primary my-8 uppercase text-center font-bold'>Coming soon This blog</h1>
-                    <p className='sm:w-[540px] w-[300px] text-white mx-auto text-center'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia eveniet quae a tempore unde culpa, quasi quia debitis accusantium nemo est ex ipsa obcaecati, dicta esse, nisi aliquam totam aut.</p>
+                    <p className='sm:w-[540px] w-[300px] text-white mx-auto text-center'>We will soon provide our website apps for your convenience. Then we have a business plan and try to implement it. For this we need a big community, we will build a big community and implement business plan to get best profit and earn money for long time. Our USA team will fully support this. Don't be afraid everyone will work without fear.</p>
                 </div>
             </div>
         </div>

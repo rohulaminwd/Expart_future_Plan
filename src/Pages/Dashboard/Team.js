@@ -1,18 +1,14 @@
 import { Button, CopyButton } from '@mantine/core';
 import React, { useContext } from 'react';
-import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import taka from '../../assets/icons/taka (1).png'
 import taka2 from '../../assets/icons/taka1 (2).png'
 import taka3 from '../../assets/icons/taka1 (3).png'
 import reffer from '../../assets/icons/refer.png'
-import taka5 from '../../assets/icons/taka1 (5).png'
 import taka6 from '../../assets/icons/taka1 (1).png'
-import useMe from '../../Hooks/useMe';
 import { Context } from '../../App';
 import Loading from '../../Share/Loading';
 
 const Team = () => {
-    // const [me] = useMe();
     const [me, isLoading] = useContext(Context);
     if(isLoading){
         return <Loading></Loading>
@@ -75,7 +71,7 @@ const Team = () => {
                     <img src={reffer} className='w-[104px] mx-auto' alt="taka" />
                 </div>
                     <h2 className='text-xl sm:text-3xl'>Invite Your Friends</h2>
-                    <p className='text-[12px] sm:text-[16px] mx-auto mt-2 sm:mt-3 sm:w-[60%] text-gray-700'>এই রেফার লিংক শেয়ার করে আপনার বন্ধুকে এই আপে আমন্ত্রন জানান। প্রতি সকল রেফারে আপনি পাবেন দারুন অফার।</p>
+                    <p className='text-[12px] sm:text-[16px] mx-auto mt-2 sm:mt-3 sm:w-[60%] text-gray-700'>Invite your friends by sharing this refer link and get bonus and </p>
                     <div className='flex mx-auto rounded-lg sm:mt-5 mt-2 gap-2 sm:gap-3 max-w-[500px] items-center'>
                         <div className='p-1 sm:p-2 border w-full rounded-md'>
                             <p className='max-w-[500px] text-[12px]'>https://expart-future-plan.vercel.app/signUp?refer={referCode}</p>

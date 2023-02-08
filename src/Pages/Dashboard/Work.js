@@ -10,22 +10,17 @@ import task3 from '../../assets/icons/task-data (1).png'
 import task4 from '../../assets/icons/tiktok.png'
 import { motion } from "framer-motion"
 import { format } from 'date-fns';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { BiEdit } from 'react-icons/bi';
 import { CopyButton } from '@mantine/core';
-import useMe from '../../Hooks/useMe';
 import SubmitTask from '../../Modale/SubmitTask';
-import useMyTask from '../../Hooks/useMyTask';
 import { useEffect } from 'react';
-
 
 
 const Work = () => {
     const [submitTask, setSubmitTask] = useState(null);
     const [Task, setTask] = useState('running');
-    const [myTask, setMYTask] = useState();
-    const [me, loading] = useMe();
-
+    const [me, loading,] = useContext(Context);
+    let newArr = []
+    const [myTask, setMYTask] = useState(newArr);
 
     const getFacts = async () => {
 		const res = await fetch("https://efp-usa-server-site.vercel.app/api/v1/task/user", {
@@ -38,6 +33,38 @@ const Work = () => {
 	};
 	const {data, error, refetch, isLoading} = useQuery('allTask', getFacts);
 
+    const completeTask = me?.CompleteTask?.slice(0, 5)?.reverse()
+    const task = data?.filter(i => i?.status?.includes("running"))
+
+    const handelPlanInTime = (timeName) => {
+        const planTime = me?.PlanInTime?.find(i => i?.planDuration.includes(timeName))
+        console.log(planTime, "dfdfd")
+        return planTime?.planDuration;
+    }
+
+    task?.map((i) => {
+        if((i?.planCategory === "Free Plan") && (me?.FreePlan === "active")){
+            newArr.push(i)
+        }
+        else if( (i?.planCategory === "Life time Plan") && (me?.LifeTimePlan === "active")){
+            newArr.push(i)
+            console.log(i, "arr")
+        }
+        else if((i?.planCategory !== "Free Plan") && (i?.planCategory !== "Life time Plan")){
+            if(i?.planDuration === handelPlanInTime(i?.planDuration)){
+                newArr.push(i)
+            }
+        }
+    }) 
+
+    useEffect(() => {
+        setMYTask(newArr)
+    }, []);
+
+    if(isLoading || loading){
+        return <Loading />
+    }
+    
     const exsisNumber = (i) => {
        const exsisItem = i.completeUser?.find(x => x?.phoneNumber.includes(me?.phoneNumber));
         return exsisItem?.phoneNumber
@@ -48,30 +75,18 @@ const Work = () => {
         setTask(x)
     }
 
-    useEffect(() => {
-        setMYTask(data)
-    }, [data]);
-
-    const completeTask = me?.CompleteTask?.slice(0, 5)?.reverse()
-  
-
-    if(isLoading || loading){
-        return <Loading />
-    }
-
-
     return (
         <div className='p-2 pt-0 sm:p-0'>
             <div className="w-full flex items-center justify-between ">
-                <div onClick={() => selectTask(data, 'running')} className={`${(Task === 'running')? '!bg-primary border-[3px] border-[#9df1e5] rounded-md !text-white' : 'border bg-slate-100'} cursor-pointer w-full py-2 px-0`}>
+                <div onClick={() => selectTask(newArr, 'running')} className={`${(Task === 'running')? '!bg-primary border-[3px] border-[#9df1e5] rounded-md !text-white' : 'border bg-slate-100'} cursor-pointer w-full py-2 px-0`}>
                     <div className='text-center'>
-                        <h1 className='text-xl sm:text-2xl'>3</h1>
+                        <h1 className='text-xl sm:text-2xl'>{newArr?.length}</h1>
                         <h1 className='text-[14px]'>My Task</h1>
                     </div>
                 </div> 
                 <div onClick={() => selectTask(completeTask, 'complete')} className={`${(Task === 'complete')? '!bg-primary border-[3px] border-[#9df1e5] rounded-md !text-white' : 'border bg-slate-100'} cursor-pointer w-full py-2 px-0`}>
                     <div className='text-center'>
-                        <h1 className='text-xl sm:text-2xl'>3</h1>
+                        <h1 className='text-xl sm:text-2xl'>{completeTask?.length}</h1>
                         <h1 className='text-[14px]'>Complete Task</h1>
                     </div>
                 </div> 
@@ -79,7 +94,8 @@ const Work = () => {
             <div className='md:mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-3'>
                 {
                   myTask?.map((i, index) => <>
-                    <motion.div 
+                    <motion.div
+                    key={index} 
                     initial={{ y: "20vw", transition: { type: "spring", duration: .1 } }}
                     animate={{ y: 0, transition: { type: "spring", duration: 2 } }}
                     exit={{ y: "60vw", scale: [1, 0], transition: { duration: 0.5 } }}
