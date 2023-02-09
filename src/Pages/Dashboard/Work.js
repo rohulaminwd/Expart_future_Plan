@@ -8,7 +8,7 @@ import task1 from '../../assets/icons/task (3).png'
 import task2 from '../../assets/icons/task-data (2).png'
 import task3 from '../../assets/icons/task-data (1).png'
 import task4 from '../../assets/icons/tiktok.png'
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { format } from 'date-fns';
 import { CopyButton } from '@mantine/core';
 import SubmitTask from '../../Modale/SubmitTask';
@@ -33,8 +33,13 @@ const Work = () => {
 	};
 	const {data, error, refetch, isLoading} = useQuery('allTask', getFacts);
 
-    const completeTask = me?.CompleteTask?.slice(0, 5)?.reverse()
-    const task = data?.filter(i => i?.status?.includes("running"))
+    const completeTask = me?.CompleteTask?.slice(0, 5)?.reverse();
+    const task = data?.filter(i => {
+        const taskComplete = i?.completeUser?.find(x => x?.phoneNumber?.includes(me?.phoneNumber));
+        return (i?.status === "running") && !taskComplete;
+    })
+
+    console.log(task, "paichi");
 
     const handelPlanInTime = (timeName) => {
         const planTime = me?.PlanInTime?.find(i => i?.planDuration.includes(timeName))
@@ -59,7 +64,7 @@ const Work = () => {
 
     useEffect(() => {
         setMYTask(newArr)
-    }, []);
+    }, [data]);
 
     if(isLoading || loading){
         return <Loading />
@@ -91,16 +96,17 @@ const Work = () => {
                     </div>
                 </div> 
             </div>
-            <div className='md:mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-3'>
+            <motion.div layout className='md:mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-3'>
+            <AnimatePresence>
                 {
                   myTask?.map((i, index) => <>
                     <motion.div
-                    key={index} 
-                    initial={{ y: "20vw", transition: { type: "spring", duration: .1 } }}
-                    animate={{ y: 0, transition: { type: "spring", duration: 2 } }}
-                    exit={{ y: "60vw", scale: [1, 0], transition: { duration: 0.5 } }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, scale: 0 }}
+                    exit={{ opacity: 0, scale: 0 }}
+                    key={i._id} 
                     className={`p-2 md:mt-0 sm:p-3 bg-white w-full duration-300 shadow-md rounded-2xl`}>
-                        <div className='relative border-b-2 pb-1'>
+                        <div key={i._id} className='relative border-b-2 pb-1'>
                             <div className='w-full flex items-start justify-start'>
                                 <div className='w-16'>
                                     {(i?.category === 'Youtube') && <img src={task1} className='w-16 -ml-2' alt="task " />}
@@ -148,7 +154,9 @@ const Work = () => {
                     </motion.div>
                 </>)
                 }
-            </div> 
+            </AnimatePresence>
+                
+            </motion.div> 
             {
                 submitTask && <SubmitTask
                 submitTask={submitTask} 
