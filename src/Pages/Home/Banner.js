@@ -18,7 +18,7 @@ const Banner = () => {
                                 <Link to='/signUp' className="btn btn-outline border-[3px] hover:border-0 hover:shadow-md hover:shadow-[#c5f3f2] border-[#7ff3ef] w-full hover:bg-[#7ff3ef] hover:text-[#000] mr-5 font-bold text-[#7ff3ef] md:btn-md btn-sm"  data-aos="zoom-in-right" data-aos-delay="700" data-aos-duration="800">Register now</Link>
                             </div>
                             <div className='w-full'>
-                                <Link to='/signIn' className="btn border-[3px] btn-secondary w-full font-bold hover:shadow-md hover:shadow-secondary text-white md:btn-md btn-sm"  data-aos="zoom-in-left" data-aos-delay="700" data-aos-duration="800">Sing In</Link>
+                                <Link to='/signIn' className="btn border-[3px] btn-secondary w-full font-bold hover:shadow-md hover:shadow-secondary text-white md:btn-md btn-sm"  data-aos="zoom-in-left" data-aos-delay="700" data-aos-duration="800">Login</Link>
                             </div>
                          </>
                         }

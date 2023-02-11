@@ -16,6 +16,7 @@ import Loading from '../../Share/Loading';
 import { useContext } from 'react';
 import { Context } from '../../App';
 import { Circles, FidgetSpinner, Watch } from 'react-loader-spinner';
+import useIncomeTracker from '../../Hooks/useIncomeTracker';
 
 const Wallet = () => {
     const [me, isLoading] = useContext(Context);
@@ -23,7 +24,7 @@ const Wallet = () => {
     const [recharge, setRecharge] = useState(null)
     const [withdraw, setWithdraw] = useState(null)
     const [updateModal, setUpdateModal] = useState(null)
-
+    const { yesterdayIncome, todayIncome, weeklyIncome, monthlyIncome } = useIncomeTracker(me?.CompleteTask);
     if(isLoading){
         return <Loading></Loading>
     }
@@ -64,7 +65,7 @@ const Wallet = () => {
                             <img src={taka} className='w-full' alt="taka" />
                         </div>
                         <div className=''>
-                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(1)} ৳</h3>
+                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{yesterdayIncome} ৳</h3>
                             <h1 className='text-[12px] hidden sm:block text-[#727988] sm:text-xl'>Yesterday Income</h1>
                         </div>
                     </div>
@@ -88,7 +89,7 @@ const Wallet = () => {
                             <img src={taka3} className='w-full' alt="taka" />
                         </div>
                         <div className=''>
-                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(1)} ৳</h3>
+                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{todayIncome} ৳</h3>
                             <h1 className='text-[12px] hidden sm:block text-[#727988] sm:text-xl'>Today Income</h1>
                         </div>
                     </div>
@@ -102,7 +103,7 @@ const Wallet = () => {
                             <img src={taka6} className='w-full' alt="taka" />
                         </div>
                         <div className=''>
-                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(7)} ৳</h3>
+                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{weeklyIncome} ৳</h3>
                             <h1 className='text-[12px] hidden sm:block text-[#727988] sm:text-xl'>Weekly Income</h1>
                         </div>
                     </div>
@@ -114,7 +115,7 @@ const Wallet = () => {
                             <img src={taka4} className='w-full' alt="taka" />
                         </div>
                         <div className=''>
-                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{timelyBalance(30)} ৳</h3>
+                            <h3 className='font-bold sm:mb-1 sm:text-2xl'>{monthlyIncome} ৳</h3>
                             <h1 className='text-[12px] hidden sm:block text-[#727988] sm:text-xl'>Monthly Income</h1>
                         </div>
                     </div>

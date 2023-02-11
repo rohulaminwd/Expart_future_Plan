@@ -1,23 +1,38 @@
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import Loading from '../../Share/Loading';
 import { Link, useLocation, useNavigate} from 'react-router-dom';
 import signInBg from '../../assets/images/signIn-bg.jpg'
 import { AiOutlineGoogle, AiFillApple, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineCodeSandbox } from 'react-icons/ai'
 import { FaFacebookF } from 'react-icons/fa'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const SignUp = () => {
 
     const search = useLocation().search;
     let refer = new URLSearchParams(search).get('refer');
-
     const [error, setError] = useState();
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit, control } = useForm();
     const [loading, setLoading] = useState(false)
+    const password = useWatch({ control, name: "password" });
+    const confirmPassword = useWatch({ control, name: "confirmPassword" });
+    const navigate = useNavigate() 
+    const [disabled, setDisabled] = useState(true); 
 
-    const navigate = useNavigate()   
+    useEffect(() => {
+        if (
+            password !== undefined &&
+            password !== "" &&
+            confirmPassword !== undefined &&
+            confirmPassword !== "" &&
+            password === confirmPassword
+        ) {
+            setDisabled(false);
+        } else {
+            setDisabled(true);
+        }
+        }, [password, confirmPassword]); 
 
     if(loading){
         return <Loading></Loading>
@@ -35,6 +50,7 @@ const SignUp = () => {
             confirmPassword: data.confirmPassword,
             phoneNumber: data.phone,
             referCode: refer,
+            myReferralCode: data?.firstName?.slice(0, 1) + data?.lastName?.slice(0,1) + data?.phone?.slice(2, )
         }
         console.log(user);
         if(data.password !== data.confirmPassword){
@@ -181,7 +197,7 @@ const SignUp = () => {
                                 </div>
                             </div>
                             { error && <p className='text-red-500 mb-2'><small>{error}</small></p>}
-                            <input className='btn w-full text-white uppercase font-bold bg-gradient-to-r from-[#2091d9] to-[#13b38f] hover:from-[#13b38f] hover:to-[#2091d9] duration-300 border-0' type="submit" value="Create Account"  />
+                            <input className='btn w-full text-white uppercase font-bold bg-gradient-to-r from-[#2091d9] to-[#13b38f] hover:from-[#13b38f] hover:to-[#2091d9] duration-300 border-0' type="submit" disabled={disabled} value="Create Account"  />
                         </form>
 
                         <div className="divider">OR</div>

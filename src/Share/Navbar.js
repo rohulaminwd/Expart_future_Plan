@@ -2,11 +2,10 @@
 import React from 'react';
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 
-import { AiOutlineHome, AiOutlineWallet } from 'react-icons/ai'
+import { AiOutlineHome, AiOutlineSetting } from 'react-icons/ai'
 import { FaBlogger } from 'react-icons/fa'
 import {BiMessageSquareDetail} from 'react-icons/bi'
 import logo from '../assets/images/logo1.png'
-import useMe from '../Hooks/useMe';
 import Loading from './Loading';
 import LogOutModule from '../Modale/LogOutModule';
 import { useState } from 'react';
@@ -14,6 +13,7 @@ import { HiOutlineLogout } from 'react-icons/hi';
 import { useContext } from 'react';
 import { Context } from '../App';
 import { useEffect } from 'react';
+import { MdOutlineDashboardCustomize, MdOutlineManageAccounts } from 'react-icons/md';
 
 const Navbar = ({userClass}) => {
     const usertoken = localStorage.getItem('accessToken')
@@ -122,17 +122,17 @@ const Navbar = ({userClass}) => {
                                 isActive ? 'border-r-[4px] border-primary rounded-l-md text-[#156c65] bg-[#d6f8f5]' : 'hover:bg-[#d6f8f5]'
                                 }
                             >
-                                <AiOutlineWallet size={'20px'} /> 
+                                <MdOutlineDashboardCustomize size={'20px'} /> 
                                 <h1 className={`origin-left whitespace-nowrap duration-300 font-medium`}>Dashboard</h1>
                             </NavLink>
                         </li>
                         <li className='font-bold'>
-                            <NavLink to='/dashboard/'
+                            <NavLink to='/dashboard/me'
                                 className={({ isActive }) =>
                                 isActive ? 'border-r-[4px] border-primary rounded-l-md text-[#156c65] bg-[#d6f8f5]' : 'hover:bg-[#d6f8f5]'
                                 }
                             >
-                                <AiOutlineWallet size={'20px'} /> 
+                                <MdOutlineManageAccounts size={'20px'} /> 
                                 <h1 className={`origin-left whitespace-nowrap duration-300 font-medium`}>Update Profile</h1>
                             </NavLink>
                         </li>
@@ -142,7 +142,7 @@ const Navbar = ({userClass}) => {
                                 isActive ? 'border-r-[4px] border-primary rounded-l-md text-[#156c65] bg-[#d6f8f5]' : 'hover:bg-[#d6f8f5]'
                                 }
                             >
-                                <AiOutlineWallet size={'20px'} /> 
+                                <AiOutlineSetting size={'20px'} /> 
                                 <h1 className={`origin-left whitespace-nowrap duration-300 font-medium`}>Setting</h1>
                             </NavLink>
                         </li>

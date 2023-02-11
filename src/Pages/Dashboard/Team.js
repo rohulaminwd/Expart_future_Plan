@@ -7,13 +7,24 @@ import reffer from '../../assets/icons/refer.png'
 import taka6 from '../../assets/icons/taka1 (1).png'
 import { Context } from '../../App';
 import Loading from '../../Share/Loading';
+import { useQuery } from 'react-query';
 
 const Team = () => {
-    const [me, isLoading] = useContext(Context);
-    if(isLoading){
+    const [me, loading] = useContext(Context);
+    const referCode = me?.myReferralCode;
+
+    const getFacts = async () => {
+		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/user');
+		return res.json();
+	};
+	// Using the hook
+	const {data, error, refetch, isLoading} = useQuery('allUsers', getFacts);
+
+    const myReferralUser = data?.data?.filter(i => i?.referCode?.includes(referCode))
+
+    if(isLoading || loading ){
         return <Loading></Loading>
     }
-    const referCode = me?.firstName?.slice(0, 1) + me?.lastName?.slice(0,1) + me?.phoneNumber?.slice(2, )
     return (
         <div className='w-full p-2 sm:py-3 sm:px-0'>
             <div className='flex justify-between gap-3 sm:gap-5 items-center'>
@@ -22,7 +33,7 @@ const Team = () => {
                         <img src={taka6} className='w-full' alt="taka" />
                     </div>
                     <div className=''>
-                        <h3 className='font-bold sm:mb-1 sm:text-2xl'>120 ৳</h3>
+                        <h3 className='font-bold sm:mb-1 sm:text-2xl'>{`0${myReferralUser?.length}`}</h3>
                         <h1 style={{lineHeight: '16px'}} className='text-[14px] text-[#727988] sm:text-xl'>Team Size</h1>
                     </div>
                 </div>
