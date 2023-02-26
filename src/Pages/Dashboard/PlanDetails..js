@@ -11,11 +11,14 @@ import { useContext } from 'react';
 import { Context } from '../../App';
 import { toast } from 'react-toastify';
 import { AnimatePresence, motion } from "framer-motion"
+import { BiMessageAltDetail } from 'react-icons/bi';
+import SeeDetailsPlan from '../../Modale/SeeDetailsPlan';
 
 
 const PlanDetails = () => {
     const [planTime, setPlanTime] = useState('3-Days');
     const [activePlan, setActivePlan] = useState(null);
+    const [seeDetails, setSeeDetails] = useState(null);
     const [me] = useContext(Context)
 
     const isActive = (id) => {
@@ -186,8 +189,11 @@ const PlanDetails = () => {
                                     <h1 className='text-[12px] border-r pr-2 flex items-center gap-2'>Unit Price: <p>{lifeTimePlan?.unitPrice}</p></h1>
                                     <h1 className='text-[12px] pl-2 flex items-center gap-2'>Daily Task: <p>{lifeTimePlan?.dailyTask}</p></h1>
                                 </div>
-                                {(me?.LifeTimePlan === 'inactive') && <label onClick={() => setActivePlan(lifeTimePlan)} htmlFor='active-plan' className="btn w-[100px] btn-accent text-white btn-sm">Start</label>}
-                                {(me?.LifeTimePlan === 'active') && <button onClick={() => planAlert(lifeTimePlan)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Active</button>}
+                                <div className='flex items-center gap-x-3'>
+                                    <label onClick={() => setSeeDetails("see")} htmlFor='see-details-plan' className='text-bold z-10 px-2 cursor-pointer text-white'><BiMessageAltDetail size={24} /></label>
+                                    {(me?.LifeTimePlan === 'inactive') && <label onClick={() => setActivePlan(lifeTimePlan)} htmlFor='active-plan' className="btn w-[100px] btn-accent text-white btn-sm">Start</label>}
+                                    {(me?.LifeTimePlan === 'active') && <button onClick={() => planAlert(lifeTimePlan)} className="btn w-[100px] btn-accent text-white btn-success btn-sm">Active</button>}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -272,10 +278,17 @@ const PlanDetails = () => {
                 </AnimatePresence>  
                 </motion.div>
             </div> 
-            { activePlan && <ActivePlan 
-                activePlan={activePlan}
-                setActivePlan={setActivePlan}
-            />
+            { activePlan && 
+                <ActivePlan 
+                    activePlan={activePlan}
+                    setActivePlan={setActivePlan}
+                />
+            } 
+            { seeDetails && 
+                <SeeDetailsPlan 
+                seeDetails={seeDetails}
+                    setSeeDetails={setSeeDetails}
+                />
             } 
         </div>
     );

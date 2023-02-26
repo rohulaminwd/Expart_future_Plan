@@ -1,5 +1,5 @@
 import { Button, CopyButton } from '@mantine/core';
-import React, { useContext } from 'react';
+import React, {useState, useContext } from 'react';
 import taka from '../../assets/icons/taka (1).png'
 import taka2 from '../../assets/icons/taka1 (2).png'
 import taka3 from '../../assets/icons/taka1 (3).png'
@@ -8,10 +8,12 @@ import taka6 from '../../assets/icons/taka1 (1).png'
 import { Context } from '../../App';
 import Loading from '../../Share/Loading';
 import { useQuery } from 'react-query';
+import UserInfo from '../../Modale/UserInfo';
 
 const Team = () => {
     const [me, loading] = useContext(Context);
     const referCode = me?.myReferralCode;
+    const [userInfo, setUserInfo] = useState(null)
 
     const getFacts = async () => {
 		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/user');
@@ -28,7 +30,7 @@ const Team = () => {
     return (
         <div className='w-full p-2 sm:py-3 sm:px-0'>
             <div className='flex justify-between gap-3 sm:gap-5 items-center'>
-                <div className='p-3 gap-1 sm:p-4 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-sm bg-[#fff] rounded-lg'>
+                <label onClick={() => setUserInfo(myReferralUser)} htmlFor='user-info' className='p-3 gap-1 sm:p-4 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-sm bg-[#fff] rounded-lg'>
                     <div className='w-12 sm:w-16 -ml-1'>
                         <img src={taka6} className='w-full' alt="taka" />
                     </div>
@@ -36,7 +38,7 @@ const Team = () => {
                         <h3 className='font-bold sm:mb-1 sm:text-2xl'>{`0${myReferralUser?.length}`}</h3>
                         <h1 style={{lineHeight: '16px'}} className='text-[14px] text-[#727988] sm:text-xl'>Team Size</h1>
                     </div>
-                </div>
+                </label>
                 <div className='p-3 gap-1 sm:p-4 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-sm bg-[#fff] rounded-lg'>
                     <div className='w-12 sm:w-16 -ml-1'>
                         <img src={taka3} className='w-full' alt="taka" />
@@ -113,6 +115,12 @@ const Team = () => {
                     </div> */}
                 </div>
             </div>
+            { userInfo &&
+                <UserInfo
+                userInfo={userInfo}
+                setUserInfo={setUserInfo}
+                />
+            }
         </div>
     );
 };
