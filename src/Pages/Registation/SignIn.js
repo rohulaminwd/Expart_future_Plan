@@ -49,6 +49,7 @@ const SignIn = () => {
                 navigate('/dashboard')
                 toast.success('Well come to dashboard');
                 const accessToken = status.data.token;
+                console.log(status?.data)
                 localStorage.setItem('accessToken', accessToken);
             }
             if(status.status === 'fail'){
