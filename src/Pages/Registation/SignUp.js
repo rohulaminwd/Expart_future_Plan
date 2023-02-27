@@ -73,10 +73,12 @@ const SignUp = () => {
                 toast.success('Sign up success please login now');
             }
             if(status.status === 'wrong'){
+                console.log(status)
                 setError('Already create account this device, plz choose another device')
             }
             if(status.status === 'fail'){
                 setError('Some this is wrong please try again')
+                console.log(status)
             }
             // console.log(status.status)
             console.log(status)
