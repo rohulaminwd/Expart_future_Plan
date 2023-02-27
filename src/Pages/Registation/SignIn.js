@@ -52,7 +52,7 @@ const SignIn = () => {
                 localStorage.setItem('accessToken', accessToken);
             }
             if(status.status === 'fail'){
-                setError(status.error);
+                setError("status.error");
             }
         })
     }
