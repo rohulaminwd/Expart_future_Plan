@@ -13,7 +13,7 @@ const UserInfo = ({userInfo}) => {
                 <div className="modal-box bg-blue-100 h-auto px-3 pt-2 pb-4">
                     <label htmlFor="user-info" className="btn z-50 btn-sm btn-circle absolute right-2 top-2">✕</label>    
                     <div className='mt-3 bg-[#f3f9fb] border overflow-hidden rounded-xl border-[#f0d2fc]'>
-                        <h1 className='text-purple-700 border-b bg-[#f0d2fc] py-1 border-[#f0d2fc] px-3 font-bold text-[20px]'>Referral users</h1>
+                        <h1 className='text-purple-700 border-b bg-[#f0d2fc] py-1 border-[#f0d2fc] px-3 font-bold text-[20px]'>Referral users {userInfo?.length}</h1>
                         <div className=''>
                             {
                             userInfo?.map((i, index) => (

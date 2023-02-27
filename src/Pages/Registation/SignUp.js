@@ -72,6 +72,9 @@ const SignUp = () => {
                 navigate('/signIn')
                 toast.success('Sign up success please login now');
             }
+            if(status.status === 'wrong'){
+                setError('Already create account this device, plz choose another device')
+            }
             if(status.status === 'fail'){
                 setError('Some this is wrong please try again')
             }
