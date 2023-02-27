@@ -54,6 +54,7 @@ const SignIn = () => {
             }
             if(status.status === 'fail'){
                 setError("status.error");
+                console.log(status, "data")
             }
         })
     }
