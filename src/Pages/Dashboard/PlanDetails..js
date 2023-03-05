@@ -27,7 +27,7 @@ const PlanDetails = () => {
     }
 
    const  planAlert = (i) => {
-     toast.error(`Already Active ${i?.planName}`)
+     toast.warn(`Already Active ${i?.planName}`)
    }
 
     const getFacts = async () => {
@@ -186,7 +186,7 @@ const PlanDetails = () => {
                             </div>
                             <div className='flex items-end mt-3 justify-between'>
                                 <div className=' flex items-center'>
-                                    <h1 className='text-[12px] border-r pr-2 flex items-center gap-2'>Unit Price: <p>{lifeTimePlan?.unitPrice}</p></h1>
+                                    <h1 className='text-[12px] border-r pr-2 flex items-center gap-2'>Unit Price: <p>3.5%, 4%, 4.5%, 5%</p></h1>
                                     <h1 className='text-[12px] pl-2 flex items-center gap-2'>Daily Task: <p>{lifeTimePlan?.dailyTask}</p></h1>
                                 </div>
                                 <div className='flex items-center gap-x-3'>

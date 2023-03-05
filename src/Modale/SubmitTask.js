@@ -24,10 +24,33 @@ const SubmitTask = ({setSubmitTask, refetch, submitTask, me,}) => {
         }
     }
 
+
+    const calculateBalance = () => {
+        if((me?.balance >= 1000) && (me?.balance <= 3000)){
+            const balance = (me?.balance / 100) * 3.5;
+            return balance;
+        }
+        else if((me?.balance > 3000) && (me?.balance <= 6000)){
+            const balance = (me?.balance / 100) * 4;
+            return balance;
+        }
+        else if((me?.balance > 6000) && (me?.balance <= 12000)){
+            const balance = (me?.balance / 100) * 4.5;
+            return balance;
+        }
+        else if((me?.balance > 12000)){
+            const balance = (me?.balance / 100) * 5;
+            return balance;
+        }
+    }
+
+    // console.log(calculateBalance(), "dnfjdkfjidurie9idofjdfiu")
+
+
     const onSubmit = () => {
         const taskInfo = {
             phoneNumber: me?.phoneNumber,
-            price: submitTask?.price,
+            price: (submitTask?.planCategory === "Life time Plan" ) ? calculateBalance() : submitTask?.price,
             date: new Date(),
             planCategory: submitTask?.planCategory,
             category: submitTask?.category,
