@@ -3,15 +3,13 @@ import { useContext } from 'react';
 import { useState } from 'react';
 import {  } from 'react-icons/ri'
 import ReactPlayer from 'react-player';
-import { Context } from '../App';
-import useMe from '../Hooks/useMe';
-import Loading from '../Share/Loading';
+import { MeContext } from '../App';
 import ConfirmRecharge from './ConfirmRecharge';
 
 
 const RechargeNow = ({setRecharge, recharge}) => {
     const [card, setCard] = useState('bkash');
-    const [me, isLoading, refetch] = useContext(Context);
+    const [me, isLoading, refetch] = useContext(MeContext);
     const [rechargeConfirm, setRechargeConfirm] = useState(null);
     const [amount, setAmount] = useState(0);
 

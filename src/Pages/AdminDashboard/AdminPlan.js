@@ -1,7 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
-import CreateTask from '../../Modale/CreateTask';
 import Loading from '../../Share/Loading';
 import plan1 from '../../assets/icons/plan (3).png'
 import plan2 from '../../assets/icons/plan (2).png'
@@ -10,30 +8,22 @@ import { motion } from "framer-motion"
 import { format } from 'date-fns';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BiEdit } from 'react-icons/bi';
-import { CopyButton } from '@mantine/core';
 import DeleteModalConfirm from '../../Modale/DeleteModalConfirm';
 import CreatePlan from '../../Modale/CreatePlan';
+import { useContext } from 'react';
+import { PlanContext } from '../../App';
 
 const AdminPlan = () => {
+    const [plans, planLoading, planRefetch] = useContext(PlanContext);
     const [openPlan, setOpenPlan] = useState(null);
     const [deleteModule, setDeletingModal] = useState(null);
     const method = 'plan'
 
-    const getFacts = async () => {
-		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/plan', {
-            method: 'GET',
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            }
-        });
-		return res.json();
-	};
-	// Using the hook
-	const {data, error, refetch, isLoading} = useQuery('allTask', getFacts);
 
-    console.log(data, 'demo test')
 
-    if(isLoading){
+    console.log(plans, 'demo test')
+
+    if(planLoading){
         return <Loading />
     }
     return (
@@ -42,11 +32,11 @@ const AdminPlan = () => {
                 <div className=''>
                     <label onClick={() => setOpenPlan(['create'])} htmlFor='create-plan' className='btn btn-primary rounded-3xl btn-sm text-white'>Create Plan</label>
                 </div>
-                <h1 className='font-bold text-xl'>All Plan: <span className='text-accent '>{data?.length}</span></h1>
+                <h1 className='font-bold text-xl'>All Plan: <span className='text-accent '>{plans?.length}</span></h1>
             </div> 
             <div className='md:mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-3'>
                 {
-                    data?.map((i, index) => <>
+                    plans?.map((i, index) => <>
                     <motion.div 
                     initial={{ y: "20vw", transition: { type: "spring", duration: .1 } }}
                     animate={{ y: 0, transition: { type: "spring", duration: 2 } }}
@@ -93,13 +83,13 @@ const AdminPlan = () => {
                 openPlan && <CreatePlan
                 openPlan={openPlan} 
                 setOpenPlan={setOpenPlan}
-                refetch={refetch}
+                refetch={planRefetch}
                 />
             }
             { deleteModule && <DeleteModalConfirm 
                 deleteModule = {deleteModule}
                 setDeletingModal = {setDeletingModal}
-                refetch={refetch}
+                refetch={planRefetch}
                 method={method}
             />
             }

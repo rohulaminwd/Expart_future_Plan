@@ -14,18 +14,19 @@ import bg2 from '../../assets/images/bg-small4.jpg'
 import UpdatePassword from '../../Modale/UpdatePassword';
 import Loading from '../../Share/Loading';
 import { useContext } from 'react';
-import { Context } from '../../App';
+import { MeContext } from '../../App';
 import { Circles, FidgetSpinner, Watch } from 'react-loader-spinner';
 import useIncomeTracker from '../../Hooks/useIncomeTracker';
 
 const Wallet = () => {
-    const [me, isLoading] = useContext(Context);
+    const [me, meLoading] = useContext(MeContext);
     const [planModal, setPlanModal] = useState(null)
     const [recharge, setRecharge] = useState(null)
     const [withdraw, setWithdraw] = useState(null)
     const [updateModal, setUpdateModal] = useState(null)
     const { yesterdayIncome, todayIncome, weeklyIncome, monthlyIncome } = useIncomeTracker(me?.CompleteTask);
-    if(isLoading){
+    
+    if(meLoading){
         return <Loading></Loading>
     }
 

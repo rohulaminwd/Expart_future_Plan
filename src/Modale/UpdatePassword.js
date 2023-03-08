@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { Context } from '../App';
+import { MeContext } from '../App';
 import Loading from '../Share/Loading';
 
 const UpdatePassword = ({setUpdateModal, updateModal}) => {
     const { register, reset, formState: { errors }, handleSubmit } = useForm();
     const [confPass, setConfPass] = useState();
     const [newPass, setNewPass] = useState();
-    const [me, isLoading, refetch] = useContext(Context);
+    const [me, isLoading, refetch] = useContext(MeContext);
 
     console.log(newPass, confPass, "appdf")
 

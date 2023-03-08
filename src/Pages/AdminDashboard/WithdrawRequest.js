@@ -10,8 +10,11 @@ import DeleteModalConfirm from '../../Modale/DeleteModalConfirm';
 import { format } from 'date-fns';
 import { useEffect } from 'react';
 import { MdFileDownloadDone, MdOutlineKeyboardReturn } from 'react-icons/md';
+import { useContext } from 'react';
+import { RequestContext } from '../../App';
 
 const WithdrawRequest = () => {
+    const [requests, requestLoading, refetch] = useContext(RequestContext);
     const [design, setDesign] = useState('Recharge1')
     const [planTime, setPlanTime] = useState([]);
     const [updateStatus, setUpdateStatus] = useState(null);
@@ -20,37 +23,25 @@ const WithdrawRequest = () => {
     const request = 'return'
     const done = 'done'
 
-    const getFacts = async () => {
-		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/request', {
-            method: 'GET',
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            }
-        });
-		return res.json();
-	};
-	// Using the hook
-	const {data, error, refetch, isLoading} = useQuery('allRequest', getFacts);
-
     useEffect(() => {
-        if(data){
+        if(requests){
             setPlanTime(rechargePending)
         }
-    }, [data])
+    }, [requests])
 
     const handleState = (i, x) => {
         setPlanTime(i);
         setDesign(x)
     }
 
-    if(isLoading || !planTime){
+    if(requestLoading || !planTime){
         return <Loading />
     }
 
-    const recharge = data?.filter(i => i?.sector?.includes('recharge'));
+    const recharge = requests?.filter(i => i?.sector?.includes('recharge'));
     const rechargePending = recharge?.filter(i => i?.status?.includes('pending'));
     const rechargeComplete = recharge?.filter(i => i?.status?.includes('complete'));
-    const withdraw = data?.filter(i => i?.sector?.includes('withdraw'));
+    const withdraw = requests?.filter(i => i?.sector?.includes('withdraw'));
     const withdrawPending = withdraw?.filter(i => i?.status?.includes('pending'));
     const withdrawComplete = withdraw?.filter(i => i?.status?.includes('complete'));
 

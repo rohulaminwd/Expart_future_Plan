@@ -7,7 +7,6 @@ import {HiArrowSmLeft} from 'react-icons/hi'
 import {MdWorkOutline, MdDetails} from 'react-icons/md'
 import {AiOutlineWallet, AiOutlineTeam, AiOutlineArrowLeft} from 'react-icons/ai'
 import { NavLink, Link, Outlet } from 'react-router-dom';
-import Loading from '../../Share/Loading';
 
 const Dashboard = ({applyUsers, userClass}) => {
     const [open, setOpen] = useState(true);

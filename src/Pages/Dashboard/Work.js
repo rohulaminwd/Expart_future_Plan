@@ -1,9 +1,8 @@
 
 import React, { useState } from 'react';
 import { useContext } from 'react';
-import { Context } from '../../App';
+import { MeContext, UserContext } from '../../App';
 import Loading from '../../Share/Loading';
-import { useQuery } from 'react-query';
 import task1 from '../../assets/icons/task (3).png'
 import task2 from '../../assets/icons/task-data (2).png'
 import task3 from '../../assets/icons/task-data (1).png'
@@ -18,23 +17,15 @@ import { useEffect } from 'react';
 const Work = () => {
     const [submitTask, setSubmitTask] = useState(null);
     const [Task, setTask] = useState('running');
-    const [me, loading,] = useContext(Context);
+    const [me, loading,] = useContext(MeContext);
+    const [users, userLoading, userRefetch] = useContext(UserContext);
     let newArr = []
     const [myTask, setMYTask] = useState(newArr);
 
-    const getFacts = async () => {
-		const res = await fetch("https://efp-usa-server-site.vercel.app/api/v1/task/user", {
-            method: 'GET',
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            },
-        });
-		return res.json();
-	};
-	const {data, error, refetch, isLoading} = useQuery('allTask', getFacts);
+
 
     const completeTask = me?.CompleteTask?.slice(0, 5)?.reverse();
-    const task = data?.filter(i => {
+    const task = users?.filter(i => {
         const taskComplete = i?.completeUser?.find(x => x?.phoneNumber?.includes(me?.phoneNumber));
         return (i?.status === "running") && !taskComplete;
     })
@@ -64,9 +55,9 @@ const Work = () => {
 
     useEffect(() => {
         setMYTask(newArr)
-    }, [data]);
+    }, [users]);
 
-    if(isLoading || loading){
+    if(userLoading || loading){
         return <Loading />
     }
     
@@ -161,7 +152,7 @@ const Work = () => {
                 submitTask && <SubmitTask
                 submitTask={submitTask} 
                 setSubmitTask={setSubmitTask}
-                refetch={refetch}
+                refetch={userRefetch}
                 me={me}
                 />
             }

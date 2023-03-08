@@ -11,14 +11,14 @@ import LogOutModule from '../Modale/LogOutModule';
 import { useState } from 'react';
 import { HiOutlineLogout } from 'react-icons/hi';
 import { useContext } from 'react';
-import { Context } from '../App';
+import { MeContext } from '../App';
 import { useEffect } from 'react';
 import { MdOutlineDashboardCustomize, MdOutlineManageAccounts } from 'react-icons/md';
 
 const Navbar = ({userClass}) => {
     const usertoken = localStorage.getItem('accessToken')
     const [logout, setLogout] = useState(null)
-    const [me, isLoading] = useContext(Context);
+    const [me, isLoading] = useContext(MeContext);
     const [stickyClass, setStickyClass] = useState("0");
     console.log(stickyClass, "dfjdjfkjf")
 

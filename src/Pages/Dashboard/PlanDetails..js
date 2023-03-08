@@ -1,14 +1,13 @@
-import { format, setDate } from 'date-fns';
+import { format } from 'date-fns';
 import React from 'react';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 import plan1 from '../../assets/icons/plan (3).png'
 import plan2 from '../../assets/icons/plan (2).png'
 import plan3 from '../../assets/icons/plan (1).png'
 import Loading from '../../Share/Loading';
 import ActivePlan from '../../Modale/ActivePlan';
 import { useContext } from 'react';
-import { Context } from '../../App';
+import { MeContext, PlanContext } from '../../App';
 import { toast } from 'react-toastify';
 import { AnimatePresence, motion } from "framer-motion"
 import { BiMessageAltDetail } from 'react-icons/bi';
@@ -19,7 +18,8 @@ const PlanDetails = () => {
     const [planTime, setPlanTime] = useState('3-Days');
     const [activePlan, setActivePlan] = useState(null);
     const [seeDetails, setSeeDetails] = useState(null);
-    const [me] = useContext(Context)
+    const [me, meLoading] = useContext(MeContext);
+    const [plan, planLoading, planRefetch] = useContext(PlanContext);
 
     const isActive = (id) => {
         const active = me?.PlanInTime?.find(i => i?._id?.includes(id));
@@ -30,20 +30,8 @@ const PlanDetails = () => {
      toast.warn(`Already Active ${i?.planName}`)
    }
 
-    const getFacts = async () => {
-		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/plan', {
-            method: 'GET',
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            }
-        });
-		return res.json();
-	};
-	// Using the hook
-	const {data, error, refetch, isLoading} = useQuery('allTask', getFacts);
-    console.log(data)
 
-    if(isLoading){
+    if(planLoading || meLoading){
         return <Loading />
     }
 
@@ -77,7 +65,7 @@ const PlanDetails = () => {
                 .then(res => res.json())
                 .then(data => {
                     if(data.status === "success"){
-                        refetch();             
+                        planRefetch()            
                     }
                     console.log(data)
                 })
@@ -113,7 +101,7 @@ const PlanDetails = () => {
             .then(res => res.json())
             .then(data => {
                 if(data.status === "success"){
-                    refetch();             
+                    planRefetch();             
                 }
                 console.log(data)
             })
@@ -123,9 +111,9 @@ const PlanDetails = () => {
 
 
 
-    const FreePlan = data?.find(i => i?.category?.includes('Free Plan'));
-    const lifeTimePlan = data?.find(i => i?.category?.includes('Life time Plan'));
-    const planDays = data?.filter(i => i?.planDuration?.includes(planTime));
+    const FreePlan = plan?.find(i => i?.category?.includes('Free Plan'));
+    const lifeTimePlan = plan?.find(i => i?.category?.includes('Life time Plan'));
+    const planDays = plan?.filter(i => i?.planDuration?.includes(planTime));
 
     return (
         <div className='w-full sm:p-0 p-2'>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 import recharge from '../../assets/icons/taka (1).png'
 import withdraw from '../../assets/icons/taka1 (1).png'
 import Loading from '../../Share/Loading';
@@ -8,41 +7,31 @@ import { motion } from "framer-motion"
 import { format } from 'date-fns';
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import { Context } from '../../App';
+import { MeContext, RequestContext } from '../../App';
 
 const History = () => {
-    const [me, loading] = useContext(Context);
+    const [me, MeLoading] = useContext(MeContext);
+    const [request, requestLoading] = useContext(RequestContext);
     const [design, setDesign] = useState('Recharge1')
     const [planTime, setPlanTime] = useState([]);
 
-    const getFacts = async () => {
-		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/request', {
-            method: 'GET',
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            }
-        });
-		return res.json();
-	};
-	// Using the hook
-	const {data, error, refetch, isLoading} = useQuery('allRequest', getFacts);
 
     useEffect(() => {
-        if(data){
+        if(request){
             setPlanTime(pending)
         }
-    }, [data])
+    }, [request])
 
     const handleState = (i, x) => {
         setPlanTime(i);
         setDesign(x)
     }
 
-    if(isLoading || loading){
+    if(MeLoading || requestLoading){
         return <Loading />
     }
 
-    const myRequest = data?.filter(i => i?.phoneNumber?.includes(me?.phoneNumber));
+    const myRequest = request?.filter(i => i?.phoneNumber?.includes(me?.phoneNumber));
     const pending = myRequest?.filter(i => i?.status?.includes('pending'));
     const complete = myRequest?.filter(i => i?.status?.includes('complete'));
     const cancelled = myRequest?.filter(i => i?.status?.includes('cancelled'));

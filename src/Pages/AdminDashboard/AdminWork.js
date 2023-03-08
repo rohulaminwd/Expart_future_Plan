@@ -17,33 +17,22 @@ import { MdDoneAll, MdRemoveDone } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import GiveTask from '../../Modale/GiveTask';
 import { useContext } from 'react';
-import { Context } from '../../App';
+import { MeContext, TaskContext } from '../../App';
 
 const AdminWork = () => {
     const [openTask, setOpenTask] = useState(null);
     const [giveTask, setGiveTask] = useState(null);
     const [deleteModule, setDeletingModal] = useState(null);
-    const [me] = useContext(Context);
+    const [me] = useContext(MeContext);
+    const [tasks, taskLoading, taskRefetch] = useContext(TaskContext);
     const method = 'task'
-
-    const getFacts = async () => {
-		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/task', {
-            method: 'GET',
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            }
-        });
-		return res.json();
-	};
-	// Using the hook
-	const {data, error, refetch, isLoading} = useQuery('allTask', getFacts);
 
  const worrning = () => {
     toast.warn("Already add the task");
  }
 
 
-    if(isLoading){
+    if(taskLoading){
         return <Loading />
     }
     return (
@@ -52,11 +41,11 @@ const AdminWork = () => {
                 <div className=''>
                     <label onClick={() => setOpenTask(['create'])} htmlFor='create-task' className='btn btn-primary rounded-3xl btn-sm text-white'>Create task</label>
                 </div>
-                <h1 className='font-bold text-xl'>All Task: <span className='text-accent '>{data?.length}</span></h1>
+                <h1 className='font-bold text-xl'>All Task: <span className='text-accent '>{tasks?.length}</span></h1>
             </div> 
             <div className='md:mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-3'>
                 {
-                    data?.map((i, index) => <>
+                    tasks?.map((i, index) => <>
                     <motion.div 
                     initial={{ y: "20vw", transition: { type: "spring", duration: .1 } }}
                     animate={{ y: 0, transition: { type: "spring", duration: 2 } }}
@@ -123,20 +112,20 @@ const AdminWork = () => {
                 openTask && <CreateTask
                 openTask={openTask} 
                 setOpenTask={setOpenTask}
-                refetch={refetch}
+                refetch={taskRefetch}
                 />
             }
             {
                 giveTask && <GiveTask
                 giveTask={giveTask} 
                 setGiveTask={setGiveTask}
-                refetch={refetch}
+                refetch={taskRefetch}
                 />
             }
             { deleteModule && <DeleteModalConfirm 
                 deleteModule = {deleteModule}
                 setDeletingModal = {setDeletingModal}
-                refetch={refetch}
+                refetch={taskRefetch}
                 method={method}
             />
             }

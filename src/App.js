@@ -7,35 +7,46 @@ import AOS from "aos";
 import 'react-day-picker/dist/style.css';
 import RouteList from "./RouteList/RouteList";
 import { createContext } from "react";
-import { useQuery } from "react-query";
+import useMe from "./Hooks/useMe";
+import useAllUsers from "./Hooks/useAllUsers";
+import useTask from "./Hooks/useTask";
+import usePlan from "./Hooks/usePlan";
+import useRequest from "./Hooks/useRequest";
 
-export const Context = createContext();
+export const MeContext = createContext();
+export const TaskContext = createContext()
+export const UserContext = createContext()
+export const PlanContext = createContext()
+export const RequestContext = createContext()
 
 
 function App() {
   AOS.init();
-    const getFacts = async () => {
-      const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/user/me', {
-              method: 'GET',
-              headers: {
-                  'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-              }
-          });
-      return res.json();
-    };
-    // Using the hook
-    const {data, error, refetch, isLoading} = useQuery('me', getFacts);
+
+  const [me, meLoading, meRefetch, meError, setMeData] = useMe();
+  const [users, userLoading, userRefetch, userError, blocked] = useAllUsers();
+  const [task, taskLoading, taskRefetch, taskError] = useTask();
+  const [plan, planLoading, planRefetch, plankError] = usePlan();
+  const [request, requestLoading, requestRefetch, requestError] = useRequest();
 
   return (
     <div className=''>
+
+    <UserContext.Provider value={[users, userLoading, userRefetch, userError, blocked]}>
+      <TaskContext.Provider value={[task, taskLoading, taskRefetch, taskError]}>
+        <PlanContext.Provider value={[plan, planLoading, planRefetch, plankError]}>
+          <RequestContext.Provider value={[request, requestLoading, requestRefetch, requestError]}>
+            <MeContext.Provider value={[me, meLoading, meRefetch, meError, setMeData]}>
+              <Router>
+                <RouteList />
+              </Router>
+            </MeContext.Provider>
+          </RequestContext.Provider>
+        </PlanContext.Provider>
+      </TaskContext.Provider>
+    </UserContext.Provider>
       
-      <Context.Provider value={[data, isLoading, refetch, error]}>
-        <Router>
-          <RouteList />
-        </Router>
-      </Context.Provider>
-      
-      <ToastContainer />
+    <ToastContainer />
     </div>
   );
 }

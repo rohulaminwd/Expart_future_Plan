@@ -12,13 +12,13 @@ import password2 from '../../assets/icons/password (2).png'
 import password3 from '../../assets/icons/password (1).png'
 import password4 from '../../assets/icons/password (4).png'
 import { useContext } from 'react';
-import { Context } from '../../App';
+import { MeContext } from '../../App';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
     const [updateModal, setUpdateModal] = useState(null)
     const [logout, setLogout] = useState(null)
-    const [me, isLoading, refetch] = useContext(Context);
+    const [me, isLoading, refetch] = useContext(MeContext);
     
     if(isLoading){
         return <Loading></Loading>

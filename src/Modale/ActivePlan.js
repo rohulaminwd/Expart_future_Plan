@@ -1,12 +1,12 @@
 import React from 'react';
 import { useContext } from 'react';
 import { toast } from 'react-toastify';
-import { Context } from '../App';
+import { MeContext } from '../App';
 import active from '../assets/icons/activeplan.png'
 
 const ActivePlan = ({setActivePlan, activePlan}) => {
 
-    const [me, , refetch,] = useContext(Context);
+    const [me, , refetch,] = useContext(MeContext);
 
     const activeOnly = (planName) => {
       const exsist =  me?.PlanInTime?.find(i => i?.planDuration?.includes(planName));

@@ -7,7 +7,7 @@ import Loading from '../Share/Loading';
 import ConfirmWithdraw from './ConfirmWithdraw';
 import { toast } from 'react-toastify';
 import { useContext } from 'react';
-import { Context } from '../App';
+import { MeContext } from '../App';
 
 
 const WithdrawModule = ({setWithdraw, withdraw}) => {
@@ -15,7 +15,7 @@ const WithdrawModule = ({setWithdraw, withdraw}) => {
     const [withdrawConfirm, setWithdrawConfirm] = useState(null);
     const [amount, setAmount] = useState(0);
     const [loading1, setLoading] = useState(false)
-    const [me, isLoading, refetch] = useContext(Context);
+    const [me, isLoading, refetch] = useContext(MeContext);
 
     if(loading1 || isLoading){
         return <Loading />

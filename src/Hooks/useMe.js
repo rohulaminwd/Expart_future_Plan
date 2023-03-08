@@ -1,26 +1,20 @@
-const { useState, useEffect } = require("react")
+import { useEffect, useState } from "react";
+import { useQuery } from 'react-query';
+import axios from '../Utils/Axios.config';
 
 const useMe = () => {
-    const [me, setMe] = useState([]);
-    const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        setLoading(true)
-        fetch('https://efp-usa-server-site.vercel.app/api/v1/user/me', {
-            method: 'GET',
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            }
-        }).then(res => res.json())
-        .then(data => {
-            if(data){
-                setMe(data)
-                setLoading(false)
-            }
-            console.log(data, 'success');
-        });
-    }, [])
+    const [meData, setMeData] = useState()
 
-    return [me, loading, setMe] ;
-}
+    const {data, isLoading, refetch, error, } = useQuery('myData', () =>
+    axios.get('/user/me').then((res) => res.data)
+  );
+
+  useEffect(() => {
+    setMeData(data)
+  }, [data])
+
+  return [meData, isLoading, refetch, error, setMeData]
+};
+
 export default useMe;

@@ -6,8 +6,11 @@ import DeleteModalConfirm from '../../Modale/DeleteModalConfirm';
 import Loading from '../../Share/Loading';
 import { motion } from "framer-motion"
 import { format } from 'date-fns';
+import { useContext } from 'react';
+import { UserContext } from '../../App';
 
 const Users = () => {
+    const [users, userLoading, userRefetch] = useContext(UserContext);
     const [deleteModule, setDeletingModal] = useState(false);
     const method = 'user'
 
@@ -17,16 +20,10 @@ const Users = () => {
         setSearchTerm(event.target.value);
     };
 
-    const getFacts = async () => {
-		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/user');
-		return res.json();
-	};
-	// Using the hook
-	const {data, error, refetch, isLoading} = useQuery('allUsers', getFacts);
 
-    const filteredUsers = data?.data?.filter(user => user.firstName.toLowerCase().startsWith(searchTerm.toLowerCase()));
+    const filteredUsers = users?.filter(user => user.firstName.toLowerCase().startsWith(searchTerm.toLowerCase()));
 
-    if(isLoading){
+    if(userLoading){
         return <Loading></Loading>
     }
 
@@ -36,7 +33,7 @@ const Users = () => {
                 <div className=''>
                     <input type="search" value={searchTerm} onChange={handleSearch} className='border rounded-3xl w-[150px] sm:w-auto ring-primary-focus ring-2 outline-0 p-1 px-3' placeholder='Search User' name="" id="" />
                 </div>
-                <h1 className='font-bold text-xl'>Users: <span className='text-accent '>{data?.data?.length}</span></h1>
+                <h1 className='font-bold text-xl'>Users: <span className='text-accent '>{users?.length}</span></h1>
             </div> 
             <div className='grid grid-cols-1 sm:gap-5 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
             {
@@ -93,7 +90,7 @@ const Users = () => {
             { deleteModule && <DeleteModalConfirm 
                 deleteModule = {deleteModule}
                 setDeletingModal = {setDeletingModal}
-                refetch={refetch}
+                refetch={userRefetch}
                 method={method}
             />
             }

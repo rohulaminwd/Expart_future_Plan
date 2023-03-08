@@ -5,26 +5,21 @@ import taka2 from '../../assets/icons/taka1 (2).png'
 import taka3 from '../../assets/icons/taka1 (3).png'
 import reffer from '../../assets/icons/refer.png'
 import taka6 from '../../assets/icons/taka1 (1).png'
-import { Context } from '../../App';
+import { MeContext, UserContext } from '../../App';
 import Loading from '../../Share/Loading';
 import { useQuery } from 'react-query';
 import UserInfo from '../../Modale/UserInfo';
 
 const Team = () => {
-    const [me, loading] = useContext(Context);
+    const [me, meLoading] = useContext(MeContext);
+    const [users, userLoading] = useContext(UserContext);
     const referCode = me?.myReferralCode;
     const [userInfo, setUserInfo] = useState(null)
 
-    const getFacts = async () => {
-		const res = await fetch('https://efp-usa-server-site.vercel.app/api/v1/user');
-		return res.json();
-	};
-	// Using the hook
-	const {data, error, refetch, isLoading} = useQuery('allUsers', getFacts);
 
-    const myReferralUser = data?.data?.filter(i => i?.referCode?.includes(referCode))
+    const myReferralUser = users?.filter(i => i?.referCode?.includes(referCode))
 
-    if(isLoading || loading ){
+    if(meLoading || userLoading ){
         return <Loading></Loading>
     }
     return (

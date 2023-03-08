@@ -1,27 +1,16 @@
-import { useQuery } from "react-query";
+import { useQuery } from 'react-query';
+import axios from '../Utils/Axios.config';
 
-const { useState, useEffect } = require("react")
+const useUsers = () => {
 
-const useAllUsers = () => {
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(false)
+    const {data, isLoading, refetch, error, } = useQuery('user', () =>
+    axios.get('/user').then((res) => res.data)
+  );
 
-    useEffect(() => {
-        setLoading(true)
-        fetch('https://efp-usa-server-site.vercel.app/api/v1/user', {
-            method: 'GET',
-            headers: {
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            }
-        }).then(res => res.json())
-        .then(data => {
-            if(data.data){
-                setUsers(data.data)
-                setLoading(false)
-            }
-        });
-    }, [])
+  const users = data?.data.filter(i => i?.status === "active");
+  const inactive = data?.data.filter(i => i?.status === "inactive");
+  const blocked = data?.data.filter(i => i?.status === "blocked");
 
-    return [users, setUsers, loading];
+    return [users, isLoading, refetch, error, blocked, inactive];
 }
-export default useAllUsers;
+export default useUsers;
