@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import './dashboard.css'
 import { motion } from "framer-motion"
 import {FaChevronLeft} from 'react-icons/fa'
-import {BsChatLeftDots, BsPerson} from 'react-icons/bs'
+import {BsChatLeftDots} from 'react-icons/bs'
 import {HiArrowSmLeft} from 'react-icons/hi'
-import {MdWorkOutline, MdDetails} from 'react-icons/md'
-import {AiOutlineWallet, AiOutlineTeam, AiOutlineArrowLeft} from 'react-icons/ai'
-import { NavLink, Link, Outlet } from 'react-router-dom';
+import { AiOutlineHome, AiFillHome } from 'react-icons/ai'
+import { NavLink, Link, Outlet, useLocation } from 'react-router-dom';
+import { RiAccountCircleFill, RiAccountCircleLine, RiFileInfoFill, RiFileInfoLine, RiTaskFill, RiTaskLine, RiTeamFill, RiTeamLine } from 'react-icons/ri';
 
 const Dashboard = ({applyUsers, userClass}) => {
     const [open, setOpen] = useState(true);
+    const location = useLocation();
+    const { pathname } = location;
     return (
         <div className="flex">
             <motion.div 
@@ -37,7 +39,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                                     isActive ? 'border-r-[4px] border-primary rounded-l-md text-[#156c65] bg-[#d6f8f5]' : 'hover:bg-[#d6f8f5]'
                                  }
                                 >
-                                    <AiOutlineWallet size={'20px'} /> 
+                                    { (pathname === "/dashboard/")? <AiFillHome size={'20px'} /> :  <AiOutlineHome size={'20px'} /> } 
                                     <h1 className={`origin-left whitespace-nowrap duration-300 font-medium ${!open && 'scale-0 hidden'}`}>Wallet</h1>
                                 </NavLink>
                             </li>
@@ -47,7 +49,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                                     isActive ? 'border-r-[4px] border-primary rounded-l-md text-[#156c65] bg-[#d6f8f5]' : 'hover:bg-[#d6f8f5]'
                                  }
                                 >
-                                    <MdDetails size={'20px'} /> 
+                                    { (pathname === "/dashboard/about")? <RiFileInfoFill size={'20px'} /> :  <RiFileInfoLine size={'20px'} /> } 
                                     <h1 className={`origin-left whitespace-nowrap duration-300 font-medium ${!open && 'scale-0 hidden'}`}>About</h1>
                                 </NavLink>
                             </li>
@@ -57,7 +59,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                                     isActive ? 'border-r-[4px] border-primary rounded-l-md text-[#156c65] bg-[#d6f8f5]' : 'hover:bg-[#d6f8f5]'
                                 }
                                 >
-                                    <MdWorkOutline size={'20px'} /> 
+                                    { (pathname === "/dashboard/work")? <RiTaskFill size={'20px'} /> :  <RiTaskLine size={'20px'} /> } 
                                     <h1 className={`origin-left whitespace-nowrap duration-300 font-medium ${!open && 'scale-0 hidden'}`}>Works</h1>
                                 </NavLink>
                             </li>
@@ -67,7 +69,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                                     isActive ? 'border-r-[4px] border-primary rounded-l-md text-[#156c65] bg-[#d6f8f5]' : 'hover:bg-[#d6f8f5]'
                                  }
                                 >
-                                    <AiOutlineTeam size={'20px'} /> 
+                                    { (pathname === "/dashboard/team")? <RiTeamFill size={'20px'} /> :  <RiTeamLine size={'20px'} /> }
                                     <h1 className={`origin-left whitespace-nowrap duration-300 font-medium ${!open && 'scale-0 hidden'}`}>Team</h1>
                                 </NavLink>
                             </li>
@@ -77,7 +79,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                                     isActive ? 'border-r-[4px] border-primary rounded-l-md text-[#156c65] bg-[#d6f8f5]' : 'hover:bg-[#d6f8f5]'
                                  }
                                 >
-                                    <BsPerson size={'20px'} /> 
+                                    { (pathname === "/dashboard/me")? <RiAccountCircleFill size={'20px'} /> :  <RiAccountCircleLine size={'20px'} /> }
                                     <h1 className={`origin-left whitespace-nowrap duration-300 font-medium ${!open && 'scale-0 hidden'}`}>My Account</h1>
                                 </NavLink>
                             </li>
@@ -98,7 +100,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                     </div>
                 </div>
                 <Outlet />
-                <div className="fixed px-3 p-1 bottom-0 left-0 border-t border-[#bed6cd] sm:hidden w-full bg-white">
+                <div className="fixed px-3 p-1 py-1.5 bottom-0 left-0 border-t border-[#bed6cd] sm:hidden w-full bg-white">
                     <ul className='flex justify-between items-center'>
                         <li className=''>
                             <NavLink to='/dashboard/'
@@ -107,7 +109,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                             }
                             >
                                 <div className='flex justify-center'>
-                                    <MdDetails size={'24px'} /> 
+                                    { (pathname === "/dashboard/")? <AiFillHome size={'20px'} /> :  <AiOutlineHome size={'20px'} /> }
                                 </div>
                                 <p className={`text-[12px] font-bold`}>Dashboard</p>
                             </NavLink>
@@ -119,7 +121,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                             }
                             >
                                 <div className='flex justify-center'>
-                                    <MdDetails size={'24px'} /> 
+                                    { (pathname === "/dashboard/about")? <RiFileInfoFill size={'20px'} /> :  <RiFileInfoLine size={'20px'} /> } 
                                 </div>
                                 <p className={`text-[12px] font-bold`}>About</p>
                             </NavLink>
@@ -131,7 +133,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                             }
                             >
                                 <div className='flex justify-center'>
-                                    <MdWorkOutline size={'24px'} /> 
+                                    { (pathname === "/dashboard/work")? <RiTaskFill size={'20px'} /> :  <RiTaskLine size={'20px'} /> } 
                                 </div> 
                                 <p className={`text-[12px] font-bold`}>Works</p>
                             </NavLink>
@@ -143,7 +145,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                             }
                             > 
                                 <div className='flex justify-center'>
-                                    <AiOutlineTeam size={'24px'} /> 
+                                    { (pathname === "/dashboard/team")? <RiTeamFill size={'20px'} /> :  <RiTeamLine size={'20px'} /> }
                                 </div> 
                                 <p className={`text-[12px] font-bold`}>Team</p>
                             </NavLink>
@@ -155,7 +157,7 @@ const Dashboard = ({applyUsers, userClass}) => {
                             }
                             >
                                 <div className='flex justify-center'>
-                                    <BsPerson size={'24px'} /> 
+                                    { (pathname === "/dashboard/me")? <RiAccountCircleFill size={'20px'} /> :  <RiAccountCircleLine size={'20px'} /> }
                                 </div> 
                                 <p className={`text-[12px] font-bold`}>Profile</p>
                             </NavLink>
