@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import Loading from '../../Share/Loading';
 import {Link, useLocation, useNavigate,} from 'react-router-dom';
@@ -11,8 +11,10 @@ import 'react-phone-input-2/lib/style.css'
 import { BiHide, BiShow } from 'react-icons/bi';
 import PhoneInput from 'react-phone-input-2';
 import loginImg from "../../assets/icons/key.png"
+import { MeContext } from '../../App';
 
 const SignIn = () => {
+    const [me, meLoading, meRefetch, meError, setMeData] = useContext(MeContext);
     const [error, setError] = useState();
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loading, setLoading] = useState(false)
@@ -38,8 +40,10 @@ const SignIn = () => {
             password: i.password,
         }
         console.log(userInfo)
-        setLoading(true)
-        fetch('https://efp-usa-server-site.vercel.app/api/v1/user/login', {
+        if(ph?.length >= 11){
+            setLoading(true);
+            setError('')
+            fetch('https://efp-usa-server-site.vercel.app/api/v1/user/login', {
             method: "POST",
             headers: {
                 'content-type': 'application/json',
@@ -48,18 +52,23 @@ const SignIn = () => {
         })
         .then(res => res.json())
         .then( status => {
-            setLoading(false)
+            setLoading(false);
+            console.log(status)
             if(status.data){
-                navigate('/dashboard')
-                toast.success('Well come to dashboard');
                 const accessToken = status.data.token;
-                console.log(status?.data)
                 localStorage.setItem('accessToken', accessToken);
+                setMeData(status?.data?.user);
+                navigate('/dashboard');
+                console.log(status?.data?.user);
+                toast.success('Well come to dashboard');
             }
             if(status.status === 'fail'){
-                setError("Some thing is wrang");
+                setError(status.error);
             }
         })
+        }else{
+            setError('Plz Enter valid phone number')
+        }
     }
     return (
         <div style={{ backgroundImage: `url(${signInBg})` }} className='bg-cover  h-screen'>
