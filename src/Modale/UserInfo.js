@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { BsInfoCircle } from 'react-icons/bs';
-import { MdOutlineSchool } from 'react-icons/md';
 
 const UserInfo = ({userInfo}) => {
 

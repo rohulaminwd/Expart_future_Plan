@@ -7,30 +7,34 @@ import { AiOutlineGoogle, AiFillApple, AiOutlineArrowLeft, AiOutlineArrowRight }
 import { FaFacebookF } from 'react-icons/fa'
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import 'react-phone-input-2/lib/style.css'
+import { BiHide, BiShow } from 'react-icons/bi';
+import PhoneInput from 'react-phone-input-2';
+import loginImg from "../../assets/icons/key.png"
 
 const SignIn = () => {
     const [error, setError] = useState();
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loading, setLoading] = useState(false)
-    const [value, setValue] = useState()
+    const [ph, setPh] = useState();
+    const [showPass, setshowPass] = useState(false);
+    const [passType, setPassType] = useState("password");
+    const navigate = useNavigate();
 
-    let signInError; 
-    const navigate = useNavigate()
- 
+    const handleShowPass = () => {
+        setshowPass(!showPass);
+        setPassType(passType === "password"? "text" : "password")
+    }
+
 
     if(loading){
         return <Loading></Loading>
     }
 
-    if(error){
-        signInError = <p className='text-red-500 mb-2'><small>{error?.message}</small></p>
-    }
 
     const onSubmit = i => {
         const userInfo = {
-            phoneNumber: i.phone,
+            phoneNumber: "+" + ph,
             password: i.password,
         }
         console.log(userInfo)
@@ -53,8 +57,7 @@ const SignIn = () => {
                 localStorage.setItem('accessToken', accessToken);
             }
             if(status.status === 'fail'){
-                setError("status.error");
-                console.log(status, "data")
+                setError("Some thing is wrang");
             }
         })
     }
@@ -63,62 +66,65 @@ const SignIn = () => {
             <div className='h-screen bg-[#111f3b75] flex items-end sm:items-center justify-center w-full'>
             <div className="w-full sm:w-[500px] bg-base-100 rounded-3xl sm:rounded-b-3xl rounded-b-none p-5 sm:p-8 shadow-md" data-aos="zoom-in-down" data-aos-delay="100" data-aos-duration="800">
                 <div className="text-center">
-                    <h2 className="text-3xl font-bold text-center">Login</h2>
+                    <div>
+                        <img src={loginImg} className="w-16 mx-auto" alt="" />
+                    </div>
                     <h6 className='text-center mb-3 leading-normal font-bold mx-auto sm:w-[80%]'>Hey Enter Your Details to get sign in to your account</h6>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="form-control w-full">
-                        <input 
-                            type="tel" 
-                            placeholder="Enter phone number" 
-                            className="input input-bordered input-success w-full" 
-                            {...register("phone", {
-                                required: {
-                                  value: true,
-                                  message: 'Phone Number is required'  
-                                },
-                              })}
-                        />
-
-                        {/* <PhoneInput
-                            placeholder="Enter phone number"
-                            className="input input-bordered outline-0 input-success w-full"
-                            value={value}
-                            defaultCountry="BD"
-                            onChange={setValue}
-                            {...register("phone", {
-                                required: {
-                                  value: true,
-                                  message: 'Phone Number is required'  
-                                },
-                              })}
-                            /> */}
-                    
-                        <label className="label">
-                        {errors.phone?.type === 'required' && <span className="label-text-alt text-red-500">{errors.phone.message}</span>}
-                        {errors.phone?.type === 'pattern' && <span className="label-text-alt text-red-500">{errors.phone.message}</span>}
-                        </label>
-                    </div>
-                    <div className="form-control w-full">
-                        <input 
-                            type="password" 
-                            placeholder="Enter Your Password" 
-                            className="input input-bordered input-success w-full" 
-                            {...register("password", {
-                                required: {
-                                  value: true,
-                                  message: 'Password is required'  
-                                },
-                                minLength: {
-                                  value: 6,
-                                  message: 'Must be 6 characters longer'
-                                }
-                              })}
-                        />
-                        <label className="label">
-                        {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
-                        {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
-                        </label>
-                    </div>
+                    <div className="form-control mb-3 w-full">
+                            <label className="label">
+                                <span className="label-text text-cyan-900 font-bold">Phone Number</span>
+                            </label>
+                            <div className='text-left'>
+                                <PhoneInput
+                                    inputProps={{
+                                        name: 'phone',
+                                        required: true,
+                                        autoFocus: true
+                                    }}
+                                    inputClass="!py-6 border !border-primary"
+                                    buttonClass="border !py-5 !border-primary"
+                                    containerClass=''
+                                    containerStyle={{ width: '100%',}}
+                                    searchClass='border border-primary'
+                                    inputStyle={{ width: '100%',}}
+                                    country={"bd"}
+                                    value={ph} 
+                                    onChange={setPh}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-control mb-5 w-full">
+                            <label className="label">
+                                <span className="label-text text-cyan-900 font-bold">Password</span>
+                            </label>
+                            <div className='relative'>
+                            <input 
+                                type={passType} 
+                                placeholder="Password" 
+                                className="input input-bordered !py-4 sm:!py-6 !rounded-md input-primary w-full" 
+                                {...register("password", {
+                                    required: {
+                                        value: true,
+                                        message: 'Password is required'  
+                                    },
+                                    minLength: {
+                                        value: 6,
+                                        message: 'Must be 6 characters longer'
+                                    }
+                                })}
+                            />
+                            <div onClick={handleShowPass} className={`${showPass? "text-primary" : "text-gray-400 "} cursor-pointer  absolute top-[12px] right-2`}>
+                                {showPass? <BiShow size={24} /> : <BiHide size={24} />}
+                            </div>
+                            </div>
+                            {errors?.password && 
+                                <label className="label p-0 pt-1">
+                                    {errors.password?.type === 'required' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
+                                    {errors.password?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.password.message}</span>}
+                                </label>
+                            }
+                        </div>
                     { error && <p className='text-red-500 mb-2'><small>{error}</small></p>}
                     <input className='btn w-full text-white uppercase font-bold bg-gradient-to-r from-[#2091d9] to-[#13b38f] hover:from-[#13b38f] hover:to-[#2091d9] duration-300 border-0' type="submit" value="Login"  />
                     </form>

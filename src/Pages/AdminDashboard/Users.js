@@ -11,11 +11,13 @@ import { BiBlock } from 'react-icons/bi';
 import { MdDelete } from 'react-icons/md';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import BlockUser from '../../Modale/BlockUser';
+import UserDetails from '../../Modale/UserDetails';
 
 const Users = () => {
     const [users, userLoading, userRefetch, userError, blocked] = useContext(UserContext);
     const [deleteModule, setDeletingModal] = useState(false);
     const [openBlock, setOpenBlock] = useState(null);
+    const [openUserDetails, setOpenUserDetails] = useState(null);
     const [data, setData] = useState(users)
     const method = 'user'
 
@@ -85,11 +87,11 @@ const Users = () => {
                                     className="bg-cover overflow-hidden cursor-pointer border-[#dedede] border-[1px] hover:border-purple-600 rounded-xl p-3 bg-[#ffffff] shadow-md border-[#eddeff]">
                                     <div className='relative'>
                                         <div className='flex gap-3 items-center'>
-                                            <div className=''>
+                                            <label htmlFor='user-details' onClick={() => setOpenUserDetails(user)} className='cursor-pointer'>
                                                 <div className="w-9 h-9 shadow-md bg-purple-700 rounded-full flex items-center justify-center ring ring-purple-300 ring-offset-base-100 ring-offset-2">
                                                     <h2 className='text-[18px] uppercase font-bold text-white'>{user?.firstName?.slice(0, 1)}{user?.lastName?.slice(0, 1)}</h2>
                                                 </div>
-                                            </div>
+                                            </label>
                                             <div className=''>
                                                 <h2 className='text-[16px] font-bold'>{user?.firstName} {user?.lastName}</h2>
                                                 <h2 className='text-[14px]'>{user.phoneNumber}</h2>
@@ -156,6 +158,13 @@ const Users = () => {
                 blocked={openBlock}  
                 setOpenBlock={setOpenBlock}
                 refetch={userRefetch}
+                />
+            }
+            {
+                openUserDetails && <UserDetails 
+                openUserDetails={openUserDetails}  
+                setOpenUserDetails={setOpenUserDetails}
+                method={method}
                 />
             }
         </div>

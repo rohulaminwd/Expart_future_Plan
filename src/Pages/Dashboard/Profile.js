@@ -65,7 +65,7 @@ const Profile = () => {
             </div>
     
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center mt-5 sm:mt-8 justify-between w-full gap-3'>
-                <label onClick={() => setUpdateModal("bankCard")} for="update-password" className='rounded-r-xl cursor-pointer border-l-[5px] border-[#a145f6] flex items-center py-1 bg-white justify-between shadow-md'>
+                <label onClick={() => setUpdateModal([me, "bankCard"])} for="update-password" className='rounded-r-xl cursor-pointer border-l-[5px] border-[#a145f6] flex items-center py-1 bg-white justify-between shadow-md'>
                     <div className='flex items-center gap-2'>
                         <div>
                             <img src={password1} className='w-16' alt="password" />
@@ -79,21 +79,7 @@ const Profile = () => {
                         <img src={password4} className='w-16' alt="password" />
                     </div>
                 </label>
-                <label onClick={() => setUpdateModal("wallet")} for="update-password" className='rounded-r-xl cursor-pointer border-l-[5px] border-[#a145f6] flex items-center py-1 bg-white justify-between shadow-md'>
-                    <div className='flex items-center gap-2'>
-                        <div>
-                            <img src={password2} className='w-16' alt="password" />
-                        </div>
-                        <div className=''>
-                            <h1 className=''>Set Wallet password</h1>
-                            <p className='text-[10px]'>এখানে অলওয়ে পাসওয়ার্ডটি সেট করে নেন এটি উইথড্র করার সময় লাগবে</p>
-                        </div>
-                    </div>
-                    <div>
-                        <img src={password4} className='w-16' alt="password" />
-                    </div>
-                </label>
-                <label onClick={() => setUpdateModal("account")} for="update-password" className='rounded-r-xl cursor-pointer border-l-[5px] border-[#a145f6] flex items-center py-1 bg-white justify-between shadow-md'>
+                <label onClick={() => setUpdateModal([me, "account"])} for="update-password" className='rounded-r-xl cursor-pointer border-l-[5px] border-[#a145f6] flex items-center py-1 bg-white justify-between shadow-md'>
                     <div className='flex items-center gap-2'>
                         <div>
                             <img src={password3} className='w-16' alt="password" />
@@ -125,6 +111,7 @@ const Profile = () => {
                 updateModal && <UpdatePassword 
                 updateModal={updateModal} 
                 setUpdateModal={setUpdateModal}
+                refetch={refetch}
                 />
             }
             {

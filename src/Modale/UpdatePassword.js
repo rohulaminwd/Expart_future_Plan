@@ -1,89 +1,84 @@
 import React, { useState } from 'react';
-import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { BiHide, BiShow } from 'react-icons/bi';
+import { ProgressBar } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
-import { MeContext } from '../App';
-import Loading from '../Share/Loading';
+import axios from "../Utils/Axios.config"
+import resetPass from "../assets/icons/reset-password.png"
+import bankCard from "../assets/icons/password (3).png"
 
-const UpdatePassword = ({setUpdateModal, updateModal}) => {
+const UpdatePassword = ({setUpdateModal, refetch, updateModal}) => {
+    const [me, type] = updateModal;
     const { register, reset, formState: { errors }, handleSubmit } = useForm();
-    const [confPass, setConfPass] = useState();
-    const [newPass, setNewPass] = useState();
-    const [me, isLoading, refetch] = useContext(MeContext);
+    const [showOldPass, setshowOldPass] = useState(false);
+    const [showNewPass, setshowNewPass] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [oldPassType, setOldPassType] = useState("password");
+    const [newPassType, setNewPassType] = useState("password");
+    const [error, setError] = useState("");
 
-    console.log(newPass, confPass, "appdf")
-
-    if(isLoading){
-      return <Loading />
+    const handleShowPass = (old) => {
+        if(old === "oldPass"){
+            setshowOldPass(!showOldPass);
+            setOldPassType(oldPassType === "password"? "text" : "password")
+        }else{
+            setshowNewPass(!showNewPass);
+            setNewPassType(newPassType === "password"? "text" : "password")
+        }
+        
     }
 
+
     const onSubmit = (data) => {
+        setLoading(true)
+        setError('') 
         const bankCard = {
             bkash: data.bkash,
             nagad: data.nagad
         }
-        const walletPass = {
-          oldPass: data.oldPass,
-          newPass : data.newPass,
+
+        const PassData = {
+          oldPass: data.OldPass,
+          newPass : data.NewPass,
         }
-        if(updateModal === 'bankCard'){
-            fetch(`https://efp-usa-server-site.vercel.app/api/v1/account/${me?._id}`, {
-            method: 'PATCH',
-            headers: {
-                'content-type': 'application/json',  
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`                  
-            },
-            body: JSON.stringify(bankCard)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.status === "success"){
-                    reset()
-                    toast.success(data.message); 
-                    setUpdateModal(null)
-                    refetch();                
-                }
+
+        if(type === 'bankCard'){
+          axios.patch(`/user/${me?._id}`, bankCard)
+          .then((response) => {
+              toast.success("successfully set the Bank Card")
+              refetch();
+              setLoading(false)
+              setUpdateModal(null)
           })
+          .catch((error) => {
+              if(error?.response?.data?.error){
+                  toast.error(error?.response?.data?.error)
+                  setError(error?.response?.data?.error)
+              }else{
+                  toast.error("Ops No..!! Something is wrong")
+              }
+              setLoading(false)
+          });
         }
         
-        if(updateModal === 'wallet'){
-
-            fetch(`https://efp-usa-server-site.vercel.app/api/v1/accoun/${me?._id}`, {
-            method: 'PATCH',
-            headers: {
-                'content-type': 'application/json',  
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`                  
-            },
-            body: JSON.stringify(walletPass)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.status === "success"){
-                    reset()
-                    toast.success(data.message); 
-                    setUpdateModal(null) 
-                    refetch();                   
-                }
-        })
-        }
-        if(updateModal === 'account'){
-            fetch(`https://efp-usa-server-site.vercel.app/api/v1/accoun/${me?._id}`, {
-            method: 'PATCH',
-            headers: {
-                'content-type': 'application/json',  
-                'authorization': `Bearer ${localStorage.getItem('accessToken')}`                  
-            },
-            body: JSON.stringify(bankCard)
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.status == "success"){
-                    reset()
-                    toast.success(data.message); 
-                    setUpdateModal(null)
-                    refetch();                    
-                }
-        })
+        if(type === 'account'){
+  
+          axios.patch(`/user/changePass/${me?._id}`, PassData)
+          .then((response) => {
+              toast.success("successfully Change the user")
+              refetch();
+              setLoading(false)
+              setUpdateModal(null)
+          })
+          .catch((error) => {
+              if(error?.response?.data?.error){
+                  toast.error(error?.response?.data?.error)
+                  setError(error?.response?.data?.error)
+              }else{
+                  toast.error("Ops No..!! Something is wrong")
+              }
+              setLoading(false)
+          });
         }
     }
     
@@ -91,12 +86,23 @@ const UpdatePassword = ({setUpdateModal, updateModal}) => {
         <div>
             <input type="checkbox" id="update-password" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
-                <form onSubmit={handleSubmit(onSubmit)} className="modal-box p-3 py-5 sm:p-4">
-                    {(updateModal === "bankCard") && <h1 className='text-xl uppercase text-center font-bold text-primary'>set Bank Card</h1>}
-                    {(updateModal === "wallet") && <h1 className='text-xl uppercase text-center font-bold text-primary'>change wallet password</h1>}
-                    {(updateModal === "account") && <h1 className='text-xl uppercase text-center font-bold text-primary'>change account password</h1>}
-
-                    {(updateModal === "bankCard") &&
+                <form onSubmit={handleSubmit(onSubmit)} className="modal-box p-3 pb-20 py-5 sm:p-4">
+                    <div>
+                    {(type === "bankCard") && 
+                      <div>
+                        <img src={bankCard} className='w-20 mx-auto' alt="create" />
+                        <h1 className='text-xl uppercase text-center font-bold text-primary'>set Bank Card</h1>
+                      </div>
+                    }
+                    
+                    {(type === "account") && 
+                      <div>
+                        <img src={resetPass} className='w-20 mx-auto' alt="create" />
+                        <h1 className='text-xl uppercase text-center font-bold text-primary'>change account password</h1>
+                      </div>
+                    }
+                    </div>
+                    {(type === "bankCard") &&
                         <div className='w-full mt-3'>
                             <div className='flex items-center'>
                                 <p className='px-4 py-[2px]  border-[3px] rounded-2xl border-primary'>Bkash</p>
@@ -125,75 +131,94 @@ const UpdatePassword = ({setUpdateModal, updateModal}) => {
                         </div>
                     }
 
-                    {(updateModal === "wallet") &&
+                    
+                    {(type === "account") &&
                         <div className='w-full mt-3'>
-                            <label>Old Password</label>
-                            <input type="password" placeholder="Old Wallet Password" class="input input-sm my-1 mb-3 input-bordered w-full" required 
-                            {...register("oldPass", {
-                                required: {
-                                  value: true,
-                                  message: 'Old Password is required'  
-                                },
-                              })}
+                          <div className="form-control w-full">
+                            <label className="label">
+                                <span className="label-text text-cyan-900 font-bold">Old Password</span>
+                            </label>
+                            <div className='relative'>
+                            <input 
+                                type={oldPassType} 
+                                placeholder="Old Password" 
+                                className="input input-bordered !py-4 sm:!py-6 !rounded-md input-sm sm:input-md input-primary w-full" 
+                                {...register("OldPass", {
+                                    required: {
+                                        value: true,
+                                        message: 'Old Password is required'  
+                                    },
+                                    minLength: {
+                                        value: 6,
+                                        message: 'Must be 6 characters longer'
+                                    }
+                                })}
                             />
-                            <label>New Wallet Password</label>
-                            <input name='newPass' onChange={(e) => setNewPass(e.target.value)} type="password" placeholder="New Wallet Password" class="input input-sm my-1 mb-3 input-bordered w-full" required 
-                            {...register("newPass", {
-                                required: {
-                                  value: true,
-                                  message: 'New Password is required'  
-                                },
-                              })}
-                            />
-                            <label>Confirm Password</label>
-                            <input type="password" name='confirmPass' onChange={(e) => setConfPass(e.target.value)} placeholder="Confirm Wallet Password" class="input input-sm my-1 mb-3 input-bordered w-full" required 
-                            {...register("confirmPass", {
-                                required: {
-                                  value: true,
-                                  message: 'Confirm Password is required'  
-                                },
-                              })}
-                            />
-                            {newPass !== confPass && <p className='text-accent text-center text-[12px] my-1'>Password is no match</p>}
-                        </div>
-                    }
+                            <div onClick={() => handleShowPass('oldPass')} className={`${showOldPass? "text-primary" : "text-gray-400 "} cursor-pointer  absolute top-[5px] sm:top-[15px] right-1 sm:right-2`}>
+                                {showOldPass? <BiShow size={24} /> : <BiHide size={24} />}
+                            </div>
+                            </div>
+                            {errors?.OldPass && 
+                                <label className="label p-0 pt-1">
+                                    {errors.OldPass?.type === 'required' && <span className="label-text-alt text-red-500">{errors.OldPass.message}</span>}
+                                    {errors.OldPass?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.OldPass.message}</span>}
+                                </label>
+                            }
+                          </div>
 
-                    {(updateModal === "account") &&
-                        <div className='w-full mt-3'>
-                          <label>Old Password</label>
-                            <input type="password" placeholder="Old Password" class="input input-sm my-1 mb-3 input-bordered w-full" required 
-                            {...register("oldPass", {
-                                required: {
-                                  value: true,
-                                  message: 'Old Password is required'  
-                                },
-                              })}
-                            />
-                            <label>New Password</label>
-                            <input name='newPass' onChange={(e) => setNewPass(e.target.value)} type="password" placeholder="New Password" class="input input-sm my-1 mb-3 input-bordered w-full" required 
-                            {...register("newPass", {
-                                required: {
-                                  value: true,
-                                  message: 'New Password is required'  
-                                },
-                              })}
-                            />
-                            <label>Confirm Password</label>
-                            <input name='confirmPass' onChange={(e) => setConfPass(e.target.value)} type="password" placeholder="Confirm Password" class="input input-sm my-1 mb-3 input-bordered w-full" required 
-                            {...register("confirmPass", {
-                                required: {
-                                  value: true,
-                                  message: 'Confirm Password is required'  
-                                },
-                              })}
-                            />
-                            {newPass !== confPass && <p className='text-accent text-center text-[12px] my-1'>Password is no match</p>}
+                          <div className="form-control w-full">
+                              <label className="label">
+                                  <span className="label-text text-cyan-900 font-bold">New Password</span>
+                              </label>
+                              <div className='relative'>
+                              <input 
+                                  type={newPassType} 
+                                  placeholder="New Password" 
+                                  className="input input-bordered !py-4 sm:!py-6 !rounded-md input-sm sm:input-md input-primary w-full" 
+                                  {...register("NewPass", {
+                                      required: {
+                                          value: true,
+                                          message: 'New Password is required'  
+                                      },
+                                      minLength: {
+                                          value: 6,
+                                          message: 'Must be 6 characters longer'
+                                      }
+                                  })}
+                              />
+                              <div onClick={() => handleShowPass("newPass")} className={`${showNewPass? "text-primary" : "text-gray-400 "} cursor-pointer  absolute top-[5px] sm:top-[15px] right-1 sm:right-2`}>
+                                  {showNewPass? <BiShow size={24} /> : <BiHide size={24} />}
+                              </div>
+                              </div>
+                              {errors?.NewPass && 
+                                  <label className="label p-0 pt-1">
+                                      {errors.NewPass?.type === 'required' && <span className="label-text-alt text-red-500">{errors.NewPass.message}</span>}
+                                      {errors.NewPass?.type === 'minLength' && <span className="label-text-alt text-red-500">{errors.NewPass.message}</span>}
+                                  </label>
+                              }
+                          </div>
                         </div>
                     }
                     
-                    <div className="flex items-center justify-center gap-3 mt-5">
-                        <input type="submit" value="Save" className="btn w-[100px] btn-primary text-white btn-sm" />
-                        <label for="update-password" className="btn btn-sm w-[100px] ">cancel</label>
+                    <div className=" gap-3 mt-5">
+                        { loading &&
+                            <div className='w-full flex items-center justify-center'>
+                                <ProgressBar
+                                height="80"
+                                width="80"
+                                ariaLabel="progress-bar-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="progress-bar-wrapper"
+                                borderColor = '#F4442E'
+                                barColor = '#51E5FF'
+                                />
+                            </div>
+                        }
+                        <p className='text-center text-sm text-accent mb-2'>{error}</p>
+                        <div className='flex items-center justify-center gap-x-3'>
+                            <input type="submit" value="Save" className="btn w-[100px] btn-primary text-white btn-sm" />
+                            <label for="update-password" className="btn btn-sm w-[100px] ">cancel</label>
+                        </div>
                     </div>
                 </form>
             </div>
