@@ -42,17 +42,6 @@ const Profile = () => {
                     <div className='flex w-full mt-5 sm:mt-8 items-center justify-between'>
                         <div className='w-full'>
                             <Link to='/dashboard/planDetails' className='btn text-white sm:btn-wide sm:btn-md btn-sm rounded-full btn-accent'>Active Plan</Link>
-                            {/* <div className='flex items-center gap-1'>
-                                {(me?.FreePlan === "active") && <p className='text-[12px] sm:text-[16px] pr-2'>Free Plan</p>}
-                                {(me?.LifeTimePlan === "active") && <p className='text-[12px] px-2 border-l-2 sm:text-[16px]'>Life Time Plan</p>}
-                                {
-                                    me?.PlanInTime && me?.PlanInTime?.map(i => 
-                                        <>
-                                            <p className='text-[12px] px-2 border-l-2 sm:text-[16px]'>{i?.planName}</p>
-                                        </>
-                                    ) 
-                                }
-                            </div> */}
                         </div>
                         <div className='w-full flex items-center justify-end gap-2'>
                             <h2 className='text-xl text-white sm:text-3xl'>{me?.balance} ৳</h2>
