@@ -90,10 +90,13 @@ const UpdatePassword = ({ setUpdateModal, refetch, updateModal }) => {
           } else {
             toast.error("Ops No..!! Something is wrong");
           }
+          console.log(error);
           setLoading(false);
         });
     }
   };
+
+  console.log(type, me, "pl");
 
   return (
     <div>

@@ -341,13 +341,8 @@ const Dashboard = ({ applyUsers, userClass }) => {
             <li className="text-purple-700 dropdown dropdown-top">
               <label tabIndex={0} className="">
                 <div className="flex justify-center">
-                  {pathname === "/dashboard/tradPrimary" ? (
-                    <BsPlusCircleFill size={24} />
-                  ) : (
-                    <BsPlusCircle size={24} />
-                  )}
+                  <BsPlusCircleFill size={32} />
                 </div>
-                <p className={`text-[12px] font-bold`}>Trad</p>
               </label>
               <div
                 tabIndex={0}

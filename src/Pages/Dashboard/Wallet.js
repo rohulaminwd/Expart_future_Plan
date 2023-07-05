@@ -19,7 +19,7 @@ import { Circles, FidgetSpinner, Watch } from "react-loader-spinner";
 import useIncomeTracker from "../../Hooks/useIncomeTracker";
 
 const Wallet = () => {
-  const [me, meLoading] = useContext(MeContext);
+  const [me, meLoading, refetch] = useContext(MeContext);
   const [planModal, setPlanModal] = useState(null);
   const [recharge, setRecharge] = useState(null);
   const [withdraw, setWithdraw] = useState(null);
@@ -59,7 +59,7 @@ const Wallet = () => {
         className="bg-cover rounded-2xl"
       >
         <div className="text-center cursor-pointer px-3 py-8 sm:py-12 bg-[#33446929] text-white rounded-2xl">
-          <h3 className="text-5xl sm:text-8xl font-bold">{me?.balance} ৳</h3>
+          <h3 className="text-5xl sm:text-8xl font-bold">{me?.balance} $</h3>
           <p className="text-3xl sm:text-5xl text-[#9cabc9] sm:mt-4 mt-2">
             Total Balance
           </p>
@@ -73,7 +73,7 @@ const Wallet = () => {
             </div>
             <div className="">
               <h3 className="font-bold sm:mb-1 sm:text-2xl">
-                {yesterdayIncome} ৳
+                {yesterdayIncome} $
               </h3>
               <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
                 Yesterday Income
@@ -90,7 +90,7 @@ const Wallet = () => {
               <img src={taka5} className="w-full" alt="taka" />
             </div>
             <div className="">
-              <h3 className="font-bold sm:mb-1 sm:text-2xl">{me?.balance} ৳</h3>
+              <h3 className="font-bold sm:mb-1 sm:text-2xl">{me?.balance} $</h3>
               <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
                 Available Balance
               </h1>
@@ -106,7 +106,7 @@ const Wallet = () => {
               <img src={taka3} className="w-full" alt="taka" />
             </div>
             <div className="">
-              <h3 className="font-bold sm:mb-1 sm:text-2xl">{todayIncome} ৳</h3>
+              <h3 className="font-bold sm:mb-1 sm:text-2xl">{todayIncome} $</h3>
               <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
                 Today Income
               </h1>
@@ -125,7 +125,7 @@ const Wallet = () => {
             </div>
             <div className="">
               <h3 className="font-bold sm:mb-1 sm:text-2xl">
-                {weeklyIncome} ৳
+                {weeklyIncome} $
               </h3>
               <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
                 Weekly Income
@@ -143,7 +143,7 @@ const Wallet = () => {
             </div>
             <div className="">
               <h3 className="font-bold sm:mb-1 sm:text-2xl">
-                {monthlyIncome} ৳
+                {monthlyIncome} $
               </h3>
               <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
                 Monthly Income
@@ -160,7 +160,7 @@ const Wallet = () => {
               <img src={taka2} className="w-full" alt="taka" />
             </div>
             <div className="">
-              <h3 className="font-bold sm:mb-1 sm:text-2xl">12 ৳</h3>
+              <h3 className="font-bold sm:mb-1 sm:text-2xl">12 $</h3>
               <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
                 Company Bunas
               </h1>
@@ -174,7 +174,7 @@ const Wallet = () => {
       <div className="border-t-2 sm:mt-8 mt-5 border-primary">
         <div className="flex items-center gap-4 sm:mt-8 mt-5 justify-between">
           <div className="w-full">
-            {me?.card?.length > 0 ? (
+            {me?.card.length > 0 ? (
               <label
                 onClick={() => setRecharge("recharge")}
                 for="recharge"
@@ -184,7 +184,7 @@ const Wallet = () => {
               </label>
             ) : (
               <label
-                onClick={() => setUpdateModal("bankCard")}
+                onClick={() => setUpdateModal([me, "bankCard"])}
                 for="update-password"
                 className="btn btn-xl sm:btn-lg border-[4px] hover:shadow-md btn-success hover:shadow-[#c5f3f2] rounded-full border-[#b0f6b0] w-full text-[#fff] mr-5 font-bold bg-[#1e9558]"
               >
@@ -203,7 +203,7 @@ const Wallet = () => {
               </label>
             ) : (
               <label
-                onClick={() => setUpdateModal("bankCard")}
+                onClick={() => setUpdateModal([me, "bankCard"])}
                 for="update-password"
                 className="btn btn-xl sm:btn-lg border-[4px] border-[#f8c4b4] btn-secondary w-full font-bold rounded-full hover:shadow-md hover:shadow-secondary text-white bg-[#f05e41]"
               >
@@ -291,6 +291,7 @@ const Wallet = () => {
         <UpdatePassword
           updateModal={updateModal}
           setUpdateModal={setUpdateModal}
+          refetch={refetch}
         />
       )}
     </div>

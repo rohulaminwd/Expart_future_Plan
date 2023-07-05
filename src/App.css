@@ -1,6 +1,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Open+Sans:wght@400;500&family=Oswald:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Teko:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Open+Sans:wght@400;500&family=Oswald:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Shalimar&family=Teko:wght@500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Oswald:wght@300;400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Reem+Kufi&family=Shalimar&family=Teko:wght@500&display=swap');
+
 .bg{
     background-color: #2533503a;
 }
@@ -15,12 +18,25 @@ body, p{
 .oswald, h1{
     font-family: 'Oswald', sans-serif;
 }
+.element-font-2 {
+    font-family: 'Siyam Rupali', sans-serif;
+  }
+  .element-font-3 {
+    font-family: 'Baloo Tamma 2', cursive;
+  }
+  .element-font-4 {
+    font-family: 'Sahitya', serif;
+  }
 .tako{
     font-family: 'Teko', sans-serif;
 }
 .shalimar{
     font-family: 'Shalimar', cursive !important;
 }
+
+.font-reem{
+    font-family: 'Reem Kufi', sans-serif;
+  }
 
 
 .sticky-nav {
