@@ -1,132 +1,111 @@
-import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import money from "../assets/icons/money.svg";
+import admin from "../assets/icons/admin.svg";
+import active from "../assets/icons/activeplan.png";
+import password1 from "../assets/icons/password (3).png";
+import password3 from "../assets/icons/password (1).png";
 
-const ProfileInformation = ({user, present, meLoading, absent, setAttendanceToday}) => {
-
-
-
-    return (
-        <div className='w-full border bg-[#e3f5ff]  shadow-md !z-[900] rounded-2xl sm:p-3 p-2'>
-            <div className='flex justify-between w-full gap-2'>
-                { ((user?.role === "student") || (user?.role === "teacher")) &&
-                <div className='p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg'>
-                    <div className='w-8 sm:w-12'>
-                        {/* <img src={daimon} className='w-full' alt="" /> */}
-                    </div>
-                    <div>
-                        <h3 className='text-secondary font-bold sm:text-3xl'>{user?.gam}</h3>
-                        <p className='text-sm'>Gam</p>
-                    </div>
-                </div>
-                }
-
-                { (user?.role === "admin") &&
-                <Link to='/dashboard/applyUser' className='w-full'>
-                    <div className='p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg'>
-                        <div className='w-6 sm:w-12'>
-                            {/* <img src={userAply} className='w-full' alt="" /> */}
-                        </div>
-                        <div>
-                            <h3 className='text-secondary font-bold sm:text-3xl'>55</h3>
-                            <p className='text-xs sm:text-sm'>Aply Users</p>
-                        </div>
-                    </div>
-                </Link>
-                }
-
-                {(user?.role === "student") &&
-                <div className='p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg'>
-                    <div className='w-8 sm:w-12'>
-                        {/* <img src={attendance} className='w-full' alt="" /> */}
-                    </div>
-                    <div>
-                        <h3 className='text-secondary font-bold sm:text-3xl'>{present?.length + " | " + absent?.length}</h3>
-                        <p className='text-sm'>Attendance</p>
-                    </div>
-                </div>
-                }
-
-                {((user?.role === "admin") || (user?.role === "teacher")) &&
-                <div className='p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg'>
-                    <div className='w-6 sm:w-12'>
-                        {/* <img src={attendance} className='w-full' alt="" /> */}
-                    </div>
-                    <div>
-                        <div className='flex items-center gap-x-2'>
-                            54
-                        </div>
-                        <p className='text-xs sm:text-sm'>Attendance</p>
-                    </div>
-                </div>
-                }
-
-                { (user?.role === "admin") &&
-                <Link to='/dashboard/bulkSms' className='w-full'>
-                    <div className='p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg'>
-                        <div className='w-6 sm:w-12'>
-                            {/* <img src={sms} className='w-full' alt="" /> */}
-                        </div>
-                        <div>
-                            <h3 className='text-secondary font-bold sm:text-3xl'>Sms</h3>
-                            <p className='text-xs sm:text-sm'>Send Sms</p>
-                        </div>
-                    </div>
-                </Link>
-                }
-               
+const ProfileInformation = ({ user, setUpdateModal }) => {
+  return (
+    <div className="w-full border bg-[#e3f5ff]  shadow-md !z-[900] rounded-2xl sm:p-3 p-2">
+      <div className="flex justify-between w-full gap-2">
+        <Link to="/dashboard/planDetails" className="w-full">
+          <div className="p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg">
+            <div className="w-6 sm:w-12">
+              <img src={active} className="w-full" alt="" />
             </div>
-            <div className='flex gap-4 text-sm sm:text-md items-center mt-2 sm:mt-3 justify-between'>
-                {!((user?.role === 'teacher') || (user?.role === 'admin')) && 
-                <div className='w-full'>
-                    <div className='flex py-1 sm:py-2 border-b border-[#d7b7fd] justify-between items-center'>
-                        <h3 className=''>Class:</h3>
-                        <h3 className=''>{user?.class}</h3>
-                    </div>
-                    <div className='flex py-1 sm:py-2 border-b border-[#d7b7fd] justify-between items-center'>
-                        <h3 className=''>Role No:</h3>
-                        <h3 className=''>{user?.roleNo}</h3>
-                    </div>
-                </div>
-                }
-                <div className='w-full'>
-                    <div className='flex py-1 sm:py-2 border-b border-[#d7b7fd] justify-between items-center'>
-                        <h3 className=''>Role:</h3>
-                        <h3 className=''>{user?.role}</h3>
-                    </div>
-                    <div className='flex py-1 sm:py-2 border-b border-[#d7b7fd] justify-between items-center'>
-                        <h3 className=''>Gender:</h3>
-                        <h3 className=''>{user?.gender}</h3>
-                    </div>
-                </div>
+            <div>
+              <h3 className="text-secondary font-bold sm:text-3xl">Plan</h3>
+              <p className="text-xs sm:text-sm">Active</p>
             </div>
-            <div className='w-full text-sm sm:text-md border-b border-[#d7b7fd] sm:flex items-center justify-between gap-4'>
-                <div className='flex w-full py-1 sm:py-2 sm:border-b-0 border-b border-[#d7b7fd] justify-between items-center'>
-                    <h3 className=''>Phone Number:</h3>
-                    <h3 className=''>{user?.phoneNumber}</h3>
-                </div>
-                <div className='flex w-full py-1 sm:py-2 justify-between items-center'>
-                    <h3 className=''>Address:</h3>
-                    <h3 className=''>{user?.address}</h3>
-                </div>
-            </div>
-            { (user?.role === 'student') &&
-            <div className='w-full border-b text-sm sm:text-md border-[#d7b7fd] sm:flex items-center justify-between gap-4'>
-               { user?.fatherName && 
-               <div className='flex w-full py-1 sm:py-2 sm:border-b-0 border-b border-[#d7b7fd] justify-between items-center'>
-                    <h3 className=''>Father Name:</h3>
-                    <h3 className=''>{user?.fatherName}</h3>
-                </div>}
-                <div className='flex w-full py-1 sm:py-2 justify-between items-center'>
-                    <h3 className=''>Date of Birth:</h3>
-                    <h3 className=''>{user?.age}</h3>
-                </div>
-            </div>
-            }
-            <div className='flex w-full py-1 text-sm sm:text-md sm:py-2 justify-between items-center'>
-                <h3 className=''>Bio Date: {user?.bio}</h3>
-            </div>
+          </div>
+        </Link>
+
+        <div className="p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg">
+          <div className="w-8 sm:w-12">
+            <img src={money} className="w-full" alt="" />
+          </div>
+          <div>
+            <h3 className="text-secondary font-bold sm:text-3xl">
+              {user?.balance}
+            </h3>
+            <p className="text-xs sm:text-sm">Balance</p>
+          </div>
         </div>
-    );
+
+        {user?.role === "admin" && (
+          <Link to="/admin-dashboard" className="w-full">
+            <div className="p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg">
+              <div className="w-6 sm:w-12">
+                <img src={admin} className="w-full" alt="" />
+              </div>
+              <div>
+                <h3 className="text-secondary font-bold sm:text-3xl">Admin</h3>
+                <p className="text-xs sm:text-sm">Send Sms</p>
+              </div>
+            </div>
+          </Link>
+        )}
+      </div>
+
+      <div className="flex mt-3 justify-between w-full gap-2">
+        <label
+          onClick={() => setUpdateModal([user, "bankCard"])}
+          for="update-password"
+          className="w-full cursor-pointer"
+        >
+          <div className="p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg">
+            <div className="w-6 sm:w-12">
+              <img src={password1} className="w-full" alt="" />
+            </div>
+            <div>
+              <h3 className="text-secondary font-bold sm:text-3xl">Account</h3>
+              <p className="text-xs sm:text-sm">Add Account Card</p>
+            </div>
+          </div>
+        </label>
+
+        <label
+          onClick={() => setUpdateModal([user, "account"])}
+          for="update-password"
+          className="w-full cursor-pointer"
+        >
+          <div className="p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg">
+            <div className="w-6 sm:w-12">
+              <img src={password3} className="w-full" alt="" />
+            </div>
+            <div>
+              <h3 className="text-secondary font-bold sm:text-3xl">Password</h3>
+              <p className="text-xs sm:text-sm">Update Password</p>
+            </div>
+          </div>
+        </label>
+      </div>
+
+      <div className="flex gap-4 sm:text-md items-center mt-2 sm:mt-3 justify-between">
+        <div className="w-full">
+          <div className="flex py-1 sm:py-2 border-b border-[#c6fbfb] justify-between items-center">
+            <h3 className="">Name:</h3>
+            <h3 className="">
+              {user?.firstName} {user?.firstName}
+            </h3>
+          </div>
+          <div className="flex py-1 sm:py-2 border-b border-[#c6fbfb] justify-between items-center">
+            <h3 className="">Phone Number:</h3>
+            <h3 className="">{user?.phoneNumber}</h3>
+          </div>
+          <div className="flex py-1 sm:py-2 border-b border-[#c6fbfb] justify-between items-center">
+            <h3 className="">Address:</h3>
+            <h3 className="">{user?.Address}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex w-full py-1 text-sm sm:text-md sm:py-2 justify-between items-center">
+        <h3 className="">Bio Date: {user?.bio}</h3>
+      </div>
+    </div>
+  );
 };
 
 export default ProfileInformation;

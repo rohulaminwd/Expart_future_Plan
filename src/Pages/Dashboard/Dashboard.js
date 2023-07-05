@@ -281,12 +281,9 @@ const Dashboard = ({ applyUsers, userClass }) => {
                 Expert Future Plan USA
               </h1>
             ) : (
-              <Link
-                to="/"
-                className="text-primary w-full text-sm sm:text-xl xl:text-2xl font-bold"
-              >
+              <div className="text-primary w-full text-sm sm:text-xl xl:text-2xl font-bold">
                 <TitleMarquee title={marqueeTitle?.title} />
-              </Link>
+              </div>
             )}
             <Link to="/dashboard/me">
               {pathname === "/dashboard/me" ? (
