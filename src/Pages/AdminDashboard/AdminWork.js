@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React from "react";
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -17,7 +18,8 @@ import { MdDoneAll, MdRemoveDone } from "react-icons/md";
 import { toast } from "react-toastify";
 import GiveTask from "../../Modale/GiveTask";
 import { useContext } from "react";
-import { MeContext, TaskContext } from "../../App";
+import { MeContext, TaskContext, UserContext } from "../../App";
+import UserProfileImg from "../../Components/UserProfileImg";
 
 const AdminWork = () => {
   const [openTask, setOpenTask] = useState(null);
@@ -25,6 +27,7 @@ const AdminWork = () => {
   const [deleteModule, setDeletingModal] = useState(null);
   const [me] = useContext(MeContext);
   const [tasks, taskLoading, taskRefetch] = useContext(TaskContext);
+  const [user] = useContext(UserContext);
   const method = "task";
 
   const worrning = () => {
@@ -34,6 +37,11 @@ const AdminWork = () => {
   if (taskLoading) {
     return <Loading />;
   }
+
+  const handleFindUser = (phone) => {
+    const exsiteUser = user?.find((i) => i?.phoneNumber === phone);
+    return exsiteUser;
+  };
   return (
     <div className="p-2 pt-0 sm:p-0">
       <div className="text-center w-full flex items-center justify-between p-3 py-4 shadow-md sm:mb-5 mb-3 rounded-md bg-white">
@@ -81,15 +89,35 @@ const AdminWork = () => {
                   <div className="w-full">
                     <h3 className="text-[13px] font-bold">{i.taskName}</h3>
                     <p className="text-[12px]">{i?.description}</p>
+                    <p className="text-[12px]">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      error iusto in.
+                    </p>
                   </div>
                 </div>
                 <div className="absolute top-0 right-0">
                   <h2 className="font-bold text-accent">{i?.price} $</h2>
                 </div>
                 <div className="text-right flex justify-between items-center gap-2">
-                  <div>
+                  <div className="flex pb-[2px] items-center">
                     {i?.completeUser && (
-                      <p className="text-[12px]">{i?.completeUser.length}</p>
+                      <p className="mr-2 font-bold text-[14px]">
+                        {i?.completeUser.length}
+                      </p>
+                    )}
+                    {i?.completeUser?.slice(0, 3)?.map((x) => (
+                      <div className="flex items-center">
+                        <UserProfileImg
+                          me={handleFindUser(x?.phoneNumber)}
+                          textColor="sm:text-[8px] ring-offset-[1px] text-[8px] text-white"
+                          className="w-4 h-4 -ml-[1px] bg-secondary ring-[1px] "
+                        />
+                      </div>
+                    ))}
+                    {i?.completeUser.length > 2 && (
+                      <span className="font-bold ml-1 text-lg text-green-500">
+                        . . .
+                      </span>
                     )}
                   </div>
                   <div className="flex justify-end gap-x-3 items-center">
