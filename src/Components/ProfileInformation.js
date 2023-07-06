@@ -87,7 +87,7 @@ const ProfileInformation = ({ user, setUpdateModal }) => {
           <div className="flex py-1 sm:py-2 border-b border-[#c6fbfb] justify-between items-center">
             <h3 className="">Name:</h3>
             <h3 className="">
-              {user?.firstName} {user?.firstName}
+              {user?.firstName} {user?.lastName}
             </h3>
           </div>
           <div className="flex py-1 sm:py-2 border-b border-[#c6fbfb] justify-between items-center">

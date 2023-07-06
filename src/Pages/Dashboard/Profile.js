@@ -68,7 +68,7 @@ const Profile = () => {
                 {me?.phoneNumber}
               </p>
             </div>
-            <div className="w-full absolute top-3 left-0 flex items-center justify-between px-2">
+            <div className="w-full absolute top-2 left-0 flex items-center justify-between px-2">
               <div className="!z-[10000] w-full flex justify-between items-center">
                 <label
                   onClick={() => setLogout("logOut")}
