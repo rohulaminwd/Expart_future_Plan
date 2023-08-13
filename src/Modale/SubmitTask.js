@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import task1 from "../assets/icons/addImage.png";
 import { useRef } from "react";
 import ProgressSpeener from "../Share/ProgressSpeener";
-import axios from "axios";
+import axios from "../Utils/Axios.config";
 
 const SubmitTask = ({ setSubmitTask, refetch, submitTask, me }) => {
   const { handleSubmit } = useForm();
@@ -66,22 +66,23 @@ const SubmitTask = ({ setSubmitTask, refetch, submitTask, me }) => {
                 ? calculateBalance()
                 : submitTask?.price,
             date: new Date(),
-            imageURL: img,
+            imageUrl: img,
           };
 
-          console.log(data);
+          // console.log(data);
           // send data backend
           axios
-            .patch(
-              `https://efp-usa-server-site.vercel.app/api/v1/task/submit/${submitTask?._id}`,
-              data
-            )
+            .patch(`/task/submit/${submitTask?._id}`, data)
             .then((response) => {
-              toast.success("successfully task submit");
-              console.log(response);
-              setLoading(false);
-              refetch();
-              setSubmitTask(null);
+              const status = response?.data;
+              if (status.success === true) {
+                toast.success("successfully task submit");
+                setLoading(false);
+                refetch();
+                setSubmitTask(null);
+              } else if (status?.success === false) {
+                toast.error("Some thing is wrong..!");
+              }
             })
             .catch((error) => {
               console.log(error);
@@ -150,7 +151,7 @@ const SubmitTask = ({ setSubmitTask, refetch, submitTask, me }) => {
                 disabled={!image}
                 className="btn w-[100px] btn-primary text-white btn-sm"
               />
-              <label for="submit-task" className="btn btn-sm w-[100px] ">
+              <label htmlFor="submit-task" className="btn btn-sm w-[100px] ">
                 cancel
               </label>
             </div>

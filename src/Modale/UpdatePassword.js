@@ -36,7 +36,6 @@ const UpdatePassword = ({ setUpdateModal, refetch, updateModal }) => {
 
   const handleCard = (card) => {
     const myCard = me?.card?.find((i) => i?.cardName === card);
-    console.log(myCard);
     return myCard;
   };
 
@@ -55,13 +54,12 @@ const UpdatePassword = ({ setUpdateModal, refetch, updateModal }) => {
 
     if (type === "bankCard") {
       axios
-        .patch(`/user/${me?._id}`, bankCard)
+        .patch(`/users/setcard/${me?._id}`, bankCard)
         .then((response) => {
           toast.success("successfully set the Bank Card");
           refetch();
           setLoading(false);
           setUpdateModal(null);
-          console.log(response);
         })
         .catch((error) => {
           if (error?.response?.data?.error) {
@@ -76,7 +74,7 @@ const UpdatePassword = ({ setUpdateModal, refetch, updateModal }) => {
 
     if (type === "account") {
       axios
-        .patch(`/user/changePass/${me?._id}`, PassData)
+        .patch(`/auth/changePass/${me?.phoneNumber}`, PassData)
         .then((response) => {
           toast.success("successfully Change the user");
           refetch();
@@ -90,13 +88,10 @@ const UpdatePassword = ({ setUpdateModal, refetch, updateModal }) => {
           } else {
             toast.error("Ops No..!! Something is wrong");
           }
-          console.log(error);
           setLoading(false);
         });
     }
   };
-
-  console.log(type, me, "pl");
 
   return (
     <div>
@@ -301,7 +296,10 @@ const UpdatePassword = ({ setUpdateModal, refetch, updateModal }) => {
                 value="Save"
                 className="btn w-[100px] btn-primary text-white btn-sm"
               />
-              <label for="update-password" className="btn btn-sm w-[100px] ">
+              <label
+                htmlFor="update-password"
+                className="btn btn-sm w-[100px] "
+              >
                 cancel
               </label>
             </div>

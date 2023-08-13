@@ -2,3 +2,83 @@
 .dashboard-none{
     display: none !important;
 }
+
+
+
+.base-card::after, .base-card::before{
+    position: absolute;
+    content: '' ;
+    display: block;
+    border: 4px solid #0f1964eb;
+    border-top-color: transparent;
+    border-left-color: transparent;
+}
+
+.base-card::after{
+    bottom: 25px;
+    left: 0
+}
+.base-card::before{
+    top: 0;
+    right: 25px;
+}
+
+.plan-card-base {
+    position: absolute;
+    top: -8px;
+    right: 16px;
+    background:
+      radial-gradient(27% 29% at right, #0000 83%,#24c2a5 85% 99%,#0000 101%) calc(10px/2) 10px,
+      radial-gradient(27% 29% at left, #0000 83%,#24c2a5 85% 99%,#0000 101%) calc(10px/-2) 10px,
+      radial-gradient(29% 27% at top, #0000 83%,#24c2a5 85% 99%,#0000 101%) 0 calc(10px/2),
+      radial-gradient(29% 27% at bottom, #0000 83%,#24c2a5 85% 99%,#0000 101%) 0 calc(10px/-2)
+      #1d9c87;
+    background-size: 20px 20px;
+    overflow: visible!important;
+  }
+.plan-card-base::before{
+    position: absolute;
+    content: '';
+    display: block;
+    border: 4px solid #0a4c49eb;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    top: 0;
+    left: -8px; 
+}
+.plan-card-base::after{
+    position: absolute;
+    content: '';
+    display: block;
+    width: 102%;
+    height: 40px;
+    clip-path: polygon(50% 45%, 0% 100%, 100% 100%);
+    bottom: -1px;
+    left: 0px; 
+    background:
+    radial-gradient(27% 29% at right, #0000 83%,#e6ecec 85% 99%,#0000 101%) calc(10px/2) 10px,
+    radial-gradient(27% 29% at left, #0000 83%,#e6ecec 85% 99%,#0000 101%) calc(10px/-2) 10px,
+    radial-gradient(29% 27% at top, #0000 83%,#e6ecec 85% 99%,#0000 101%) 0 calc(10px/2),
+    radial-gradient(29% 27% at bottom, #0000 83%,#e6ecec 85% 99%,#0000 101%) 0 calc(10px/-2)
+    #fdf9f9;
+    background-size: 20px 20px;
+}
+
+.pattern-bg{
+    background:
+    radial-gradient(27% 29% at right, #0000 83%,#e6ecec 85% 99%,#0000 101%) calc(10px/2) 10px,
+    radial-gradient(27% 29% at left, #0000 83%,#e6ecec 85% 99%,#0000 101%) calc(10px/-2) 10px,
+    radial-gradient(29% 27% at top, #0000 83%,#e6ecec 85% 99%,#0000 101%) 0 calc(10px/2),
+    radial-gradient(29% 27% at bottom, #0000 83%,#e6ecec 85% 99%,#0000 101%) 0 calc(10px/-2)
+    #fdf9f9;
+    background-size: 20px 20px;
+}
+.pattern-planbg{
+    background:
+    radial-gradient(27% 29% at right, #0000 83%,#e6ecec 85% 99%,#0000 101%) calc(10px/2) 10px,
+    radial-gradient(27% 29% at left, #0000 83%,#e6ecec 85% 99%,#0000 101%) calc(10px/-2) 10px,
+    radial-gradient(29% 27% at top, #0000 83%,#e6ecec 85% 99%,#0000 101%) 0 calc(10px/2),
+    radial-gradient(29% 27% at bottom, #0000 83%,#e6ecec 85% 99%,#0000 101%) 0 calc(10px/-2)
+    #f4f1fc;
+    background-size: 20px 20px;
+}

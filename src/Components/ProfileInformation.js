@@ -51,7 +51,7 @@ const ProfileInformation = ({ user, setUpdateModal }) => {
       <div className="flex mt-3 justify-between w-full gap-2">
         <label
           onClick={() => setUpdateModal([user, "bankCard"])}
-          for="update-password"
+          htmlFor="update-password"
           className="w-full cursor-pointer"
         >
           <div className="p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg">
@@ -67,7 +67,7 @@ const ProfileInformation = ({ user, setUpdateModal }) => {
 
         <label
           onClick={() => setUpdateModal([user, "account"])}
-          for="update-password"
+          htmlFor="update-password"
           className="w-full cursor-pointer"
         >
           <div className="p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg">
@@ -87,7 +87,7 @@ const ProfileInformation = ({ user, setUpdateModal }) => {
           <div className="flex py-1 sm:py-2 border-b border-[#c6fbfb] justify-between items-center">
             <h3 className="">Name:</h3>
             <h3 className="">
-              {user?.firstName} {user?.lastName}
+              {user?.name?.firstName} {user?.name?.lastName}
             </h3>
           </div>
           <div className="flex py-1 sm:py-2 border-b border-[#c6fbfb] justify-between items-center">

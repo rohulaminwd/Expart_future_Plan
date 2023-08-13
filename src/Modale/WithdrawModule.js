@@ -10,11 +10,13 @@ import { useContext } from "react";
 import { MeContext } from "../App";
 import { accountName } from "../data/accountName";
 import TitleMarquee from "../Components/TitleMarquee";
+import axios from "../Utils/Axios.config";
 
 const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
   const [card, setCard] = useState("Bkash");
   const [withdrawConfirm, setWithdrawConfirm] = useState(null);
   const [amount, setAmount] = useState(0);
+  const [error, SetError] = useState();
   const [loading1, setLoading] = useState(false);
   const [me, isLoading, refetch] = useContext(MeContext);
 
@@ -33,37 +35,31 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
     // setLoading(true)
     const requestInfo = {
       sector: "withdraw",
-      name: me?.firstName + " " + me?.lastName,
       amount: amount,
-      phoneNumber: me?.phoneNumber,
+      user: me?._id,
       accountNumber: handleCard(card)?.cardNum,
     };
-    console.log(requestInfo, "dta data");
 
-    fetch("https://efp-usa-server-site.vercel.app/api/v1/request/add", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify(requestInfo),
-    })
-      .then((res) => res.json())
-      .then((status) => {
-        if (status.status === "success") {
+    axios
+      .post("/request/create", requestInfo)
+      .then((response) => {
+        const status = response?.data;
+        if (status.success === true) {
           toast.success("Your Request Success");
           setLoading(false);
-          setWithdraw("hidden");
-          setWithdrawConfirm({ amount, card });
+          setUpdateModal(null);
+          setWithdraw(null);
           refetch();
         }
-        if (status.status === "fail") {
+        if (status.success === false) {
           setLoading(false);
           toast.error("Your Request fail plx try again");
-          setWithdraw(null);
-          setWithdrawConfirm(null);
+          SetError(status.message);
         }
-        console.log(status);
+        setLoading(false);
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
   return (
@@ -76,7 +72,7 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
       >
         <div className="modal-box bg-blue-100 h-auto px-2 py-4 sm:py-8 sm:px-4">
           <label
-            for="withdraw"
+            htmlFor="withdraw"
             class="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
@@ -137,11 +133,12 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
                 class="input input-sm input-bordered w-full"
                 required
               />
+              <p className="text-center text-sm text-red-500">{error}</p>
               <label
                 onClick={handleState}
                 htmlFor="confirmWithdraw"
                 className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm"
-                disabled={amount < 500 || me?.balance < 500}
+                disabled={amount < 10 || me?.balance < 10}
               >
                 Withdraw Now
               </label>

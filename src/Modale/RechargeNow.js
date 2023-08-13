@@ -35,7 +35,7 @@ const RechargeNow = ({ setRecharge, recharge }) => {
       >
         <div className="modal-box bg-blue-100 h-screen sm:h-auto px-2 py-4 sm:py-8 sm:px-4">
           <label
-            for="recharge"
+            htmlFor="recharge"
             class="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
@@ -71,14 +71,12 @@ const RechargeNow = ({ setRecharge, recharge }) => {
                   </div>
                 ))}
               </div>
-              <p className="mt-3">{`${
-                card === "bkash" ? `Bkash: ${me?.bkash}` : `Nagad: ${me?.nagad}`
-              }`}</p>
+              <p className="mt-3"></p>
             </div>
             <p className="p-2 text-[16px] text-gray-700">
               Recharge Amount:{" "}
               <span className="text-secondary text-[14px]">
-                ( Minimum 1000 )
+                ( Minimum 10 $ )
               </span>
             </p>
             <form className="w-full mt-4">
@@ -93,7 +91,7 @@ const RechargeNow = ({ setRecharge, recharge }) => {
                 onClick={handleState}
                 htmlFor="confirmRecharge"
                 className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm"
-                disabled={amount < 1000}
+                disabled={amount < 10}
               >
                 Recharge Now
               </label>

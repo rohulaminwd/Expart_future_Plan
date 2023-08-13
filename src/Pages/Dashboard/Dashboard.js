@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./dashboard.css";
 import { motion } from "framer-motion";
 import { FaChevronLeft } from "react-icons/fa";
@@ -19,8 +19,11 @@ import {
 } from "react-icons/ri";
 import { titleMarquee } from "../../data/titleMerqueeData";
 import TitleMarquee from "../../Components/TitleMarquee";
+import UserProfileImg from "../../Components/UserProfileImg";
+import { MeContext } from "../../App";
 
 const Dashboard = ({ applyUsers, userClass }) => {
+  const [me] = useContext(MeContext);
   const [open, setOpen] = useState(true);
   const [tradOpen, setTardOpen] = useState(false);
   const location = useLocation();
@@ -286,11 +289,11 @@ const Dashboard = ({ applyUsers, userClass }) => {
               </div>
             )}
             <Link to="/dashboard/me">
-              {pathname === "/dashboard/me" ? (
-                <RiAccountCircleFill size={24} />
-              ) : (
-                <RiAccountCircleLine size={24} />
-              )}
+              <UserProfileImg
+                me={me}
+                textColor="sm:text-[14px] ring-offset-[1px] text-[12px] text-white"
+                className="w-6 h-6 sm:w-8 bg-secondary ring-[#91f2dc] sm:h-8 ring-[2px] "
+              />
             </Link>
           </div>
         </div>

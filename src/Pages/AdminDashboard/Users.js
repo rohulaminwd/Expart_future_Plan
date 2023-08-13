@@ -33,7 +33,7 @@ const Users = () => {
   };
 
   const filteredUsers = data?.filter((user) =>
-    user.firstName.toLowerCase().startsWith(searchTerm.toLowerCase())
+    user.name?.firstName.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 
   const handleClass = (classData) => {
@@ -108,14 +108,14 @@ const Users = () => {
                         >
                           <div className="w-9 h-9 shadow-md bg-purple-700 rounded-full flex items-center justify-center ring ring-purple-300 ring-offset-base-100 ring-offset-2">
                             <h2 className="text-[18px] uppercase font-bold text-white">
-                              {user?.firstName?.slice(0, 1)}
-                              {user?.lastName?.slice(0, 1)}
+                              {user?.name?.firstName?.slice(0, 1)}
+                              {user?.name?.lastName?.slice(0, 1)}
                             </h2>
                           </div>
                         </label>
                         <div className="">
                           <h2 className="text-[16px] font-bold">
-                            {user?.firstName} {user?.lastName}
+                            {user?.name?.firstName} {user?.name?.lastName}
                           </h2>
                           <h2 className="text-[14px]">{user.phoneNumber}</h2>
                         </div>

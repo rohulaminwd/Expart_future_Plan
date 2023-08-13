@@ -24,7 +24,6 @@ const Profile = () => {
 
   const cardHandler = (cardName) => {
     const existCard = me?.card?.find((i) => i?.cardName === cardName);
-    console.log(existCard);
     return existCard;
   };
   return (
@@ -51,18 +50,18 @@ const Profile = () => {
                     <UserProfileImg
                       me={me}
                       textColor="sm:text-[70px] ring-offset-[3px] text-[60px] text-white"
-                      className="w-28 h-28 sm:w-36 bg-secondary sm:h-36 ring-[6px] "
+                      className="w-28 h-28 sm:w-36 bg-secondary ring-[#91f2dc] sm:h-36 ring-[6px] "
                     />
                   </div>
                 )}
                 <div className="absolute sm:bottom-16 bottom-12 sm:-right-4 -right-3 text-[18px] bg-white border-[4px] border-[#91f2dc] rounded-full w-8 h-8 !grid !place-content-center">
                   <p className="text-green-500 font-bold">
-                    {me?.firstName?.slice(0, 1)}
+                    {me?.name?.firstName?.slice(0, 1)}
                   </p>
                 </div>
               </div>
               <p className="text-3xl mt-3 font-reem font-bold text-white text-center">
-                {me?.firstName} {me?.lastName}
+                {me?.name?.firstName} {me?.name?.lastName}
               </p>
               <p className="text-xl sm:mt-1 font-bold text-[#f0e0fc] text-center">
                 {me?.phoneNumber}
@@ -72,7 +71,7 @@ const Profile = () => {
               <div className="!z-[10000] w-full flex justify-between items-center">
                 <label
                   onClick={() => setLogout("logOut")}
-                  for="Logout-modal"
+                  htmlFor="Logout-modal"
                   className=""
                 >
                   <div className="cursor-pointer text-white hover:text-accent">

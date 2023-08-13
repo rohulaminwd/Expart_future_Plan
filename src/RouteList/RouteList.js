@@ -22,6 +22,7 @@ import SignIn from "../Pages/Registation/SignIn";
 import SignUp from "../Pages/Registation/SignUp";
 import TradPrimary from "../Pages/Dashboard/TradPrimary";
 import TradSecondary from "../Pages/Dashboard/TradSecondary";
+import SubmitTask from "../Pages/AdminDashboard/SubmitTask";
 
 const RouteList = () => {
   return (
@@ -63,6 +64,7 @@ const RouteList = () => {
           <Route index element={<AdminHome />}></Route>
           <Route path="users" element={<Users />}></Route>
           <Route path="adminWork" element={<AdminWork />}></Route>
+          <Route path="submit-task" element={<SubmitTask />}></Route>
           <Route path="adminPlan" element={<AdminPlan />}></Route>
           <Route
             path="withdraw-requested"

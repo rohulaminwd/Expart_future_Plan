@@ -1,20 +1,19 @@
 import React from "react";
 import { useState } from "react";
 import Loading from "../../Share/Loading";
-import plan1 from "../../assets/icons/plan (3).png";
-import plan2 from "../../assets/icons/plan (2).png";
-import plan3 from "../../assets/icons/plan (1).png";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { format } from "date-fns";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import DeleteModalConfirm from "../../Modale/DeleteModalConfirm";
 import CreatePlan from "../../Modale/CreatePlan";
 import { useContext } from "react";
-import { PlanContext } from "../../App";
+import { MeContext, PlanContext } from "../../App";
+import PlanCard from "../../Components/PlanCard";
 
 const AdminPlan = () => {
   const [plans, planLoading, planRefetch] = useContext(PlanContext);
+  const [me, meLoading] = useContext(MeContext);
   const [openPlan, setOpenPlan] = useState(null);
   const [deleteModule, setDeletingModal] = useState(null);
   const method = "plan";
@@ -40,29 +39,66 @@ const AdminPlan = () => {
           All Plan: <span className="text-accent ">{plans?.length}</span>
         </h1>
       </div>
-      <div className="md:mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-3">
-        {plans?.map((i, index) => (
-          <>
-            <motion.div
-              initial={{
-                y: "20vw",
-                transition: { type: "spring", duration: 0.1 },
-              }}
-              animate={{ y: 0, transition: { type: "spring", duration: 2 } }}
-              exit={{ y: "60vw", scale: [1, 0], transition: { duration: 0.5 } }}
-              className={` ${
-                i?.category === "Free Plan"
-                  ? "bg-[#2d4069] text-white"
-                  : "bg-white"
-              } 
-                    ${
-                      i?.category === "Life time Plan"
-                        ? "bg-primary text-white"
-                        : "bg-white"
-                    } 
-                     p-2 md:mt-0 sm:p-3 w-full duration-300 shadow-md rounded-2xl`}
-            >
-              <div className="relative border-b pb-1">
+      <motion.div className="md:mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-3">
+        <AnimatePresence>
+          {plans?.map((i, index) => (
+            <>
+              <motion.div
+                layout
+                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0 }}
+                exit={{ opacity: 0, scale: 0 }}
+                key={i?._id}
+                className={`md:mt-0 w-full duration-300 shadow-md rounded-2xl`}
+              >
+                <PlanCard
+                  plan={i}
+                  btnClass={`${
+                    i?.category === "Free Plan"
+                      ? "ring-[#91f2dc] bg-primary"
+                      : i?.category === "Life time Plan"
+                      ? "ring-[#91f2dc] bg-primary"
+                      : "bg-purple-700 text-white border-0 hover:bg-purple-700"
+                  }`}
+                  PlanDateExpire={""}
+                  setActivePlan={""}
+                  me={me}
+                  color={
+                    "after:bg-purple-400 before:bg-purple-400 text-purple-700"
+                  }
+                  classNam={"ring-purple-400 bg-purple-700"}
+                  bgColor={"bg-purple-700"}
+                  setOpenPlan={setOpenPlan}
+                  setDeletingModal={setDeletingModal}
+                />
+              </motion.div>
+            </>
+          ))}
+        </AnimatePresence>
+      </motion.div>
+      {openPlan && (
+        <CreatePlan
+          openPlan={openPlan}
+          setOpenPlan={setOpenPlan}
+          refetch={planRefetch}
+        />
+      )}
+      {deleteModule && (
+        <DeleteModalConfirm
+          deleteModule={deleteModule}
+          setDeletingModal={setDeletingModal}
+          refetch={planRefetch}
+          method={method}
+        />
+      )}
+    </div>
+  );
+};
+
+export default AdminPlan;
+
+{
+  /* <div className="relative border-b pb-1">
                 <div className="w-full flex items-start justify-start">
                   <div className="w-16">
                     {i?.category === "Free Plan" && (
@@ -136,28 +172,5 @@ const AdminPlan = () => {
                     <AiOutlineDelete size={20} />
                   </label>
                 </div>
-              </div>
-            </motion.div>
-          </>
-        ))}
-      </div>
-      {openPlan && (
-        <CreatePlan
-          openPlan={openPlan}
-          setOpenPlan={setOpenPlan}
-          refetch={planRefetch}
-        />
-      )}
-      {deleteModule && (
-        <DeleteModalConfirm
-          deleteModule={deleteModule}
-          setDeletingModal={setDeletingModal}
-          refetch={planRefetch}
-          method={method}
-        />
-      )}
-    </div>
-  );
-};
-
-export default AdminPlan;
+              </div> */
+}

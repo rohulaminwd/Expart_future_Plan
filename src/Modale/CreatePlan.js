@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import Loading from "../Share/Loading";
 import create1 from "../assets/icons/create (1).png";
 import create2 from "../assets/icons/create (2).png";
+import axios from "../Utils/Axios.config";
+import ProgressSpeener from "../Share/ProgressSpeener";
 
 const CreatePlan = ({ setOpenPlan, refetch, openPlan }) => {
   const {
@@ -15,15 +17,9 @@ const CreatePlan = ({ setOpenPlan, refetch, openPlan }) => {
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("Free Plan");
 
-  if (loading) {
-    return <Loading />;
-  }
-
-  console.log(openPlan[0]?._id);
-
   const onSubmit = (data) => {
     setLoading(true);
-    const TaskInfo = {
+    const PlanInfo = {
       planName: data.name,
       price: parseFloat(data.price),
       dailyTask: data.dailyTask,
@@ -32,54 +28,47 @@ const CreatePlan = ({ setOpenPlan, refetch, openPlan }) => {
       category: category,
       planInTimeName: data?.planInTimeName,
     };
-    console.log(TaskInfo);
+    console.log(PlanInfo);
 
     if (openPlan[0] === "create") {
-      fetch("https://efp-usa-server-site.vercel.app/api/v1/plan/create", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: JSON.stringify(TaskInfo),
-      })
-        .then((res) => res.json())
-        .then((status) => {
-          if (status.status === "success") {
+      axios
+        .post("plan/create", PlanInfo)
+        .then((response) => {
+          const status = response.data;
+          if (status.success === true) {
             reset();
             toast.success("successfully create task");
             setOpenPlan(null);
             refetch();
           }
-          if (status.status === "fail") {
-            console.log(data.error);
-            toast.error("Your Request fail plx try again");
+          if (status.success === false) {
+            console.log(status.error);
+            toast.error("Your Request failed. Please try again.");
           }
           setLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("An error occurred. Please try again.");
         });
     } else {
       console.log(openPlan[0]?._id);
-      fetch(
-        `https://efp-usa-server-site.vercel.app/api/v1/plan/${openPlan[0]?._id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "content-type": "application/json",
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-          body: JSON.stringify(TaskInfo),
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.status === "success") {
+      axios
+        .patch(`plan/${openPlan[0]?._id}`, PlanInfo)
+        .then((response) => {
+          const data = response.data;
+          if (data.success === true) {
             toast.success(data.message);
             refetch();
             setOpenPlan(null);
           }
-          if (data.status === "fail") {
-            toast.error("Your Request fail plx try again");
+          if (data.success === false) {
+            toast.error("Your Request failed. Please try again.");
           }
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("An error occurred. Please try again.");
         });
     }
   };
@@ -308,13 +297,14 @@ const CreatePlan = ({ setOpenPlan, refetch, openPlan }) => {
             )}
           </div>
 
-          <div className="flex items-center justify-center gap-3 mt-5">
+          <ProgressSpeener loading={loading} />
+          <div className="flex items-center justify-center gap-3">
             <input
               type="submit"
               value="Create"
               className="btn w-[100px] btn-primary text-white btn-sm"
             />
-            <label for="create-plan" className="btn btn-sm w-[100px] ">
+            <label htmlFor="create-plan" className="btn btn-sm w-[100px] ">
               cancel
             </label>
           </div>

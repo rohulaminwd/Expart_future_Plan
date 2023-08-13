@@ -21,39 +21,29 @@ const Work = () => {
   const [myTask, setMYTask] = useState(newArr);
 
   const completeTask = me?.CompleteTask?.slice(0, 5)?.reverse();
+
   const task = tasks?.filter((i) => {
-    const taskComplete = i?.completeUser?.find((x) =>
+    const submitTask = i?.submitTask?.find((x) =>
       x?.phoneNumber?.includes(me?.phoneNumber)
     );
-    return i?.status === "running" && !taskComplete;
+    return i?.status === "running" && !submitTask;
   });
 
-  console.log(task, "paichi");
+  // console.log(task, tasks, "paichi");
 
-  const handelPlanInTime = (timeName) => {
-    const planTime = me?.PlanInTime?.find((i) =>
-      i?.planDuration.includes(timeName)
-    );
-    console.log(planTime, "dfdfd");
-    return planTime?.planDuration;
+  const handleFindPlan = (name) => {
+    const planName = me?.plan?.find((i) => {
+      const planSplit = i?.planDuration?.split("-")?.[0];
+      return planSplit === name;
+    });
+    // console.log(planName, planName?.planDuration?.split("-")?.[0]);
+    return planName?.planDuration?.split("-")?.[0];
   };
 
-  task?.map((i) => {
-    if (i?.planCategory === "Free Plan" && me?.FreePlan === "active") {
+  task?.forEach((i) => {
+    const planName = i?.planCategory?.split("-")?.[0];
+    if (planName === handleFindPlan(planName)) {
       newArr.push(i);
-    } else if (
-      i?.planCategory === "Life time Plan" &&
-      me?.LifeTimePlan === "active"
-    ) {
-      newArr.push(i);
-      console.log(i, "arr");
-    } else if (
-      i?.planCategory !== "Free Plan" &&
-      i?.planCategory !== "Life time Plan"
-    ) {
-      if (i?.planDuration === handelPlanInTime(i?.planDuration)) {
-        newArr.push(i);
-      }
     }
   });
 
@@ -77,7 +67,7 @@ const Work = () => {
     setTask(x);
   };
 
-  console.log(myTask, task);
+  // console.log(myTask, task, "good");
 
   return (
     <div className="p-2 pt-0 sm:p-0">
@@ -88,11 +78,11 @@ const Work = () => {
             Task === "running"
               ? "!bg-primary border-[3px] border-[#9df1e5] rounded-md !text-white"
               : "border bg-slate-100"
-          } cursor-pointer w-full py-2 px-0`}
+          } cursor-pointer w-full px-0`}
         >
-          <div className="text-center">
-            <h1 className="text-xl sm:text-2xl">{newArr?.length}</h1>
-            <h1 className="text-[14px]">My Task</h1>
+          <div className="text-center flex items-center gap-x-2 justify-center">
+            <h2 className="text-[14px]">Pending</h2>
+            <h1 className="text-lg sm:text-xl">{newArr?.length}</h1>
           </div>
         </div>
         <div
@@ -101,11 +91,13 @@ const Work = () => {
             Task === "complete"
               ? "!bg-primary border-[3px] border-[#9df1e5] rounded-md !text-white"
               : "border bg-slate-100"
-          } cursor-pointer w-full py-2 px-0`}
+          } cursor-pointer w-full px-0`}
         >
-          <div className="text-center">
-            <h1 className="text-xl sm:text-2xl">{completeTask?.length}</h1>
-            <h1 className="text-[14px]">Complete Task</h1>
+          <div className="text-center flex gap-x-2 justify-center items-center">
+            <h2 className="text-[14px]">Complete</h2>
+            <h1 className="text-lg sm:text-xl">
+              {completeTask ? completeTask?.length : "0"}
+            </h1>
           </div>
         </div>
       </div>
@@ -175,13 +167,13 @@ const Work = () => {
                     <div className="border-r pr-2">
                       <a
                         className="text-[12px] font-bold text-primary"
-                        href={`${i?.taskUrl}`}
+                        href={`${i?.taskLink}`}
                       >
                         Open Link
                       </a>
                     </div>
                     <div className="border-l pl-2">
-                      <CopyButton value={`${i?.taskUrl}`}>
+                      <CopyButton value={`${i?.taskLink}`}>
                         {({ copied, copy }) => (
                           <p
                             className={`${

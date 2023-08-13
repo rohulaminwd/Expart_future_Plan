@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Loading from "../Share/Loading";
+import axios from "../Utils/Axios.config";
 import create1 from "../assets/icons/create (1).png";
 import create2 from "../assets/icons/create (2).png";
+import ProgressSpeener from "../Share/ProgressSpeener";
 
 const CreateTask = ({ setOpenTask, refetch, openTask }) => {
   const {
@@ -15,61 +17,46 @@ const CreateTask = ({ setOpenTask, refetch, openTask }) => {
   const [loading, setLoading] = useState(false);
   const [planCategory, setPlanCategory] = useState("Free Plan");
 
-  if (loading) {
-    return <Loading />;
-  }
-
   const onSubmit = (data) => {
     setLoading(true);
     const TaskInfo = {
       taskName: data.name,
       price: parseFloat(data.price),
       category: data.category,
-      planCategory: planCategory,
-      taskUrl: data.url,
-      planDuration: data.planDuration,
-      planInTimeName: data.planInTimeName,
+      planCategory:
+        planCategory === "Plan in time"
+          ? data?.planDuration + "-" + data?.planInTimeName
+          : planCategory === "Free Plan"
+          ? "15-Days"
+          : "Life time",
+      taskLink: data.url,
     };
 
-    console.log(TaskInfo, "ok");
-
     if (openTask[0] === "create") {
-      fetch("https://efp-usa-server-site.vercel.app/api/v1/task/create", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: JSON.stringify(TaskInfo),
-      })
-        .then((res) => res.json())
-        .then((status) => {
-          if (status.status === "success") {
+      axios
+        .post("/task/create", TaskInfo)
+        .then((response) => {
+          const status = response.data;
+          if (status.success === true) {
             reset();
             toast.success("successfully create task");
             setOpenTask(null);
             refetch();
           }
-          if (status.status === "fail") {
-            console.log(status.error);
+          if (status.success === false) {
             toast.error("Your Request fail plx try again");
           }
           setLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("An error occurred. Please try again.");
         });
     } else {
-      fetch(
-        `https://efp-usa-server-site.vercel.app/api/v1/task/${openTask[0]?._id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "content-type": "application/json",
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-          body: JSON.stringify(TaskInfo),
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
+      axios
+        .patch(`/task/${openTask[0]?._id}`, TaskInfo)
+        .then((response) => {
+          const data = response.data;
           if (data.status === "success") {
             toast.success(data.message);
             refetch();
@@ -78,6 +65,10 @@ const CreateTask = ({ setOpenTask, refetch, openTask }) => {
           if (data.status === "fail") {
             toast.error("Your Request fail plx try again");
           }
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("An error occurred. Please try again.");
         });
     }
   };
@@ -312,13 +303,14 @@ const CreateTask = ({ setOpenTask, refetch, openTask }) => {
             )}
           </div>
 
-          <div className="flex items-center justify-center gap-3 mt-5">
+          <ProgressSpeener loading={loading} />
+          <div className="flex items-center justify-center gap-3">
             <input
               type="submit"
               value="Create"
               className="btn w-[100px] btn-primary text-white btn-sm"
             />
-            <label for="create-task" className="btn btn-sm w-[100px] ">
+            <label htmlFor="create-task" className="btn btn-sm w-[100px] ">
               cancel
             </label>
           </div>

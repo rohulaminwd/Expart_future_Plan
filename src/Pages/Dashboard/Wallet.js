@@ -17,6 +17,10 @@ import { useContext } from "react";
 import { MeContext } from "../../App";
 import { Circles, FidgetSpinner, Watch } from "react-loader-spinner";
 import useIncomeTracker from "../../Hooks/useIncomeTracker";
+import tree from "../../assets/lottie/treee.json";
+import plan from "../../assets/lottie/plan.json";
+import Lottie from "lottie-react";
+import { AiOutlineFileDone, AiOutlineHistory } from "react-icons/ai";
 
 const Wallet = () => {
   const [me, meLoading, refetch] = useContext(MeContext);
@@ -53,131 +57,154 @@ const Wallet = () => {
   };
 
   return (
-    <div className="w-full sm:p-0 sm:pb-3 p-2">
-      <div
-        style={{ backgroundImage: `url(${bg2})` }}
-        className="bg-cover rounded-2xl"
-      >
-        <div className="text-center cursor-pointer px-3 py-8 sm:py-12 bg-[#33446929] text-white rounded-2xl">
-          <h3 className="text-5xl sm:text-8xl font-bold">{me?.balance} $</h3>
-          <p className="text-3xl sm:text-5xl text-[#9cabc9] sm:mt-4 mt-2">
-            Total Balance
-          </p>
+    <div className="w-full">
+      <div className="font-reem -z-[0] relative pattern-planbg border-t-0 border sm:border-2 rounded-t-[10px] sm:border-t-0 border-purple-200 text-gray-800 pb-8 p-3 py-5 sm:p-5 rounded-b-[100px] bg-white">
+        <div className="w-full absolute top-[60px] left-0">
+          <Lottie
+            animationData={plan}
+            loop={true}
+            style={{ height: "250px" }}
+          />
+        </div>
+        <div className="mb-10">
+          <div className="w-full">
+            <Lottie
+              animationData={tree}
+              loop={true}
+              style={{ height: "150px", width: "100%" }}
+            />
+          </div>
+          <div className="w-full -mt-10 pb-5 text-center">
+            <h2 className="text-5xl sm:text-7xl font-bold text-purple-700">
+              {me?.balance} $
+            </h2>
+            <p className="text-4xl font-reem sm:text-5xl mt-2 sm:mt-3 text-purple-500">
+              Total Balance
+            </p>
+          </div>
         </div>
       </div>
-      <div className="flex items-center mt-5 mb-3 sm:my-6 justify-between gap-2 sm:gap-6">
-        <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg">
-          <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
-            <div className="w-9 sm:w-16 -ml-1">
-              <img src={taka} className="w-full" alt="taka" />
+
+      <div className="-mt-[65px] relative z-50 px-2 mx-2 sm:mx-3 sm:px-3 bg-white rounded-xl p-4">
+        <div className="flex items-center mb-3 justify-between gap-2 sm:gap-3">
+          <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 border border-purple-200 duration-300 shadow-sm pattern-planbg rounded-lg">
+            <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
+              <div className="w-9 sm:w-16 -ml-1">
+                <img src={taka} className="w-full" alt="taka" />
+              </div>
+              <div className="">
+                <h3 className="font-bold sm:mb-1 sm:text-2xl">
+                  {yesterdayIncome} $
+                </h3>
+                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                  Yesterday Income
+                </h1>
+              </div>
             </div>
-            <div className="">
-              <h3 className="font-bold sm:mb-1 sm:text-2xl">
-                {yesterdayIncome} $
-              </h3>
-              <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
-                Yesterday Income
-              </h1>
-            </div>
+            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+              Yesterday Income
+            </h1>
           </div>
-          <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
-            Yesterday Income
-          </h1>
+          <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 border border-purple-200 duration-300 shadow-sm pattern-planbg rounded-lg">
+            <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
+              <div className="w-9 sm:w-16 -ml-1">
+                <img src={taka5} className="w-full" alt="taka" />
+              </div>
+              <div className="">
+                <h3 className="font-bold sm:mb-1 sm:text-2xl">
+                  {me?.balance} $
+                </h3>
+                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                  Available Balance
+                </h1>
+              </div>
+            </div>
+            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+              Available Balance
+            </h1>
+          </div>
+          <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 border border-purple-200 duration-300 shadow-sm pattern-planbg rounded-lg">
+            <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
+              <div className="w-9 sm:w-16 -ml-1">
+                <img src={taka3} className="w-full" alt="taka" />
+              </div>
+              <div className="">
+                <h3 className="font-bold sm:mb-1 sm:text-2xl">
+                  {todayIncome} $
+                </h3>
+                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                  Today Income
+                </h1>
+              </div>
+            </div>
+            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+              Today Income
+            </h1>
+          </div>
         </div>
-        <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg">
-          <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
-            <div className="w-9 sm:w-16 -ml-1">
-              <img src={taka5} className="w-full" alt="taka" />
+        <div className="flex items-center justify-between gap-2 sm:gap-3">
+          <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 border border-purple-200 duration-300 shadow-sm pattern-planbg rounded-lg">
+            <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
+              <div className="w-9 sm:w-16 -ml-1">
+                <img src={taka6} className="w-full" alt="taka" />
+              </div>
+              <div className="">
+                <h3 className="font-bold sm:mb-1 sm:text-2xl">
+                  {weeklyIncome} $
+                </h3>
+                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                  Weekly Income
+                </h1>
+              </div>
             </div>
-            <div className="">
-              <h3 className="font-bold sm:mb-1 sm:text-2xl">{me?.balance} $</h3>
-              <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
-                Available Balance
-              </h1>
-            </div>
+            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+              Weekly Income
+            </h1>
           </div>
-          <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
-            Available Balance
-          </h1>
-        </div>
-        <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg">
-          <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
-            <div className="w-9 sm:w-16 -ml-1">
-              <img src={taka3} className="w-full" alt="taka" />
+          <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 border border-purple-200 duration-300 shadow-sm pattern-planbg rounded-lg">
+            <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
+              <div className="w-9 sm:w-16 -ml-1">
+                <img src={taka4} className="w-full" alt="taka" />
+              </div>
+              <div className="">
+                <h3 className="font-bold sm:mb-1 sm:text-2xl">
+                  {monthlyIncome} $
+                </h3>
+                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                  Monthly Income
+                </h1>
+              </div>
             </div>
-            <div className="">
-              <h3 className="font-bold sm:mb-1 sm:text-2xl">{todayIncome} $</h3>
-              <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
-                Today Income
-              </h1>
-            </div>
+            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+              Monthly Income
+            </h1>
           </div>
-          <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
-            Today Income
-          </h1>
+          <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 border border-purple-200 duration-300 shadow-sm pattern-planbg rounded-lg">
+            <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
+              <div className="w-9 sm:w-16 -ml-1">
+                <img src={taka2} className="w-full" alt="taka" />
+              </div>
+              <div className="">
+                <h3 className="font-bold sm:mb-1 sm:text-2xl">12 $</h3>
+                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                  Company Bunas
+                </h1>
+              </div>
+            </div>
+            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+              Company Bunas
+            </h1>
+          </div>
         </div>
       </div>
-      <div className="flex items-center my-2 justify-between gap-2 sm:gap-6">
-        <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg">
-          <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
-            <div className="w-9 sm:w-16 -ml-1">
-              <img src={taka6} className="w-full" alt="taka" />
-            </div>
-            <div className="">
-              <h3 className="font-bold sm:mb-1 sm:text-2xl">
-                {weeklyIncome} $
-              </h3>
-              <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
-                Weekly Income
-              </h1>
-            </div>
-          </div>
-          <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
-            Weekly Income
-          </h1>
-        </div>
-        <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg">
-          <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
-            <div className="w-9 sm:w-16 -ml-1">
-              <img src={taka4} className="w-full" alt="taka" />
-            </div>
-            <div className="">
-              <h3 className="font-bold sm:mb-1 sm:text-2xl">
-                {monthlyIncome} $
-              </h3>
-              <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
-                Monthly Income
-              </h1>
-            </div>
-          </div>
-          <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
-            Monthly Income
-          </h1>
-        </div>
-        <div className="p-2 sm:p-3 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-lg bg-[#fff] rounded-lg">
-          <div className="gap-1 flex items-center justify-between sm:justify-start sm:gap-2">
-            <div className="w-9 sm:w-16 -ml-1">
-              <img src={taka2} className="w-full" alt="taka" />
-            </div>
-            <div className="">
-              <h3 className="font-bold sm:mb-1 sm:text-2xl">12 $</h3>
-              <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
-                Company Bunas
-              </h1>
-            </div>
-          </div>
-          <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
-            Company Bunas
-          </h1>
-        </div>
-      </div>
-      <div className="border-t-2 sm:mt-8 mt-5 border-primary">
-        <div className="flex items-center gap-4 sm:mt-8 mt-5 justify-between">
+
+      <div className="sm:mt-6 mt-4 bg-white mx-2 sm:mx-3 rounded-xl p-4">
+        <div className="flex items-center gap-4 justify-between">
           <div className="w-full">
             {me?.card.length > 0 ? (
               <label
                 onClick={() => setRecharge("recharge")}
-                for="recharge"
+                htmlFor="recharge"
                 className="btn btn-xl sm:btn-lg border-[4px] hover:shadow-md btn-success hover:shadow-[#c5f3f2] rounded-full border-[#b0f6b0] w-full text-[#fff] mr-5 font-bold bg-[#1e9558]"
               >
                 Recharge
@@ -185,7 +212,7 @@ const Wallet = () => {
             ) : (
               <label
                 onClick={() => setUpdateModal([me, "bankCard"])}
-                for="update-password"
+                htmlFor="update-password"
                 className="btn btn-xl sm:btn-lg border-[4px] hover:shadow-md btn-success hover:shadow-[#c5f3f2] rounded-full border-[#b0f6b0] w-full text-[#fff] mr-5 font-bold bg-[#1e9558]"
               >
                 Recharge
@@ -196,7 +223,7 @@ const Wallet = () => {
             {me?.card?.length > 0 ? (
               <label
                 onClick={() => setWithdraw("withdraw")}
-                for="withdraw"
+                htmlFor="withdraw"
                 className="btn btn-xl sm:btn-lg border-[4px] border-[#f8c4b4] btn-secondary w-full font-bold rounded-full hover:shadow-md hover:shadow-secondary text-white bg-[#f05e41]"
               >
                 Withdraw
@@ -204,7 +231,7 @@ const Wallet = () => {
             ) : (
               <label
                 onClick={() => setUpdateModal([me, "bankCard"])}
-                for="update-password"
+                htmlFor="update-password"
                 className="btn btn-xl sm:btn-lg border-[4px] border-[#f8c4b4] btn-secondary w-full font-bold rounded-full hover:shadow-md hover:shadow-secondary text-white bg-[#f05e41]"
               >
                 Withdraw
@@ -213,67 +240,31 @@ const Wallet = () => {
           </div>
         </div>
       </div>
-      <Link to="/dashboard/planDetails">
-        <div className="border-[4px] cursor-pointer flex gap-2 sm:gap-4 items-center border-[#6182c9] sm:mt-8 mt-5 p-2 bg-[#2d4069] text-white rounded-[80px]">
-          <div className="w-[80px] h-[80px] grid place-content-center border-[4px] border-[#77e9d2] bg-[#cff8f7] rounded-full">
-            <div className="text-center">
-              <Circles
-                visible={true}
-                height="60"
-                width="60"
-                ariaLabel="dna-loading"
-                wrapperStyle={{}}
-                wrapperClass="dna-wrapper"
-                ballColors={["#ff0000", "#00ff00", "#0000ff"]}
-                backgroundColor="#F4442E"
-              />
-            </div>
-          </div>
-          <div>
-            <h2 className="text-4xl sm:text-5xl font-bold">Show Plan</h2>
-            <p className="text-2xl sm:text-3xl">Our best plan</p>
-          </div>
-        </div>
-      </Link>
-      <Link to="/dashboard/history">
-        <div className="border-[4px] cursor-pointer flex gap-2 sm:gap-4 items-center border-[#e4b88c] sm:mt-8 mt-5 p-2 bg-[#965a2c] text-white rounded-[80px]">
-          <div className="w-[80px] h-[80px] grid place-content-center border-[4px] border-[#77e9d2] bg-[#cff8f7] rounded-full">
-            <div className="text-center">
-              <Watch
-                visible={true}
-                height="60"
-                width="60"
-                ariaLabel="dna-loading"
-                wrapperStyle={{}}
-                wrapperClass="dna-wrapper"
-                ballColors={["#ff0000", "#00ff00", "#0000ff"]}
-                backgroundColor="#F4442E"
-              />
-            </div>
-          </div>
-          <div>
-            <h2 className="text-4xl sm:text-5xl font-bold">My History</h2>
-            <p className="text-2xl sm:text-3xl">My Request history</p>
-          </div>
-        </div>
-      </Link>
-      {me?.role === "admin" && (
-        <Link to="/admin-dashboard">
-          <div
-            style={{ backgroundImage: `url(${bg1})` }}
-            className="bg-cover rounded-2xl"
-          >
-            <div className="text-center cursor-pointer sm:mt-3 mt-5 px-3 py-8 bg-[#2d4069cd] text-white rounded-2xl">
-              <h2 className="text-3xl sm:text-5xl font-bold">
-                Admin Dashboard
+
+      <div className="px-2 sm:px-3">
+        <div className="font-reem w-full flex items-center gap-x-3 sm:mt-6 mt-4 bg-white rounded-xl p-3 sm:p-4">
+          <Link className="w-full" to="/dashboard/planDetails">
+            <div className="p-2 gap-1 sm:p-4 flex items-center sm:gap-2 cursor-pointer hover:-translate-y-1 duration-300 shadow-sm border border-purple-200 pattern-planbg rounded-lg">
+              <span className="text-2xl text-purple-700">
+                <AiOutlineFileDone />
+              </span>
+              <h2 className="sm:text-xl text-purple-500 font-bold">
+                Show Plan
               </h2>
-              <p className="text-xl text-primary mt-2">
-                only admin access the dashboard
-              </p>
             </div>
-          </div>
-        </Link>
-      )}
+          </Link>
+          <Link className="w-full" to="/dashboard/history">
+            <div className="p-2 gap-1 sm:p-4 flex items-center sm:gap-2 cursor-pointer hover:-translate-y-1 duration-300 shadow-sm border border-purple-200 pattern-planbg rounded-lg">
+              <span className="text-2xl text-purple-700">
+                <AiOutlineHistory />
+              </span>
+              <h2 className="sm:text-xl text-purple-500 font-bold">
+                My History
+              </h2>
+            </div>
+          </Link>
+        </div>
+      </div>
       {planModal && (
         <PlansModale planModal={planModal} setPlanModal={setPlanModal} />
       )}

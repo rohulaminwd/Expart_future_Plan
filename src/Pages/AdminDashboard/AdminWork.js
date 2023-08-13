@@ -1,7 +1,6 @@
 /* eslint-disable array-callback-return */
 import React from "react";
 import { useState } from "react";
-import { useQuery } from "react-query";
 import CreateTask from "../../Modale/CreateTask";
 import Loading from "../../Share/Loading";
 import task1 from "../../assets/icons/task (3).png";
@@ -42,6 +41,7 @@ const AdminWork = () => {
     const exsiteUser = user?.find((i) => i?.phoneNumber === phone);
     return exsiteUser;
   };
+
   return (
     <div className="p-2 pt-0 sm:p-0">
       <div className="text-center w-full flex items-center justify-between p-3 py-4 shadow-md sm:mb-5 mb-3 rounded-md bg-white">
@@ -68,7 +68,9 @@ const AdminWork = () => {
               }}
               animate={{ y: 0, transition: { type: "spring", duration: 2 } }}
               exit={{ y: "60vw", scale: [1, 0], transition: { duration: 0.5 } }}
-              className={`p-2 md:mt-0 sm:p-3 bg-white w-full duration-300 shadow-md rounded-2xl`}
+              className={`${
+                i?.status === "running" ? "border-2 border-green-500" : ""
+              } p-2 md:mt-0 sm:p-3 bg-white w-full duration-300 shadow-md rounded-2xl`}
             >
               <div className="relative border-b-2 pb-1">
                 <div className="w-full flex items-start justify-start">
@@ -100,21 +102,21 @@ const AdminWork = () => {
                 </div>
                 <div className="text-right flex justify-between items-center gap-2">
                   <div className="flex pb-[2px] items-center">
-                    {i?.completeUser && (
+                    {i?.submitTask && (
                       <p className="mr-2 font-bold text-[14px]">
-                        {i?.completeUser.length}
+                        {i?.submitTask?.length}
                       </p>
                     )}
-                    {i?.completeUser?.slice(0, 3)?.map((x) => (
+                    {i?.submitTask?.slice(0, 3)?.map((x) => (
                       <div className="flex items-center">
                         <UserProfileImg
                           me={handleFindUser(x?.phoneNumber)}
                           textColor="sm:text-[8px] ring-offset-[1px] text-[8px] text-white"
-                          className="w-4 h-4 -ml-[1px] bg-secondary ring-[1px] "
+                          className="w-4 h-4 -ml-[1px] bg-secondary ring-[1px] ring-[#91f2dc]"
                         />
                       </div>
                     ))}
-                    {i?.completeUser.length > 2 && (
+                    {i?.submitTask?.length > 2 && (
                       <span className="font-bold ml-1 text-lg text-green-500">
                         . . .
                       </span>
@@ -148,13 +150,13 @@ const AdminWork = () => {
                   <div className="border-r pr-2">
                     <a
                       className="text-[12px] font-bold text-primary"
-                      href={`${i?.taskUrl}`}
+                      href={`${i?.taskLink}`}
                     >
                       Open Link
                     </a>
                   </div>
                   <div className="border-l pl-2">
-                    <CopyButton value={`${i?.taskUrl}`}>
+                    <CopyButton value={`${i?.taskLink}`}>
                       {({ copied, copy }) => (
                         <p
                           className={`${
