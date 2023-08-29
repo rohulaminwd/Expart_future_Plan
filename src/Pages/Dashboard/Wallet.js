@@ -9,13 +9,10 @@ import taka3 from "../../assets/icons/taka1 (3).png";
 import taka4 from "../../assets/icons/taka1 (4).png";
 import taka5 from "../../assets/icons/taka1 (5).png";
 import taka6 from "../../assets/icons/taka1 (1).png";
-import bg1 from "../../assets/images/bg-small6.jpg";
-import bg2 from "../../assets/images/bg-small4.jpg";
 import UpdatePassword from "../../Modale/UpdatePassword";
 import Loading from "../../Share/Loading";
 import { useContext } from "react";
 import { MeContext } from "../../App";
-import { Circles, FidgetSpinner, Watch } from "react-loader-spinner";
 import useIncomeTracker from "../../Hooks/useIncomeTracker";
 import tree from "../../assets/lottie/treee.json";
 import plan from "../../assets/lottie/plan.json";
@@ -28,8 +25,13 @@ const Wallet = () => {
   const [recharge, setRecharge] = useState(null);
   const [withdraw, setWithdraw] = useState(null);
   const [updateModal, setUpdateModal] = useState(null);
-  const { yesterdayIncome, todayIncome, weeklyIncome, monthlyIncome } =
-    useIncomeTracker(me?.CompleteTask);
+  const {
+    yesterdayIncome,
+    todayIncome,
+    weeklyIncome,
+    monthlyIncome,
+    companyBunas,
+  } = useIncomeTracker(me?.incomeHistory);
 
   if (meLoading) {
     return <Loading></Loading>;
@@ -93,15 +95,15 @@ const Wallet = () => {
                 <img src={taka} className="w-full" alt="taka" />
               </div>
               <div className="">
-                <h3 className="font-bold sm:mb-1 sm:text-2xl">
+                <h3 className="font-bold text-purple-700 sm:mb-1 sm:text-2xl">
                   {yesterdayIncome} $
                 </h3>
-                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Yesterday Income
                 </h1>
               </div>
             </div>
-            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+            <h1 className="text-[12px] sm:hidden block text-purple-400 sm:text-xl">
               Yesterday Income
             </h1>
           </div>
@@ -111,15 +113,15 @@ const Wallet = () => {
                 <img src={taka5} className="w-full" alt="taka" />
               </div>
               <div className="">
-                <h3 className="font-bold sm:mb-1 sm:text-2xl">
+                <h3 className="font-bold text-purple-700 sm:mb-1 sm:text-2xl">
                   {me?.balance} $
                 </h3>
-                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Available Balance
                 </h1>
               </div>
             </div>
-            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+            <h1 className="text-[12px] sm:hidden block text-purple-400 sm:text-xl">
               Available Balance
             </h1>
           </div>
@@ -129,15 +131,15 @@ const Wallet = () => {
                 <img src={taka3} className="w-full" alt="taka" />
               </div>
               <div className="">
-                <h3 className="font-bold sm:mb-1 sm:text-2xl">
+                <h3 className="font-bold text-purple-700 sm:mb-1 sm:text-2xl">
                   {todayIncome} $
                 </h3>
-                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Today Income
                 </h1>
               </div>
             </div>
-            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+            <h1 className="text-[12px] sm:hidden block text-purple-400 sm:text-xl">
               Today Income
             </h1>
           </div>
@@ -149,15 +151,15 @@ const Wallet = () => {
                 <img src={taka6} className="w-full" alt="taka" />
               </div>
               <div className="">
-                <h3 className="font-bold sm:mb-1 sm:text-2xl">
+                <h3 className="font-bold text-purple-700 sm:mb-1 sm:text-2xl">
                   {weeklyIncome} $
                 </h3>
-                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Weekly Income
                 </h1>
               </div>
             </div>
-            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+            <h1 className="text-[12px] sm:hidden block text-purple-400 sm:text-xl">
               Weekly Income
             </h1>
           </div>
@@ -167,15 +169,15 @@ const Wallet = () => {
                 <img src={taka4} className="w-full" alt="taka" />
               </div>
               <div className="">
-                <h3 className="font-bold sm:mb-1 sm:text-2xl">
+                <h3 className="font-bold text-purple-700 sm:mb-1 sm:text-2xl">
                   {monthlyIncome} $
                 </h3>
-                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Monthly Income
                 </h1>
               </div>
             </div>
-            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+            <h1 className="text-[12px] sm:hidden block text-purple-400 sm:text-xl">
               Monthly Income
             </h1>
           </div>
@@ -185,13 +187,15 @@ const Wallet = () => {
                 <img src={taka2} className="w-full" alt="taka" />
               </div>
               <div className="">
-                <h3 className="font-bold sm:mb-1 sm:text-2xl">12 $</h3>
-                <h1 className="text-[12px] hidden sm:block text-[#727988] sm:text-xl">
+                <h3 className="font-bold sm:mb-1 text-purple-700 sm:text-2xl">
+                  {companyBunas} $
+                </h3>
+                <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Company Bunas
                 </h1>
               </div>
             </div>
-            <h1 className="text-[12px] sm:hidden block text-[#727988] sm:text-xl">
+            <h1 className="text-[12px] sm:hidden block text-purple-400 sm:text-xl">
               Company Bunas
             </h1>
           </div>
@@ -201,42 +205,22 @@ const Wallet = () => {
       <div className="sm:mt-6 mt-4 bg-white mx-2 sm:mx-3 rounded-xl p-4">
         <div className="flex items-center gap-4 justify-between">
           <div className="w-full">
-            {me?.card.length > 0 ? (
-              <label
-                onClick={() => setRecharge("recharge")}
-                htmlFor="recharge"
-                className="btn btn-xl sm:btn-lg border-[4px] hover:shadow-md btn-success hover:shadow-[#c5f3f2] rounded-full border-[#b0f6b0] w-full text-[#fff] mr-5 font-bold bg-[#1e9558]"
-              >
-                Recharge
-              </label>
-            ) : (
-              <label
-                onClick={() => setUpdateModal([me, "bankCard"])}
-                htmlFor="update-password"
-                className="btn btn-xl sm:btn-lg border-[4px] hover:shadow-md btn-success hover:shadow-[#c5f3f2] rounded-full border-[#b0f6b0] w-full text-[#fff] mr-5 font-bold bg-[#1e9558]"
-              >
-                Recharge
-              </label>
-            )}
+            <label
+              onClick={() => setRecharge("recharge")}
+              htmlFor="recharge"
+              className="btn btn-xl sm:btn-lg border-[4px] hover:shadow-md btn-success hover:shadow-[#c5f3f2] rounded-full border-[#b0f6b0] w-full text-[#fff] mr-5 font-bold bg-[#1e9558]"
+            >
+              Recharge
+            </label>
           </div>
           <div className="w-full">
-            {me?.card?.length > 0 ? (
-              <label
-                onClick={() => setWithdraw("withdraw")}
-                htmlFor="withdraw"
-                className="btn btn-xl sm:btn-lg border-[4px] border-[#f8c4b4] btn-secondary w-full font-bold rounded-full hover:shadow-md hover:shadow-secondary text-white bg-[#f05e41]"
-              >
-                Withdraw
-              </label>
-            ) : (
-              <label
-                onClick={() => setUpdateModal([me, "bankCard"])}
-                htmlFor="update-password"
-                className="btn btn-xl sm:btn-lg border-[4px] border-[#f8c4b4] btn-secondary w-full font-bold rounded-full hover:shadow-md hover:shadow-secondary text-white bg-[#f05e41]"
-              >
-                Withdraw
-              </label>
-            )}
+            <label
+              onClick={() => setWithdraw("withdraw")}
+              htmlFor="withdraw"
+              className="btn btn-xl sm:btn-lg border-[4px] border-[#f8c4b4] btn-secondary w-full font-bold rounded-full hover:shadow-md hover:shadow-secondary text-white bg-[#f05e41]"
+            >
+              Withdraw
+            </label>
           </div>
         </div>
       </div>

@@ -39,7 +39,11 @@ const PlanDetails = () => {
     }
   };
 
-  const isDateExpire = (PlanDate) => {
+  const PaidPlan = me?.plan?.find((i) => i?.planDuration !== "15-Days");
+
+  console.log(PaidPlan, "paidPlan");
+
+  const FreePlanDateExpire = (PlanDate) => {
     const date = new Date(PlanDate);
     const expireDate = date.setDate(date.getDate() + 15);
     const expire = expireDate - new Date();
@@ -63,7 +67,7 @@ const PlanDetails = () => {
   };
 
   const PlanDateExpire = (id) => {
-    const active = me?.PlanInTime?.find((i) => i?._id?.includes(id));
+    const active = me?.plan?.find((i) => i?._id?.includes(id));
     const duration = parseInt(active?.planDuration?.split("-")?.[0]);
     const date = new Date(active?.date);
     const expireDate = date.setDate(date.getDate() + duration);
@@ -156,7 +160,7 @@ const PlanDetails = () => {
             </div> */}
             <PlanCard
               plan={freePlan}
-              PlanDateExpire={PlanDateExpire}
+              PlanDateExpire={FreePlanDateExpire}
               setActivePlan={setActivePlan}
               me={me}
               classNam={"ring-[#91f2dc] bg-primary"}
@@ -231,7 +235,6 @@ const PlanDetails = () => {
             <PlanCard
               plan={planInTime}
               btnClass={"btn-primary text-white"}
-              PlanDateExpire={PlanDateExpire}
               setActivePlan={setActivePlan}
               me={me}
               classNam={"ring-[#91f2dc] bg-primary"}

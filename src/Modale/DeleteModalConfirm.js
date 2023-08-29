@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import Loading from "../Share/Loading";
 import delete1 from "../assets/icons/delete.png";
 import axios from "../Utils/Axios.config";
+import ProgressSpeener from "../Share/ProgressSpeener";
 
 const DeleteModalConfirm = ({
   deleteModule,
@@ -11,10 +12,6 @@ const DeleteModalConfirm = ({
   setDeletingModal,
 }) => {
   const [loading, setLoading] = useState(false);
-
-  if (loading) {
-    return <Loading></Loading>;
-  }
   const handleDelete = () => {
     setLoading(true);
     axios
@@ -53,19 +50,22 @@ const DeleteModalConfirm = ({
           <h2 className="text-red-700 text-2xl">
             Are you sure you want to delete This item
           </h2>
-          <div className="flex items-center justify-center gap-3 mt-5">
-            <button
-              onClick={handleDelete}
-              className="btn w-[100px] btn-primary text-white btn-sm"
-            >
-              Yes
-            </button>
-            <label
-              htmlFor="delete-confirm-modal"
-              className="btn btn-sm w-[100px] "
-            >
-              No
-            </label>
+          <div className="mt-5">
+            <ProgressSpeener loading={loading} />
+            <div className="flex items-center justify-center gap-3 ">
+              <button
+                onClick={handleDelete}
+                className="btn w-[100px] btn-primary text-white btn-sm"
+              >
+                Yes
+              </button>
+              <label
+                htmlFor="delete-confirm-modal"
+                className="btn btn-sm w-[100px] "
+              >
+                No
+              </label>
+            </div>
           </div>
         </div>
       </div>

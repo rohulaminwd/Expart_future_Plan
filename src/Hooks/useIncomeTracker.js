@@ -1,30 +1,56 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const useIncomeTracker = (incomeData) => {
   const [yesterdayIncome, setYesterdayIncome] = useState(0);
   const [todayIncome, setTodayIncome] = useState(0);
   const [weeklyIncome, setWeeklyIncome] = useState(0);
   const [monthlyIncome, setMonthlyIncome] = useState(0);
+  const [companyBunas, setCompanyBunas] = useState(0);
 
   useEffect(() => {
     const today = new Date();
     const yesterday = new Date();
     yesterday.setDate(today.getDate() - 1);
 
-    const todayIncomeData = incomeData?.filter(income => new Date(income.date).toDateString() === today.toDateString());
-    const yesterdayIncomeData = incomeData?.filter(income => new Date(income.date).toDateString() === yesterday.toDateString());
-    const weeklyIncomeData = incomeData?.filter(income => new Date(income.date) > new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7));
-    const monthlyIncomeData = incomeData?.filter(income => new Date(income.date) > new Date(today.getFullYear(), today.getMonth() - 1, today.getDate()));
+    const todayIncomeData = incomeData?.filter(
+      (income) => new Date(income.date).toDateString() === today.toDateString()
+    );
+    const yesterdayIncomeData = incomeData?.filter(
+      (income) =>
+        new Date(income.date).toDateString() === yesterday.toDateString()
+    );
+    const weeklyIncomeData = incomeData?.filter(
+      (income) =>
+        new Date(income.date) >
+        new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7)
+    );
+    const monthlyIncomeData = incomeData?.filter(
+      (income) =>
+        new Date(income.date) >
+        new Date(today.getFullYear(), today.getMonth() - 1, today.getDate())
+    );
 
-    const calculateTotalIncome = (incomeData) => incomeData?.reduce((total, income) => total + income.price, 0);
+    const companyBunas = incomeData?.filter(
+      (income) => income?.category === "bunas"
+    );
+
+    const calculateTotalIncome = (incomeData) =>
+      incomeData?.reduce((total, income) => total + income?.amount, 0);
 
     setYesterdayIncome(calculateTotalIncome(yesterdayIncomeData));
     setTodayIncome(calculateTotalIncome(todayIncomeData));
     setWeeklyIncome(calculateTotalIncome(weeklyIncomeData));
     setMonthlyIncome(calculateTotalIncome(monthlyIncomeData));
+    setCompanyBunas(calculateTotalIncome(companyBunas));
   }, [incomeData]);
 
-  return { yesterdayIncome, todayIncome, weeklyIncome, monthlyIncome };
+  return {
+    yesterdayIncome,
+    todayIncome,
+    weeklyIncome,
+    monthlyIncome,
+    companyBunas,
+  };
 };
 
 export default useIncomeTracker;

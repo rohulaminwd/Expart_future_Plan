@@ -22,7 +22,6 @@ const Navbar = ({ userClass }) => {
   const [logout, setLogout] = useState(null);
   const [me, isLoading] = useContext(MeContext);
   const [stickyClass, setStickyClass] = useState("0");
-  console.log(stickyClass, "dfjdjfkjf");
 
   function stickNavbar() {
     let windowHeight = window.scrollY;
@@ -33,14 +32,15 @@ const Navbar = ({ userClass }) => {
     window.addEventListener("scroll", stickNavbar);
   }, []);
 
-  if (isLoading) {
-    <Loading />;
-  }
+  // if (isLoading) {
+  //   <Loading />;
+  // }
+
   const navigate = useNavigate();
-  const logOut = () => {
-    navigate("/");
-    localStorage.removeItem("accessToken");
-  };
+  // const logOut = () => {
+  //   navigate("/");
+  //   localStorage.removeItem("accessToken");
+  // };
 
   const menuItems = (
     <>

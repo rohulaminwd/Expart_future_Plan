@@ -16,6 +16,7 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
   const [card, setCard] = useState("Bkash");
   const [withdrawConfirm, setWithdrawConfirm] = useState(null);
   const [amount, setAmount] = useState(0);
+  const [accountNum, setAccountNum] = useState(0);
   const [error, SetError] = useState();
   const [loading1, setLoading] = useState(false);
   const [me, isLoading, refetch] = useContext(MeContext);
@@ -37,7 +38,7 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
       sector: "withdraw",
       amount: amount,
       user: me?._id,
-      accountNumber: handleCard(card)?.cardNum,
+      accountNumber: accountNum,
     };
 
     axios
@@ -62,6 +63,8 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
         toast.error(error.message);
       });
   };
+
+  const minAmount = card === "Bkash" || card === "Nagod" ? 1000 : 10;
   return (
     <div>
       <input type="checkbox" id="withdraw" className="modal-toggle" />
@@ -87,58 +90,64 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
             <div className="rounded-md p-3 bg-slate-200">
               <p>
                 Available Balance:{" "}
-                <span className="font-bold text-lg">{me?.balance}</span>
+                <span className="font-bold text-lg">{me?.balance} $</span>
               </p>
-              <div className="tabs mt-2 flex items-center gap-3 tabs-boxed">
-                <div className="tabs flex w-full items-center sm:gap-2 gap-1.5 tabs-boxed">
-                  {accountName?.map((i, index) => (
-                    <div
-                      key={index}
-                      onClick={() => setCard(i?.name)}
-                      className={`${
-                        card === i?.name
-                          ? "tab-active !text-white"
-                          : "border border-[#9b9b9b] rounded-lg"
-                      } ${
-                        handleCard(i?.name)?.cardName === i?.name
-                          ? "!border-primary text-primary border"
-                          : ""
-                      } tab`}
-                    >
-                      {i?.name}
+              <div className="tabs mt-2 flex w-full items-center sm:gap-2 gap-2 tabs-boxed">
+                {accountName?.map((i, index) => (
+                  <div
+                    key={index}
+                    onClick={() => setCard(i?.name)}
+                    className={`${
+                      card === i?.name ? "border border-primary" : ""
+                    } tab sm:w-[100px] w-[90px] h-full bg-white rounded-lg`}
+                  >
+                    <div className="sm:w-[100px] w-[90px] rounded-lg bg-white">
+                      <img src={i?.img} className="w-full" alt="cardImg" />
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className="flex items-center justify-between">
-                <p className="mt-1">
-                  {card}:{" "}
-                  {handleCard(card)?.cardName === card
-                    ? handleCard(card)?.cardNum
-                    : "No account card set yet"}{" "}
-                </p>
+                  </div>
+                ))}
               </div>
             </div>
             <p className="p-2 text-[16px] text-gray-700">
               Withdraw Amount:{" "}
               <span className="text-secondary text-[14px]">
-                ( Minimum 500 )
+                ( Minimum{" "}
+                {card === "Bkash" || card === "Nagod" ? "1000 ৳" : "10 $"} )
               </span>
             </p>
             <form className="w-full mt-4">
-              <input
-                type="number"
-                placeholder="Enter Recharge Amount"
-                onChange={(e) => setAmount(e.target.value)}
-                class="input input-sm input-bordered w-full"
-                required
-              />
+              <div className="my-2">
+                <span>{card} Account Number</span>
+                <input
+                  type="text"
+                  placeholder="Enter Account Number"
+                  onChange={(e) => setAmount(e.target.value)}
+                  className="input input-sm input-primary input-bordered w-full"
+                  required
+                />
+              </div>
+
+              <div className="my-2">
+                <span>Withdraw Amount</span>
+                <input
+                  type="number"
+                  placeholder="Enter Withdraw Amount"
+                  onChange={(e) => setAmount(e.target.value)}
+                  className="input input-primary input-sm input-bordered w-full"
+                  required
+                />
+              </div>
+
               <p className="text-center text-sm text-red-500">{error}</p>
               <label
                 onClick={handleState}
                 htmlFor="confirmWithdraw"
                 className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm"
-                disabled={amount < 10 || me?.balance < 10}
+                disabled={
+                  amount < minAmount ||
+                  me?.balance < minAmount ||
+                  me?.balance < amount
+                }
               >
                 Withdraw Now
               </label>
@@ -153,7 +162,7 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
               />
               <ReactPlayer
                 height="80px"
-                url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                url="https://youtu.be/etANLEnIIhA?si=E8ls0ChPh_jF4PK3"
               />
             </div>
           </div>

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import task from "../assets/icons/task (2).png";
 import axios from "../Utils/Axios.config";
 import ProgressSpeener from "../Share/ProgressSpeener";
 
-const ViewTask = ({ setTaskModul, taskModul, refetch }) => {
+const ViewTask = ({ setTaskModule, taskModul, refetch }) => {
   const [i, status] = taskModul;
   const [loading, setLoading] = useState(false);
 
@@ -13,6 +12,8 @@ const ViewTask = ({ setTaskModul, taskModul, refetch }) => {
     i.date = new Date();
     console.log(i, "ok2");
 
+    console.log(loading, "loading");
+
     if (status === "done") {
       i.request = "done";
       axios
@@ -20,27 +21,27 @@ const ViewTask = ({ setTaskModul, taskModul, refetch }) => {
         .then((response) => {
           const data = response.data;
           if (data.success === true) {
-            toast.success("Successfully add the task");
+            toast.success("Successfully check the task");
             refetch();
-            setTaskModul(null);
+            setTaskModule(null);
           } else if (data.success === false) {
-            toast.error("Your Request fail plx try again");
+            toast.error("Your Request fail please try again");
           }
           setLoading(false);
         })
         .catch((error) => {
           setLoading(false);
-          // Handle any errors that occurred during the request
         });
     } else if (status === "rejected") {
+      i.request = "rejected";
       axios
-        .patch(`/v1/task/${i?._id}`, { status: "running" })
+        .patch(`/task/check/${i?.taskId}`, i)
         .then((response) => {
           const data = response.data;
           if (data.success === true) {
-            toast.success("Successfully add the task");
+            toast.success("Rejected the task");
             refetch();
-            setTaskModul(null);
+            setTaskModule(null);
           } else if (data.success === false) {
             toast.error("Your Request fail plx try again");
           }
@@ -51,7 +52,6 @@ const ViewTask = ({ setTaskModul, taskModul, refetch }) => {
           // Handle any errors that occurred during the request
         });
     }
-    setLoading(false);
   };
 
   return (
@@ -78,6 +78,7 @@ const ViewTask = ({ setTaskModul, taskModul, refetch }) => {
           </div>
           <div className="mt-5">
             <ProgressSpeener loading={loading} />
+
             <div className="flex items-center justify-center gap-3">
               {status === "done" && (
                 <button

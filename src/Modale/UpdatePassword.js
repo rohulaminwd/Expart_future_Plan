@@ -121,16 +121,16 @@ const UpdatePassword = ({ setUpdateModal, refetch, updateModal }) => {
                           key={index}
                           onClick={() => setCard(i?.name)}
                           className={`${
-                            card === i?.name
-                              ? "tab-active !text-white"
-                              : "border border-[#9b9b9b] rounded-lg"
-                          } ${
-                            handleCard(i?.name)?.cardName === i?.name
-                              ? "!border-primary text-primary border"
-                              : ""
-                          } tab`}
+                            card === i?.name ? "border border-primary" : ""
+                          } tab sm:w-[100px] w-[90px] h-full bg-white rounded-lg`}
                         >
-                          {i?.name}
+                          <div className="sm:w-[100px] w-[90px] rounded-lg bg-white">
+                            <img
+                              src={i?.img}
+                              className="w-full"
+                              alt="cardImg"
+                            />
+                          </div>
                         </div>
                       ))}
                     </div>

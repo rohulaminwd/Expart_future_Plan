@@ -3,13 +3,13 @@ import React, { useState, useContext } from "react";
 import taka from "../../assets/icons/taka (1).png";
 import taka2 from "../../assets/icons/taka1 (2).png";
 import taka3 from "../../assets/icons/taka1 (3).png";
-import reffer from "../../assets/icons/refer.svg";
 import taka6 from "../../assets/icons/taka1 (1).png";
 import { MeContext, UserContext } from "../../App";
 import Loading from "../../Share/Loading";
 import team from "../../assets/lottie/team.json";
 import UserInfo from "../../Modale/UserInfo";
 import Lottie from "lottie-react";
+import useReferIncomeTracker from "../../Hooks/useReferIncomeTracker";
 
 const Team = () => {
   const [me, meLoading] = useContext(MeContext);
@@ -19,6 +19,26 @@ const Team = () => {
 
   const myReferralUser = users?.filter((i) =>
     i?.referCode?.includes(referCode)
+  );
+
+  const teamInvestment = myReferralUser?.filter((i) => {
+    const activePlan = i?.plan?.find((x) => x?.planDuration !== "15-Days");
+    return activePlan;
+  });
+
+  const referIncomeHistory = me?.incomeHistory?.filter((i) =>
+    i?.category?.includes("efer")
+  );
+
+  const { todayCommission, monthlyCommission, commission } =
+    useReferIncomeTracker(referIncomeHistory);
+
+  console.log(
+    referIncomeHistory,
+    todayCommission,
+    monthlyCommission,
+    commission,
+    "dfdkj"
   );
 
   if (meLoading || userLoading) {
@@ -70,7 +90,7 @@ const Team = () => {
           <div className="p-3 sm:p-4 mt-5 bg-white w-full rounded-xl">
             <div className="flex justify-between gap-2 sm:gap-5 items-center">
               <label
-                onClick={() => setUserInfo(myReferralUser)}
+                onClick={() => setUserInfo([myReferralUser, "Refer user"])}
                 htmlFor="user-info"
                 className="p-2 gap-1 sm:p-4 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-sm border border-purple-200 pattern-planbg rounded-lg"
               >
@@ -79,7 +99,7 @@ const Team = () => {
                 </div>
                 <div className="">
                   <h3 className="font-bold text-purple-700 sm:mb-1 text-xl sm:text-2xl">
-                    0{myReferralUser ? myReferralUser?.length : "0"}
+                    0{myReferralUser ? myReferralUser?.length : "00"}
                   </h3>
                   <h1
                     style={{ lineHeight: "16px" }}
@@ -89,13 +109,19 @@ const Team = () => {
                   </h1>
                 </div>
               </label>
-              <div className="p-2 gap-1 sm:p-4 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-sm border border-purple-200 pattern-planbg rounded-lg">
+              <label
+                onClick={() =>
+                  setUserInfo([teamInvestment, "Refer Investment User"])
+                }
+                htmlFor="user-info"
+                className="p-2 gap-1 sm:p-4 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 duration-300 shadow-sm border border-purple-200 pattern-planbg rounded-lg"
+              >
                 <div className="w-10 sm:w-16 -ml-1">
                   <img src={taka3} className="w-full" alt="taka" />
                 </div>
                 <div className="">
                   <h3 className="font-bold text-purple-700 sm:mb-1 text-xl sm:text-2xl">
-                    12
+                    0{teamInvestment ? teamInvestment?.length : "00"}
                   </h3>
                   <h1
                     style={{ lineHeight: "16px" }}
@@ -104,7 +130,7 @@ const Team = () => {
                     Team Investment
                   </h1>
                 </div>
-              </div>
+              </label>
             </div>
             <div className="flex justify-between gap-2 sm:gap-5 mt-3 sm:mt-5 items-center">
               <div className="p-2 gap-1 sm:p-4 flex items-center sm:gap-2 w-full cursor-pointer hover:-translate-y-1 border border-purple-200 duration-300 shadow-sm pattern-planbg rounded-lg">
@@ -113,7 +139,7 @@ const Team = () => {
                 </div>
                 <div className="">
                   <h3 className="font-bold text-purple-700 sm:mb-1 text-xl sm:text-2xl">
-                    05 $
+                    {todayCommission} $
                   </h3>
                   <h1
                     style={{ lineHeight: "16px" }}
@@ -129,7 +155,7 @@ const Team = () => {
                 </div>
                 <div className="">
                   <h3 className="font-bold text-purple-700 sm:mb-1 text-xl sm:text-2xl">
-                    120 $
+                    {commission} $
                   </h3>
                   <h1
                     style={{ lineHeight: "16px" }}
@@ -146,7 +172,7 @@ const Team = () => {
               </div>
               <div className="">
                 <h3 className="font-bold text-purple-700 text-xl sm:mb-1 sm:text-2xl">
-                  20 $
+                  {monthlyCommission} $
                 </h3>
                 <h1
                   style={{ lineHeight: "16px" }}

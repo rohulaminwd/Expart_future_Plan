@@ -6,9 +6,9 @@ import useMe from "../Hooks/useMe";
 import balance from "../assets/images/balance.webp";
 import { Button, CopyButton } from "@mantine/core";
 import { toast } from "react-toastify";
-import Loading from "../Share/Loading";
 import axios from "../Utils/Axios.config";
 import { ProgressBar } from "react-loader-spinner";
+import { BsWhatsapp } from "react-icons/bs";
 
 const ConfirmRecharge = ({
   setRecharge,
@@ -25,7 +25,11 @@ const ConfirmRecharge = ({
   const [me] = useMe();
   const [loading, setLoading] = useState(false);
 
-  const accountNumber = rechargeConfirm?.card;
+  const card = rechargeConfirm?.card;
+  const activeAdmin = rechargeConfirm?.activeAdmin;
+  const adminWhatsappNum = activeAdmin?.card?.find(
+    (i) => i?.cardName === "Bkash"
+  );
 
   const onSubmit = (data) => {
     setLoading(true);
@@ -61,6 +65,15 @@ const ConfirmRecharge = ({
       });
   };
 
+  const url = `https://wa.me/${
+    adminWhatsappNum?.cardNum
+  }?text=${encodeURIComponent("Please send the recharge number..??")}`;
+
+  const message =
+    card === "Bkash" || card === "Nagad"
+      ? "নীচের হোয়াটসঅ্যাপ বোতামে ক্লিক করে অ্যাডমিনের কাছ থেকে নম্বর দিয়ে রিচার্জটি সম্পূর্ণ করুন।"
+      : "Complete the recharge with the number from the admin by clicking on the WhatsApp button below.";
+
   return (
     <div>
       <input type="checkbox" id="confirmRecharge" className="modal-toggle" />
@@ -80,39 +93,15 @@ const ConfirmRecharge = ({
               <img src={balance} className="w-20" alt="balance" />
               <div>
                 <p className="text-3xl font-bold text-accent">
-                  {rechargeConfirm?.amount} tk
+                  {rechargeConfirm?.amount} $
                 </p>
-                <p className="text-gray-700">Your account : {accountNumber}</p>
+                <p className="text-gray-700">Your account : {card}</p>
               </div>
             </div>
-            <p className="mt-2">
-              Lorem ipsum dolor sit amet consectetur error dolor tempore
-              aspernatur eligendi consectetur deleniti modi accusamus quasi
-              quia, corporis doloribus eum.
-            </p>
+            <p className="mt-2">{message}</p>
           </div>
           <div className="w-full p-2 sm:p-3 shadow-md mt-4 rounded-md bg-white">
             <div className="rounded-md p-3 bg-slate-200">
-              <p className="text-[14px">Target Bkash Account</p>
-              <div className="flex mx-auto rounded-lg gap-2 sm:gap-3 max-w-[500px] items-center">
-                <div className="p-1 sm:p-2 border w-full rounded-md">
-                  <p className="font-bold text-xl">01831294559</p>
-                </div>
-                <div className="">
-                  <CopyButton value="01831294559">
-                    {({ copied, copy }) => (
-                      <Button
-                        className={`${
-                          copied ? "bg-[#177865]" : "bg-[#174e78]"
-                        } !py-0 px-4 rounded-3xl`}
-                        onClick={copy}
-                      >
-                        {copied ? "Copied" : "Copy"}
-                      </Button>
-                    )}
-                  </CopyButton>
-                </div>
-              </div>
               <p className="text-[14px">The Amount to be transferred</p>
               <div className="flex mx-auto rounded-lg gap-2 sm:gap-3 max-w-[500px] items-center">
                 <div className="p-1 sm:p-2 border w-full rounded-md">
@@ -133,6 +122,25 @@ const ConfirmRecharge = ({
                       </Button>
                     )}
                   </CopyButton>
+                </div>
+              </div>
+              <div className="flex mx-auto mt-3 p-1 rounded-full gap-2 sm:gap-3 max-w-[500px] items-center">
+                <div className="p-2 w-full bg-green-500 text-white rounded-full">
+                  <a
+                    href={url}
+                    className="item-center inline-block w-full gap-x-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="relative bg-green-500 p-0 w-full text-white rounded-full">
+                      <span className="font-bold text-white absolute -top-3 -left-3 p-[10px] rounded-full bg-green-600 border border-green-300">
+                        <BsWhatsapp size={24} />
+                      </span>
+                      <span className="text-white ml-11 top-0 bottom-0 leading-[1px] text-lg font-bold">
+                        Contact Whatsapp
+                      </span>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>

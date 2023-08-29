@@ -5,12 +5,11 @@ import { format } from "date-fns";
 import ViewTask from "../../Modale/ViewTask";
 
 const SubmitTask = () => {
-  const [Task, setTask] = useState("pending");
   const [taskModul, setTaskModule] = useState(null);
   const [tasks, taskLoading, taskRefetch] = useContext(TaskContext);
   let submitTask = [];
 
-  tasks.map((task) => {
+  tasks?.map((task) => {
     task?.submitTask?.map((i) => {
       i.category = task?.category;
       i.taskName = task?.taskName;
@@ -22,50 +21,47 @@ const SubmitTask = () => {
 
   const pendingTaskSubmit = submitTask?.filter((i) => i.status === "pending");
   const completeTaskSubmit = submitTask?.filter((i) => i.status === "complete");
+  const rejectedTaskSubmit = submitTask?.filter((i) => i.status === "rejected");
   const [myTaskSubmit, setMYTaskSubmit] = useState(pendingTaskSubmit);
 
   useEffect(() => {
     setMYTaskSubmit(pendingTaskSubmit);
   }, [tasks]);
 
-  const selectTask = (i, x) => {
-    setMYTaskSubmit(i);
-    setTask(x);
-  };
-
   // console.log(tasks, submitTask, myTaskSubmit, "ok");
+
+  const handleSelect = (i) => {
+    if (i === "pending") {
+      setMYTaskSubmit(pendingTaskSubmit);
+    }
+    if (i === "complete") {
+      setMYTaskSubmit(completeTaskSubmit);
+    }
+    if (i === "rejected") {
+      setMYTaskSubmit(rejectedTaskSubmit);
+    }
+  };
 
   return (
     <div className="p-2 pt-0 sm:p-0">
-      <div className="w-full flex items-center justify-between ">
-        <div
-          onClick={() => selectTask(pendingTaskSubmit, "pending")}
-          className={`${
-            Task === "pending"
-              ? "!bg-primary border-[3px] border-[#9df1e5] rounded-md !text-white"
-              : "border bg-slate-100"
-          } cursor-pointer w-full sm:py-1 px-0`}
-        >
-          <div className="text-center flex items-center gap-x-2 justify-center">
-            <h2 className="text-[14px]">Pending</h2>
-            <h1 className="text-lg sm:text-xl">{pendingTaskSubmit?.length}</h1>
-          </div>
+      <div
+        className={`flex justify-between items-center gap-x-3 bg-[#ffffff] p-3 rounded-xl w-full`}
+      >
+        <div className="w-[100px] py-2 bg-[#f0eaf7] flex items-center justify-center rounded-lg">
+          <span className="text-xl font-bold text-purple-700">
+            {myTaskSubmit?.length ? myTaskSubmit?.length : 0}
+          </span>
         </div>
-        <div
-          onClick={() => selectTask(completeTaskSubmit, "complete")}
-          className={`${
-            Task === "complete"
-              ? "!bg-primary border-[3px] border-[#9df1e5] rounded-md !text-white"
-              : "border bg-slate-100"
-          } cursor-pointer w-full sm:py-1 px-0`}
+        <select
+          onChange={(e) => handleSelect(e.target.value)}
+          className="text-sm border px-3 py-2 rounded-lg w-full"
         >
-          <div className="text-center flex gap-x-2 justify-center items-center">
-            <h2 className="text-[14px]">Complete</h2>
-            <h1 className="text-lg sm:text-xl">
-              {completeTaskSubmit ? completeTaskSubmit?.length : "0"}
-            </h1>
-          </div>
-        </div>
+          <option value="pending" select>
+            Pending
+          </option>
+          <option value="complete">Complete</option>
+          <option value="rejected">Rejected</option>
+        </select>
       </div>
 
       <motion.div
@@ -80,7 +76,11 @@ const SubmitTask = () => {
                 initial={{ opacity: 0, scale: 0 }}
                 exit={{ opacity: 0, scale: 0 }}
                 key={i._id}
-                className={`p-3 md:mt-0 sm:p-3 bg-white w-full duration-300 shadow-md rounded-2xl`}
+                className={`${
+                  i?.status === "complete" ? "border-primary" : ""
+                } ${
+                  i?.status === "rejected" ? "border-red-500" : ""
+                } p-3 md:mt-0 border sm:p-3 bg-white w-full duration-300 shadow-md rounded-2xl`}
               >
                 <div key={i._id} className="relative border-b-2 pb-1">
                   <div className="w-full flex gap-x-2 items-start justify-start">
@@ -134,8 +134,10 @@ const SubmitTask = () => {
                           Done
                         </label>
                       </div>
+                    ) : i?.status === "complete" ? (
+                      <p className="text-primary font-bold">Completed</p>
                     ) : (
-                      <p>Completed</p>
+                      <p className="text-red-500 font-bold">Rejected</p>
                     )}
                   </div>
                 </div>

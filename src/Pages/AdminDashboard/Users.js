@@ -8,19 +8,24 @@ import { useContext } from "react";
 import { UserContext } from "../../App";
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { BiBlock } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
-import { RiLockPasswordLine } from "react-icons/ri";
+import {
+  MdAdminPanelSettings,
+  MdDelete,
+  MdOutlineAdminPanelSettings,
+} from "react-icons/md";
 import BlockUser from "../../Modale/BlockUser";
 import UserDetails from "../../Modale/UserDetails";
+import CreateAdmin from "../../Modale/CreateAdmin";
 
 const Users = () => {
   const [users, userLoading, userRefetch, userError, blocked] =
     useContext(UserContext);
-  const [deleteModule, setDeletingModal] = useState(false);
+  const [deleteModule, setDeletingModal] = useState(null);
   const [openBlock, setOpenBlock] = useState(null);
+  const [createAdmin, setOpenCreateAdmin] = useState(null);
   const [openUserDetails, setOpenUserDetails] = useState(null);
   const [data, setData] = useState(users);
-  const method = "user";
+  const method = "users";
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -36,20 +41,28 @@ const Users = () => {
     user.name?.firstName.toLowerCase().startsWith(searchTerm.toLowerCase())
   );
 
-  const handleClass = (classData) => {
-    if (classData === "All") {
+  const handleClass = (selectData) => {
+    if (selectData === "All") {
       return setData(users);
-    } else if (classData === "Blocked") {
+    } else if (selectData === "Blocked") {
       return setData(blocked);
-    } else if (classData === "SubAdmin") {
-      const data = users?.filter((i) => i?.role?.includes(classData));
+    } else if (selectData === "subAdmin") {
+      const data = users?.filter((i) => i?.role?.includes(selectData));
       return setData(data);
+    } else if (selectData === "ActivePlan") {
+      const ActiveUser = users?.filter((i) => i?.plan?.length > 0);
+      return setData(ActiveUser);
+    } else if (selectData === "DeActive") {
+      const DeActiveUser = users?.filter((i) => i?.plan?.length <= 0);
+      return setData(DeActiveUser);
+    } else if (selectData === "FreePlan") {
+      const ActiveFreePlan = users?.filter((i) => {
+        const freePlan = i?.plan?.find((x) => x?.planDuration === "15-Days");
+        return freePlan;
+      });
+      return setData(ActiveFreePlan);
     }
   };
-
-  if (userLoading) {
-    return <Loading></Loading>;
-  }
 
   return (
     <div className="p-2 sm:p-0">
@@ -80,7 +93,11 @@ const Users = () => {
             <option value="All" select>
               All
             </option>
-            <option value="SubAdmin">SubAdmin</option>
+            <option value="subAdmin">SubAdmin</option>
+            <option value="ActivePlan">ActivePlan</option>
+            <option value="FreePlan">FreePlan</option>
+            <option value="DeActive">DeActive</option>
+            <option value="InvestUser">InvestUser</option>
             <option value="Blocked">Blocked</option>
           </select>
         </div>
@@ -117,7 +134,7 @@ const Users = () => {
                           <h2 className="text-[16px] font-bold">
                             {user?.name?.firstName} {user?.name?.lastName}
                           </h2>
-                          <h2 className="text-[14px]">{user.phoneNumber}</h2>
+                          <h2 className="text-[14px]">{user?.role}</h2>
                         </div>
                       </div>
                       <div className="absolute -top-3 grid place-content-center -right-[16px] w-20 h-7 rounded-full bg-[#eddeff] border border-[#e7d5fd] text-purple-700">
@@ -138,13 +155,33 @@ const Users = () => {
                         </button>
                       </a>
                       <div className="flex items-center">
-                        {!(user?.role === "admin") && (
-                          <div
-                            className="text-[#807e7e] mr-2 font-bold cursor-pointer tooltip"
-                            data-tip={user?.password}
+                        {user?.role === "user" && (
+                          <label
+                            onClick={() =>
+                              setOpenCreateAdmin([user, "subAdmin"])
+                            }
+                            htmlFor="createAdmin"
+                            className="btn ml-1 px-1 btn-ghost text-[#c945ee] btn-xs"
+                            disabled={user?.role === "admin"}
                           >
-                            <RiLockPasswordLine size={20} />
-                          </div>
+                            <span className=" text-xl font-bold px-0 mx-0">
+                              <MdOutlineAdminPanelSettings size={20} />
+                            </span>
+                          </label>
+                        )}
+                        {user?.role === "subAdmin" && (
+                          <label
+                            onClick={() =>
+                              setOpenCreateAdmin([user, "backAdmin"])
+                            }
+                            htmlFor="createAdmin"
+                            className="btn ml-1 px-1 btn-ghost text-[#b73ada] btn-xs"
+                            disabled={user?.role === "admin"}
+                          >
+                            <span className=" text-xl font-bold px-0 mx-0">
+                              <MdAdminPanelSettings size={20} />
+                            </span>
+                          </label>
                         )}
                         {user?.status === "active" && (
                           <label
@@ -158,7 +195,7 @@ const Users = () => {
                             </span>
                           </label>
                         )}
-                        {user?.status === "blocked" && (
+                        {user?.status === "block" && (
                           <label
                             onClick={() => setOpenBlock([user, "unblock"])}
                             htmlFor="blocked"
@@ -166,7 +203,7 @@ const Users = () => {
                             disabled={user?.role === "admin"}
                           >
                             <span className=" text-xl font-bold px-0 mx-0">
-                              <BsArrowReturnLeft />{" "}
+                              <BsArrowReturnLeft />
                             </span>
                           </label>
                         )}
@@ -209,6 +246,13 @@ const Users = () => {
         <BlockUser
           blocked={openBlock}
           setOpenBlock={setOpenBlock}
+          refetch={userRefetch}
+        />
+      )}
+      {createAdmin && (
+        <CreateAdmin
+          createAdmin={createAdmin}
+          setOpenCreateAdmin={setOpenCreateAdmin}
           refetch={userRefetch}
         />
       )}

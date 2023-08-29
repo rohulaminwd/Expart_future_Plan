@@ -13,6 +13,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 const PlanCard = ({
   plan,
   setActivePlan,
+  PlanDateExpire,
   me,
   color,
   classNam,

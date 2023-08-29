@@ -41,7 +41,7 @@ const ProfileInformation = ({ user, setUpdateModal }) => {
               </div>
               <div>
                 <h3 className="text-secondary font-bold sm:text-3xl">Admin</h3>
-                <p className="text-xs sm:text-sm">Send Sms</p>
+                <p className="text-xs sm:text-sm">Access</p>
               </div>
             </div>
           </Link>
@@ -49,21 +49,25 @@ const ProfileInformation = ({ user, setUpdateModal }) => {
       </div>
 
       <div className="flex mt-3 justify-between w-full gap-2">
-        <label
-          onClick={() => setUpdateModal([user, "bankCard"])}
-          htmlFor="update-password"
-          className="w-full cursor-pointer"
-        >
-          <div className="p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg">
-            <div className="w-6 sm:w-12">
-              <img src={password1} className="w-full" alt="" />
+        {(user?.role === "admin" || user?.role === "subAdmin") && (
+          <label
+            onClick={() => setUpdateModal([user, "bankCard"])}
+            htmlFor="update-password"
+            className="w-full cursor-pointer"
+          >
+            <div className="p-1 sm:p-2 w-full flex items-center gap-x-2 border bg-[#d2f8fb] border-[#b1f3fc] rounded-lg">
+              <div className="w-6 sm:w-12">
+                <img src={password1} className="w-full" alt="" />
+              </div>
+              <div>
+                <h3 className="text-secondary font-bold sm:text-3xl">
+                  Account
+                </h3>
+                <p className="text-xs sm:text-sm">Add Account Card</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-secondary font-bold sm:text-3xl">Account</h3>
-              <p className="text-xs sm:text-sm">Add Account Card</p>
-            </div>
-          </div>
-        </label>
+          </label>
+        )}
 
         <label
           onClick={() => setUpdateModal([user, "account"])}
@@ -95,8 +99,8 @@ const ProfileInformation = ({ user, setUpdateModal }) => {
             <h3 className="">{user?.phoneNumber}</h3>
           </div>
           <div className="flex py-1 sm:py-2 border-b border-[#c6fbfb] justify-between items-center">
-            <h3 className="">Address:</h3>
-            <h3 className="">{user?.Address}</h3>
+            <h3 className="">Role:</h3>
+            <h3 className="capitalize">{user?.role}</h3>
           </div>
         </div>
       </div>

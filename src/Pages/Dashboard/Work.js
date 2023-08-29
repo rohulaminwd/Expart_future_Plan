@@ -14,7 +14,7 @@ import { useEffect } from "react";
 
 const Work = () => {
   const [submitTask, setSubmitTask] = useState(null);
-  const [Task, setTask] = useState("running");
+  const [Task, setTask] = useState("pending");
   const [me, loading] = useContext(MeContext);
   const [tasks, taskLoading, taskRefetch] = useContext(TaskContext);
   let newArr = [];
@@ -27,6 +27,12 @@ const Work = () => {
       x?.phoneNumber?.includes(me?.phoneNumber)
     );
     return i?.status === "running" && !submitTask;
+  });
+  const taskExist = tasks?.filter((i) => {
+    const submitTask = i?.submitTask?.find((x) =>
+      x?.phoneNumber?.includes(me?.phoneNumber)
+    );
+    return submitTask;
   });
 
   // console.log(task, tasks, "paichi");
@@ -55,52 +61,66 @@ const Work = () => {
     return <Loading />;
   }
 
-  const exsisNumber = (i) => {
-    const exsisItem = i.completeUser?.find((x) =>
-      x?.phoneNumber.includes(me?.phoneNumber)
-    );
-    return exsisItem?.phoneNumber;
-  };
+  // find the rejected task
+  const rejectedTask = [];
+  const completedTasks = [];
 
-  const selectTask = (i, x) => {
-    setMYTask(i);
-    setTask(x);
+  taskExist?.forEach((i) => {
+    const rejectedItem = i?.submitTask?.find(
+      (item) => item?.status === "rejected"
+    );
+
+    const completeItem = i?.submitTask?.find(
+      (item) => item?.status === "complete"
+    );
+    if (rejectedItem) {
+      rejectedTask.push(i);
+    } else if (completeItem) {
+      completedTasks.push(i);
+    }
+  });
+
+  // console.log(rejectedTask, completedTasks, myTask);
+
+  const handleSelect = (i) => {
+    if (i === "pending") {
+      setMYTask(newArr);
+      setTask(i);
+    }
+    if (i === "complete") {
+      setMYTask(completedTasks);
+      setTask(i);
+    }
+    if (i === "rejected") {
+      setMYTask(rejectedTask);
+      setTask(i);
+    }
   };
 
   // console.log(myTask, task, "good");
 
   return (
     <div className="p-2 pt-0 sm:p-0">
-      <div className="w-full flex items-center justify-between ">
-        <div
-          onClick={() => selectTask(newArr, "running")}
-          className={`${
-            Task === "running"
-              ? "!bg-primary border-[3px] border-[#9df1e5] rounded-md !text-white"
-              : "border bg-slate-100"
-          } cursor-pointer w-full px-0`}
-        >
-          <div className="text-center flex items-center gap-x-2 justify-center">
-            <h2 className="text-[14px]">Pending</h2>
-            <h1 className="text-lg sm:text-xl">{newArr?.length}</h1>
-          </div>
+      <div
+        className={`flex justify-between items-center gap-x-3 bg-[#ffffff] p-3 rounded-xl w-full`}
+      >
+        <div className="w-[100px] py-2 bg-[#f0eaf7] flex items-center justify-center rounded-lg">
+          <span className="text-xl font-bold text-purple-700">
+            {myTask?.length ? myTask?.length : 0}
+          </span>
         </div>
-        <div
-          onClick={() => selectTask(completeTask, "complete")}
-          className={`${
-            Task === "complete"
-              ? "!bg-primary border-[3px] border-[#9df1e5] rounded-md !text-white"
-              : "border bg-slate-100"
-          } cursor-pointer w-full px-0`}
+        <select
+          onChange={(e) => handleSelect(e.target.value)}
+          className="text-sm border px-3 py-2 rounded-lg w-full"
         >
-          <div className="text-center flex gap-x-2 justify-center items-center">
-            <h2 className="text-[14px]">Complete</h2>
-            <h1 className="text-lg sm:text-xl">
-              {completeTask ? completeTask?.length : "0"}
-            </h1>
-          </div>
-        </div>
+          <option value="pending" select>
+            Pending
+          </option>
+          <option value="complete">Complete</option>
+          <option value="rejected">Rejected</option>
+        </select>
       </div>
+
       <motion.div
         layout
         className="md:mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-3"
@@ -113,7 +133,11 @@ const Work = () => {
                 initial={{ opacity: 0, scale: 0 }}
                 exit={{ opacity: 0, scale: 0 }}
                 key={i._id}
-                className={`p-2 md:mt-0 sm:p-3 bg-white w-full duration-300 shadow-md rounded-2xl`}
+                className={`${
+                  Task === "complete" ? "border border-green-500" : ""
+                } ${
+                  Task === "rejected" ? "border-red-500" : ""
+                } border p-2 md:mt-0 sm:p-3 bg-white w-full duration-300 shadow-md rounded-2xl`}
               >
                 <div key={i._id} className="relative border-b-2 pb-1">
                   <div className="w-full flex items-start justify-start">
@@ -133,9 +157,6 @@ const Work = () => {
                     </div>
                     <div className="w-full">
                       <h3 className="text-[13px] font-bold">{i.taskName}</h3>
-                      {Task === "complete" && (
-                        <h3 className="text-[13px] font-bold">{i.category}</h3>
-                      )}
                       <p className="text-[12px]">
                         Lorem ipsum dolor sit amet, consectetur adipisicing
                         elit. error iusto in.
@@ -157,7 +178,7 @@ const Work = () => {
                     )}
                     {Task === "complete" && (
                       <p className="text-[12px]">
-                        {format(new Date(i?.date), "PP")}
+                        {format(new Date(i?.updatedAt), "PP")}
                       </p>
                     )}
                   </div>
@@ -188,25 +209,18 @@ const Work = () => {
                     </div>
                   </div>
                   <div className="flex items-center">
-                    {!(exsisNumber(i) === me?.phoneNumber) &&
-                      i?.status === "running" && (
-                        <label
-                          onClick={() => setSubmitTask(i)}
-                          htmlFor="submit-task"
-                          className="text-white btn btn-primary btn-outline hover:!text-white btn-xs cursor-pointer"
-                        >
-                          submit
-                        </label>
-                      )}
-                    {exsisNumber(i) === me?.phoneNumber &&
-                      i?.status === "pending" && (
-                        <p className="text-[#244654] text-[16px] font-bold">
-                          pending...
-                        </p>
-                      )}
+                    {(Task === "pending" || Task === "rejected") && (
+                      <label
+                        onClick={() => setSubmitTask(i)}
+                        htmlFor="submit-task"
+                        className="text-white btn btn-primary btn-outline hover:!text-white btn-xs cursor-pointer"
+                      >
+                        submit
+                      </label>
+                    )}
                     {Task === "complete" && (
-                      <p className="text-[#378230] text-[16px] font-bold">
-                        Complete
+                      <p className="text-primary text-[16px] font-bold">
+                        Completed
                       </p>
                     )}
                   </div>

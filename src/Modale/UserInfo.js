@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 
 const UserInfo = ({ userInfo }) => {
+  const user = userInfo[0];
+  const type = userInfo[1];
   return (
     <div>
       <input type="checkbox" id="user-info" className="modal-toggle" />
@@ -15,10 +17,10 @@ const UserInfo = ({ userInfo }) => {
           </label>
           <div className="mt-3 bg-[#f3f9fb] border overflow-hidden rounded-xl border-[#f0d2fc]">
             <h1 className="text-purple-700 border-b bg-[#f0d2fc] py-1 border-[#f0d2fc] px-3 font-bold text-[20px]">
-              Referral users {userInfo?.length}
+              {type} {user?.length}
             </h1>
             <div className="">
-              {userInfo?.map((i, index) => (
+              {user?.map((i, index) => (
                 <div
                   key={index}
                   className="py-2 px-3 flex items-center justify-between border-b border-[#f0d2fc]"

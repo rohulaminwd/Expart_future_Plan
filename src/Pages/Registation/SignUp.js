@@ -67,7 +67,7 @@ const SignUp = () => {
   if (refer === null) {
     refer = undefined;
   }
-  console.log(refer);
+  // console.log(refer);
   const onSubmit = async (data) => {
     setLoading(true);
     const user = {
@@ -96,13 +96,19 @@ const SignUp = () => {
         }
         if (status.success === false) {
           setError(status.message);
+          setLoading(false);
         }
-        console.log(response, "okk");
+        console.log(response, "okk1");
         setLoading(false);
       })
       .catch((error) => {
-        // Handle any error that occurred during the request
-        console.error(error);
+        console.error(error, "okk2");
+        if (error?.response?.data?.message) {
+          setError(error?.response?.data?.message);
+        } else {
+          setError("Something is wrong");
+        }
+        setLoading(false);
       });
   };
 
