@@ -93,12 +93,13 @@ const ConfirmRecharge = ({
               <img src={balance} className="w-20" alt="balance" />
               <div>
                 <p className="text-3xl font-bold text-accent">
-                  {rechargeConfirm?.amount} $
+                  {rechargeConfirm?.amount}{" "}
+                  {card === "Bkash" || card === "Nagad" ? "৳" : "$"}
                 </p>
                 <p className="text-gray-700">Your account : {card}</p>
               </div>
             </div>
-            <p className="mt-2">{message}</p>
+            <p className="mt-2 siliguri">{message}</p>
           </div>
           <div className="w-full p-2 sm:p-3 shadow-md mt-4 rounded-md bg-white">
             <div className="rounded-md p-3 bg-slate-200">
@@ -106,7 +107,8 @@ const ConfirmRecharge = ({
               <div className="flex mx-auto rounded-lg gap-2 sm:gap-3 max-w-[500px] items-center">
                 <div className="p-1 sm:p-2 border w-full rounded-md">
                   <p className="font-bold text-xl">
-                    {rechargeConfirm?.amount} $
+                    {rechargeConfirm?.amount}{" "}
+                    {card === "Bkash" || card === "Nagad" ? "৳" : "$"}
                   </p>
                 </div>
                 <div className="">

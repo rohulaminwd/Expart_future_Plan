@@ -34,7 +34,7 @@ const RechargeNow = ({ setRecharge, recharge }) => {
     setRecharge("card");
   };
 
-  const minAmount = card === "Bkash" || card === "Nagod" ? 1000 : 10;
+  const minAmount = card === "Bkash" || card === "Nagad" ? 1100 : 10;
 
   return (
     <div>
@@ -84,7 +84,7 @@ const RechargeNow = ({ setRecharge, recharge }) => {
               Recharge Amount:{" "}
               <span className="text-secondary text-[14px]">
                 ( Minimum{" "}
-                {card === "Bkash" || card === "Nagod" ? "1000 ৳" : "10 $"} )
+                {card === "Bkash" || card === "Nagad" ? "1100 ৳" : "10 $"} )
               </span>
             </p>
             <form className="w-full mt-4">

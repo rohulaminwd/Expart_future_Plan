@@ -4,7 +4,12 @@ import { motion } from "framer-motion";
 import { FaChevronLeft } from "react-icons/fa";
 import { BsPlusCircle, BsPlusCircleFill } from "react-icons/bs";
 import { HiArrowSmLeft } from "react-icons/hi";
-import { MdArrowDropDown, MdArrowRight } from "react-icons/md";
+import {
+  MdArrowDropDown,
+  MdArrowRight,
+  MdOutlineSportsEsports,
+  MdSportsEsports,
+} from "react-icons/md";
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
 import { NavLink, Link, Outlet, useLocation } from "react-router-dom";
 import {
@@ -193,7 +198,7 @@ const Dashboard = ({ applyUsers, userClass }) => {
                             !open && "scale-0 hidden"
                           }`}
                         >
-                          Trad-1
+                          Tread
                         </h1>
                       </NavLink>
                     </li>
@@ -207,16 +212,16 @@ const Dashboard = ({ applyUsers, userClass }) => {
                         }
                       >
                         {pathname === "/dashboard/tradSecondary" ? (
-                          <BsPlusCircleFill size={20} />
+                          <MdSportsEsports size={20} />
                         ) : (
-                          <BsPlusCircle size={20} />
+                          <MdOutlineSportsEsports size={20} />
                         )}
                         <h1
                           className={`origin-left whitespace-nowrap duration-300 font-medium ${
                             !open && "scale-0 hidden"
                           }`}
                         >
-                          Trad-2
+                          Games
                         </h1>
                       </NavLink>
                     </li>
@@ -363,7 +368,7 @@ const Dashboard = ({ applyUsers, userClass }) => {
                       ) : (
                         <BsPlusCircle size={20} />
                       )}
-                      <div className="ml-1">Trad Primary</div>
+                      <div className="ml-1">Tread</div>
                     </NavLink>
                   </li>
                   <li className="font-bold flex items-center w-full py-1">
@@ -376,11 +381,11 @@ const Dashboard = ({ applyUsers, userClass }) => {
                       }
                     >
                       {pathname === "/dashboard/tradSecondary" ? (
-                        <BsPlusCircleFill size={20} />
+                        <MdSportsEsports size={20} />
                       ) : (
-                        <BsPlusCircle size={20} />
+                        <MdOutlineSportsEsports size={20} />
                       )}
-                      <div className="ml-1">Trad Secondary</div>
+                      <div className="ml-1">Games</div>
                     </NavLink>
                   </li>
                 </ul>

@@ -64,7 +64,7 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
       });
   };
 
-  const minAmount = card === "Bkash" || card === "Nagod" ? 1000 : 10;
+  const minAmount = card === "Bkash" || card === "Nagad" ? 550 : 5;
   return (
     <div>
       <input type="checkbox" id="withdraw" className="modal-toggle" />
@@ -112,7 +112,7 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
               Withdraw Amount:{" "}
               <span className="text-secondary text-[14px]">
                 ( Minimum{" "}
-                {card === "Bkash" || card === "Nagod" ? "1000 ৳" : "10 $"} )
+                {card === "Bkash" || card === "Nagad" ? "550 ৳" : "5 $"} )
               </span>
             </p>
             <form className="w-full mt-4">
