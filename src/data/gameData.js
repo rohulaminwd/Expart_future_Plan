@@ -1,14 +1,14 @@
 export const sortGameData = [
   {
     name: "Gambling",
-    link: "",
+    path: "/games/rouletteWheel",
   },
   {
-    name: "Gambling",
-    link: "",
+    name: "/games/rouletteWheel",
+    path: "",
   },
   {
-    name: "Gambling",
-    link: "",
+    name: "/games/rouletteWheel",
+    path: "",
   },
 ];

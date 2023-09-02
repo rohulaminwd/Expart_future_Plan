@@ -31,14 +31,18 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
     return myCard;
   };
 
+  const commission = (amount / 100) * 5;
+
   const handleState = () => {
     setWithdrawConfirm({ amount, card });
+
     // setLoading(true)
     const requestInfo = {
       sector: "withdraw",
       amount: amount,
       user: me?._id,
       accountNumber: accountNum,
+      PaymentMethod: card,
     };
 
     axios
@@ -115,6 +119,11 @@ const WithdrawModule = ({ setWithdraw, withdraw, setUpdateModal }) => {
                 {card === "Bkash" || card === "Nagad" ? "550 ৳" : "5 $"} )
               </span>
             </p>
+
+            {/* <p>
+              5% Commission You get {amount} - {commission} ={" "}
+              {amount - commission}
+            </p> */}
             <form className="w-full mt-4">
               <div className="my-2">
                 <span>{card} Account Number</span>

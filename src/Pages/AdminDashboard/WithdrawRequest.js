@@ -12,11 +12,13 @@ import { useEffect } from "react";
 import { MdFileDownloadDone, MdOutlineKeyboardReturn } from "react-icons/md";
 import { useContext } from "react";
 import { RequestContext } from "../../App";
+import ViewPaymenImg from "../../Modale/ViewPaymentImg";
 
 const WithdrawRequest = () => {
   const [requests, requestLoading, refetch] = useContext(RequestContext);
   const [design, setDesign] = useState("Recharge1");
   const [planTime, setPlanTime] = useState([]);
+  const [viewImg, setViewImg] = useState(null);
   const [updateStatus, setUpdateStatus] = useState(null);
   const [deleteModule, setDeletingModal] = useState(null);
   const method = "request";
@@ -69,6 +71,8 @@ const WithdrawRequest = () => {
     }
   };
 
+  console.log(planTime);
+
   return (
     <div className="w-full sm:p-0 p-2">
       <div
@@ -101,50 +105,70 @@ const WithdrawRequest = () => {
                 initial={{ opacity: 0, scale: 0 }}
                 exit={{ opacity: 0, scale: 0 }}
                 className={`${
-                  i?.status === "complete"
-                    ? "text-[#156c65] border-[#c9f8d6] bg-[#dbfbd7]"
+                  i?.status === "pending"
+                    ? "text-[#342c74] border-[#c9f8d6] bg-[#f9fbf9]"
                     : "bg-[#ffffff] text-[#000] border-[#dedede]"
                 } 
                         ${
                           i?.status === "complete"
-                            ? "text-[#156c65] border-[#8df3f9] bg-green-200"
+                            ? "text-[#312b6e] border-[#8df3f9] bg-green-200"
                             : "bg-primary text-white border-[#9df1e5]"
                         }  
-                        p-2 md:mt-0 sm:p-3 w-full cursor-pointer border-[3px]  duration-300 shadow-md rounded-2xl`}
+                        p-2 md:mt-0 sm:p-3 w-full cursor-pointer  duration-300 shadow-md rounded-xl`}
               >
-                <div className="flex relative border-b-2 pb-3 justify-between gap-2">
-                  <div className="w-full flex items-center gap-2">
+                <div className="flex relative pb-3 justify-between gap-2">
+                  <div className="w-full flex gap-2">
                     <div>
-                      <img src={payment} className="w-16" alt="pending " />
+                      {i?.sector === "recharge" ? (
+                        <label
+                          onClick={() => setViewImg([i, "view"])}
+                          htmlFor="view-Img"
+                          className="w-16 cursor-pointer"
+                        >
+                          <img
+                            src={i?.image}
+                            className="w-16 rounded-md"
+                            alt="pending "
+                          />
+                        </label>
+                      ) : (
+                        <img
+                          src={payment}
+                          className="w-12 rounded-sm"
+                          alt="pending "
+                        />
+                      )}
                     </div>
                     <div>
-                      <h3 className="text-[20px] font-bold">{i.name}</h3>
-                      <p className="text-[16px]">{i?.phoneNumber}</p>
+                      <h2 className=" font-bold">
+                        {i?.user?.name?.firstName} {i?.user?.name?.lastName}
+                      </h2>
+                      <p className="text-[12px]">
+                        {i?.PaymentMethod} Num {i?.accountNumber}
+                      </p>
+                      {i?.tranId && (
+                        <p className="text-[12px]">TranID: {i?.tranId}</p>
+                      )}
+                      <div className="">
+                        {i?.status === "pending" && (
+                          <p className="text-[12px]">
+                            Date: {format(new Date(i?.createdAt), "PP")}
+                          </p>
+                        )}
+                        {i?.status === "complete" && (
+                          <p className="text-[12px]">
+                            Date: {format(new Date(i?.updatedAt), "PP")}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <div className="absolute top-0 right-0">
                     <h2 className="font-bold text-accent">{i?.amount} $</h2>
                   </div>
-                  <div className="absolute top-[55px] right-0">
-                    {i?.status === "pending" && (
-                      <p className="text-[12px]">
-                        {format(new Date(i?.createdAt), "PP")}
-                      </p>
-                    )}
-                    {i?.status === "complete" && (
-                      <p className="text-[12px]">
-                        {format(new Date(i?.updatedAt), "PP")}
-                      </p>
-                    )}
-                  </div>
                 </div>
-                <div className="flex items-end justify-between mt-3">
-                  <div className="">
-                    <h3 className="text-[16px]">Account: {i?.accountNumber}</h3>
-                    {i?.tranId && (
-                      <p className="text-[16px]">ID: {i?.tranId}</p>
-                    )}
-                  </div>
+                <div className="flex items-center justify-between mt-3">
+                  <div className=""></div>
                   <div className="flex items-center">
                     {i?.status === "pending" && i?.sector === "recharge" && (
                       <label
@@ -197,6 +221,7 @@ const WithdrawRequest = () => {
           setUpdateStatus={setUpdateStatus}
         />
       )}
+      {viewImg && <ViewPaymenImg viewImg={viewImg} setViewImg={setViewImg} />}
       {deleteModule && (
         <DeleteModalConfirm
           deleteModule={deleteModule}

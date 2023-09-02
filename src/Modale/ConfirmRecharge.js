@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {} from "react-icons/ri";
@@ -8,7 +8,11 @@ import { Button, CopyButton } from "@mantine/core";
 import { toast } from "react-toastify";
 import axios from "../Utils/Axios.config";
 import { ProgressBar } from "react-loader-spinner";
-import { BsWhatsapp } from "react-icons/bs";
+import {
+  BsFileEarmarkImage,
+  BsFileEarmarkImageFill,
+  BsWhatsapp,
+} from "react-icons/bs";
 
 const ConfirmRecharge = ({
   setRecharge,
@@ -26,42 +30,86 @@ const ConfirmRecharge = ({
   const [loading, setLoading] = useState(false);
 
   const card = rechargeConfirm?.card;
+  const amount = rechargeConfirm?.amount;
+
+  const dollerConvert =
+    card === "Bkash" || card === "Nagad" ? (amount / 110).toFixed(2) : amount;
+
   const activeAdmin = rechargeConfirm?.activeAdmin;
+
   const adminWhatsappNum = activeAdmin?.card?.find(
     (i) => i?.cardName === "Bkash"
   );
 
+  const [image, setImage] = useState();
+  const [img, setImg] = useState();
+  const imageRef = useRef();
+
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      setImg(img);
+      setImage({
+        image: URL.createObjectURL(img),
+      });
+    }
+  };
+
   const onSubmit = (data) => {
     setLoading(true);
-    const requestInfo = {
-      tranId: data.tranId,
-      sector: "recharge",
-      amount: rechargeConfirm?.amount,
-      user: me?._id,
-      accountNumber: data?.accountNumber,
-    };
 
-    axios
-      .post("/request/create", requestInfo)
-      .then((response) => {
-        const status = response?.data;
-        if (status.success === true) {
-          toast.success("Your Request Success");
-          setLoading(false);
-          setRechargeConfirm(null);
-          setRecharge(null);
-          refetch();
-        }
-        if (status.success === false) {
+    const fromData = new FormData();
+    fromData.append("file", img);
+    fromData.append("upload_preset", "expart_future_plan");
+    fromData.append("cloud_name", "ddlrfuyzp");
+    const url = `https://api.cloudinary.com/v1_1/ddlrfuyzp/image/upload`;
+
+    fetch(url, {
+      method: "POST",
+      body: fromData,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result) {
+          const img = result.secure_url;
+          console.log(result);
+
+          const requestInfo = {
+            tranId: data.tranId,
+            sector: "recharge",
+            PaymentMethod: card,
+            amount: dollerConvert,
+            user: me?._id,
+            accountNumber: data?.accountNumber,
+            image: img,
+          };
+
+          axios
+            .post("/request/create", requestInfo)
+            .then((response) => {
+              const status = response?.data;
+              if (status.success === true) {
+                toast.success("Your Request Success");
+                setLoading(false);
+                setRechargeConfirm(null);
+                setRecharge(null);
+                refetch();
+              }
+              if (status.success === false) {
+                setLoading(false);
+                toast.error("Your Request fail plx try again");
+              }
+              setLoading(false);
+              console.log(status);
+            })
+            .catch((error) => {
+              toast.error(error?.message);
+              console.log(error, "onk");
+            });
+        } else {
           setLoading(false);
           toast.error("Your Request fail plx try again");
         }
-        setLoading(false);
-        console.log(status);
-      })
-      .catch((error) => {
-        toast.error(error?.message);
-        console.log(error, "onk");
       });
   };
 
@@ -93,8 +141,12 @@ const ConfirmRecharge = ({
               <img src={balance} className="w-20" alt="balance" />
               <div>
                 <p className="text-3xl font-bold text-accent">
-                  {rechargeConfirm?.amount}{" "}
+                  {rechargeConfirm?.amount}
                   {card === "Bkash" || card === "Nagad" ? "৳" : "$"}
+
+                  {(card === "Bkash" || card === "Nagad") && (
+                    <span className="ml-3">== {dollerConvert} $</span>
+                  )}
                 </p>
                 <p className="text-gray-700">Your account : {card}</p>
               </div>
@@ -148,32 +200,75 @@ const ConfirmRecharge = ({
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full mt-4">
               <div className="">
-                <input
-                  type="text"
-                  placeholder="Enter Transection Id"
-                  onChange={(e) => setTransCode(e.target.value)}
-                  class="input input-sm input-accent input-bordered w-full"
-                  required
-                  {...register("tranId", {
-                    required: {
-                      value: true,
-                      message: "Transection Id is required",
-                    },
-                  })}
-                />
-                <input
-                  type="text"
-                  placeholder="Enter Account Number"
-                  onChange={(e) => setTransCode(e.target.value)}
-                  class="input mt-3 input-sm input-accent input-bordered w-full"
-                  required
-                  {...register("accountNumber", {
-                    required: {
-                      value: true,
-                      message: "Enter Account Number",
-                    },
-                  })}
-                />
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Enter Transection Id"
+                    onChange={(e) => setTransCode(e.target.value)}
+                    class="input input-sm input-primary input-bordered w-full"
+                    required
+                    {...register("tranId", {
+                      required: {
+                        value: true,
+                        message: "Transection Id is required",
+                      },
+                    })}
+                  />
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Enter Account Number"
+                    onChange={(e) => setTransCode(e.target.value)}
+                    class="input mt-3 input-sm input-primary input-bordered w-full"
+                    required
+                    {...register("accountNumber", {
+                      required: {
+                        value: true,
+                        message: "Enter Account Number",
+                      },
+                    })}
+                  />
+                </div>
+                <div>
+                  <div
+                    onClick={() => imageRef.current.click()}
+                    className="flex my-4 cursor-pointer justify-center items-center"
+                  >
+                    <div className=" w-full sm:text-[30px] text-blue-700 text-center">
+                      {image ? (
+                        <div className="relative w-full flex text-primary items-center justify-between ju gap-x-2">
+                          <span className="flex btn btn-primary btn-sm btn-outline font-bold items-center gap-x-1">
+                            <BsFileEarmarkImage size={20} /> Select Img
+                          </span>
+                          <div className="absolute top-0 right-1 w-6 h-8">
+                            <img
+                              src={image.image}
+                              className="w-6 h-8 rounded-[2px]"
+                              alt="screenshot"
+                            />
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="w-full flex items-center justify-between ju gap-x-2 text-gray-500">
+                          <span className="flex btn btn-sm btn-outline font-bold items-center gap-x-1">
+                            <BsFileEarmarkImage size={20} /> Select Img
+                          </span>
+                          <span className="text-sm">No Selected Img</span>
+                        </div>
+                      )}
+                    </div>
+                    <div style={{ display: "none" }} className="hidden">
+                      <input
+                        type="file"
+                        name="images"
+                        onChange={onImageChange}
+                        ref={imageRef}
+                        id=""
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
               {loading && (
                 <div className="w-full flex items-center justify-center">
@@ -191,7 +286,7 @@ const ConfirmRecharge = ({
               <input
                 type="submit"
                 value="Submit"
-                className="btn w-full mt-5 mb-3 btn-primary rounded-2xl text-white btn-sm"
+                className="btn w-full mt-3 mb-3 btn-primary rounded-2xl text-white btn-sm"
               />
             </form>
           </div>

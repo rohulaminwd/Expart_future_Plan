@@ -23,6 +23,7 @@ import SignUp from "../Pages/Registation/SignUp";
 import TradPrimary from "../Pages/Dashboard/TradPrimary";
 import TradSecondary from "../Pages/Dashboard/TradSecondary";
 import SubmitTask from "../Pages/AdminDashboard/SubmitTask";
+import RouletteWheelGame1 from "../Pages/Dashboard/games/RouletteWheelGame1";
 
 const RouteList = () => {
   return (
@@ -70,6 +71,17 @@ const RouteList = () => {
             path="withdraw-requested"
             element={<WithdrawRequest />}
           ></Route>
+        </Route>
+
+        <Route
+          path="/games"
+          element={
+            <RequireAuth>
+              <AdminDashboard />
+            </RequireAuth>
+          }
+        >
+          <Route path="rouletteWheel" element={<RouletteWheelGame1 />}></Route>
         </Route>
       </Routes>
     </div>

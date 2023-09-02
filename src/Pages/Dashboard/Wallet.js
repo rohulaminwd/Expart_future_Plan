@@ -78,7 +78,7 @@ const Wallet = () => {
           </div>
           <div className="w-full -mt-10 pb-5 text-center">
             <h2 className="text-5xl sm:text-7xl font-bold text-purple-700">
-              {me?.balance} $
+              {me?.balance?.toFixed(2)} $
             </h2>
             <p className="text-4xl font-reem sm:text-5xl mt-2 sm:mt-3 text-purple-500">
               Total Balance
@@ -96,7 +96,7 @@ const Wallet = () => {
               </div>
               <div className="">
                 <h3 className="font-bold text-purple-700 sm:mb-1 sm:text-2xl">
-                  {yesterdayIncome} $
+                  {yesterdayIncome?.toFixed(2)} $
                 </h3>
                 <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Yesterday Income
@@ -114,7 +114,7 @@ const Wallet = () => {
               </div>
               <div className="">
                 <h3 className="font-bold text-purple-700 sm:mb-1 sm:text-2xl">
-                  {me?.balance} $
+                  {me?.balance?.toFixed(2)} $
                 </h3>
                 <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Available Balance
@@ -132,7 +132,7 @@ const Wallet = () => {
               </div>
               <div className="">
                 <h3 className="font-bold text-purple-700 sm:mb-1 sm:text-2xl">
-                  {todayIncome} $
+                  {todayIncome?.toFixed(2)} $
                 </h3>
                 <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Today Income
@@ -152,7 +152,7 @@ const Wallet = () => {
               </div>
               <div className="">
                 <h3 className="font-bold text-purple-700 sm:mb-1 sm:text-2xl">
-                  {weeklyIncome} $
+                  {weeklyIncome?.toFixed(2)} $
                 </h3>
                 <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Weekly Income
@@ -170,7 +170,7 @@ const Wallet = () => {
               </div>
               <div className="">
                 <h3 className="font-bold text-purple-700 sm:mb-1 sm:text-2xl">
-                  {monthlyIncome} $
+                  {monthlyIncome?.toFixed(2)} $
                 </h3>
                 <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Monthly Income
@@ -188,7 +188,7 @@ const Wallet = () => {
               </div>
               <div className="">
                 <h3 className="font-bold sm:mb-1 text-purple-700 sm:text-2xl">
-                  {companyBunas} $
+                  {companyBunas?.toFixed(2)} $
                 </h3>
                 <h1 className="text-[12px] hidden sm:block text-purple-400 sm:text-xl">
                   Company Bunas

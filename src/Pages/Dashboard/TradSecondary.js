@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Lottie from "lottie-react";
 import game1 from "../../assets/lottie/lottie (2).json";
 import game2 from "../../assets/lottie/lottie (1).json";
 import { sortGameData } from "../../data/gameData";
+import { Link } from "react-router-dom";
 
 const TradSecondary = () => {
   return (
@@ -47,13 +48,17 @@ const TradSecondary = () => {
             </div>
             <div className="mt-5 flex justify-center items-center gap-x-3">
               {sortGameData?.map((game, index) => (
-                <div className="p-1 border-2 bg-[#fbd2d2] border-[#fcb1cb] rounded-xl w-[100px] h-[100px] ">
+                <Link
+                  to={game?.path}
+                  key={index}
+                  className="p-1 border-2 bg-[#fbd2d2] border-[#fcb1cb] rounded-xl w-[100px] h-[100px] "
+                >
                   <Lottie
                     animationData={game2}
                     loop={true}
                     style={{ height: "90px" }}
                   />
-                </div>
+                </Link>
               ))}
             </div>
           </div>

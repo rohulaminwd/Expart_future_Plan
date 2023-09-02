@@ -39,8 +39,6 @@ const SubmitTask = ({ setSubmitTask, refetch, submitTask, me }) => {
     }
   };
 
-  // console.log(calculateBalance(), "dnfjdkfjidurie9idofjdfiu")
-
   const onSubmit = () => {
     setLoading(true);
     const fromData = new FormData();
@@ -69,7 +67,6 @@ const SubmitTask = ({ setSubmitTask, refetch, submitTask, me }) => {
             imageUrl: img,
           };
 
-          // console.log(data);
           // send data backend
           axios
             .patch(`/task/submit/${submitTask?._id}`, data)
