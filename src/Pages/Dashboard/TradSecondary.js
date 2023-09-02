@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Lottie from "lottie-react";
-import game1 from "../../assets/lottie/lottie (2).json";
-import game2 from "../../assets/lottie/lottie (1).json";
 import { sortGameData } from "../../data/gameData";
 import { Link } from "react-router-dom";
 
@@ -15,15 +13,12 @@ const TradSecondary = () => {
               <h2 className="text-purple-700 mb-3 uppercase font-bold text-4xl sm:text-6xl">
                 Short Games
               </h2>
-              <h2 className="text-purple-400 mx-auto text-center font-bold text-xl">
-                This is the short game. play and enjoy now..!
-              </h2>
             </div>
             <div className="mt-5 flex justify-center items-center gap-x-3">
               {sortGameData?.map((game, index) => (
                 <div className="p-1 border-2 bg-[#d2f8fb] border-[#b1f3fc] rounded-xl w-[100px] h-[100px] ">
                   <Lottie
-                    animationData={game1}
+                    animationData={game?.img}
                     loop={true}
                     style={{ height: "90px" }}
                   />
@@ -37,13 +32,10 @@ const TradSecondary = () => {
         </div>
 
         <div className=" bg-white mt-5 overflow-hidden relative rounded-2xl">
-          <div className="text-center cursor-pointer sm:mt-3 px-3 py-5 rounded-2xl">
+          <div className="text-center relative z-10  cursor-pointer sm:mt-3 px-3 py-5 rounded-2xl">
             <div className="w-full">
               <h2 className="text-purple-700 mb-3 uppercase font-bold text-4xl sm:text-6xl text-center">
                 big Games
-              </h2>
-              <h2 className="text-purple-400 font-bold text-xl text-center">
-                This is the short game. play and enjoy now..!
               </h2>
             </div>
             <div className="mt-5 flex justify-center items-center gap-x-3">
@@ -51,10 +43,10 @@ const TradSecondary = () => {
                 <Link
                   to={game?.path}
                   key={index}
-                  className="p-1 border-2 bg-[#fbd2d2] border-[#fcb1cb] rounded-xl w-[100px] h-[100px] "
+                  className="p-1 border-2 bg-[#eed2fb] border-[#ddb1fc] rounded-xl w-[100px] h-[100px] "
                 >
                   <Lottie
-                    animationData={game2}
+                    animationData={game?.img}
                     loop={true}
                     style={{ height: "90px" }}
                   />
@@ -68,7 +60,7 @@ const TradSecondary = () => {
         </div>
 
         <div className=" bg-white overflow-hidden mt-5 relative rounded-2xl">
-          <div className="text-center cursor-pointer sm:mt-3 px-3 py-5 rounded-2xl">
+          <div className="text-center relative z-10  cursor-pointer sm:mt-3 px-3 py-5 rounded-2xl">
             <div className="w-full">
               <h2 className="text-purple-700 mb-3 uppercase font-bold text-4xl sm:text-6xl text-center">
                 Live betting

@@ -24,6 +24,7 @@ import TradPrimary from "../Pages/Dashboard/TradPrimary";
 import TradSecondary from "../Pages/Dashboard/TradSecondary";
 import SubmitTask from "../Pages/AdminDashboard/SubmitTask";
 import RouletteWheelGame1 from "../Pages/Dashboard/games/RouletteWheelGame1";
+import GameBoard from "../Pages/Dashboard/games/GameBoard";
 
 const RouteList = () => {
   return (
@@ -77,7 +78,7 @@ const RouteList = () => {
           path="/games"
           element={
             <RequireAuth>
-              <AdminDashboard />
+              <GameBoard />
             </RequireAuth>
           }
         >
