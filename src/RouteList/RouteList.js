@@ -25,6 +25,8 @@ import TradSecondary from "../Pages/Dashboard/TradSecondary";
 import SubmitTask from "../Pages/AdminDashboard/SubmitTask";
 import RouletteWheelGame1 from "../Pages/Dashboard/games/RouletteWheelGame1";
 import GameBoard from "../Pages/Dashboard/games/GameBoard";
+import Casinio from "../Pages/Dashboard/games/Casinio";
+import { Plinko } from "../Pages/Dashboard/games/Plinko";
 
 const RouteList = () => {
   return (
@@ -83,6 +85,8 @@ const RouteList = () => {
           }
         >
           <Route path="rouletteWheel" element={<RouletteWheelGame1 />}></Route>
+          <Route path="casiniogame" element={<Casinio />}></Route>
+          <Route path="plinko" element={<Plinko />}></Route>
         </Route>
       </Routes>
     </div>

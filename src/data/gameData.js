@@ -9,13 +9,13 @@ export const sortGameData = [
     img: game2,
   },
   {
-    name: "/games/rouletteWheel",
-    path: "",
+    name: "Casinio",
+    path: "/games/casiniogame",
     img: game1,
   },
   {
-    name: "/games/rouletteWheel",
-    path: "",
+    name: "Plinko",
+    path: "/games/plinko",
     img: game2,
   },
 ];

@@ -60,7 +60,7 @@ const TradSecondary = () => {
         </div>
 
         <div className=" bg-white overflow-hidden mt-5 relative rounded-2xl">
-          <div className="text-center relative z-10  cursor-pointer sm:mt-3 px-3 py-5 rounded-2xl">
+          <div className="text-center  cursor-pointer sm:mt-3 px-3 py-5 rounded-2xl">
             <div className="w-full">
               <h2 className="text-purple-700 mb-3 uppercase font-bold text-4xl sm:text-6xl text-center">
                 Live betting

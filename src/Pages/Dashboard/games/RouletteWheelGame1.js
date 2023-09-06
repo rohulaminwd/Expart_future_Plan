@@ -47,6 +47,8 @@ const RouletteWheelGame1 = () => {
     setWinModule([amount, betAmount, me]);
   };
 
+  const minMax = betAmount < 0.2 || betAmount > 100;
+
   return (
     <div className="relative sm:p-3 p-2">
       <div>
@@ -87,7 +89,7 @@ const RouletteWheelGame1 = () => {
                 <div className="flex items-center gap-x-2 w-full px-2 border-b border-purple-500 text-purple-800">
                   <input
                     onChange={(e) => setBetAmount(e.target.value)}
-                    className="border-0 outline-none w-8 mb-0.5"
+                    className="border-0 bg-purple-50 outline-none w-8 mb-0.5"
                     value={betAmount}
                   />
 
@@ -100,6 +102,7 @@ const RouletteWheelGame1 = () => {
               <label
                 htmlFor="win"
                 onClick={handleSpinClick}
+                disabled={me?.balance < 0.2 || spin || minMax}
                 className="btn btn-sm bg-purple-700 hover:border-purple-500 hover:bg-purple-600 text-white border-purple-500 outline-0"
               >
                 Bet

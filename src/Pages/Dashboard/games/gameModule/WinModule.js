@@ -1,6 +1,7 @@
 import React from "react";
 import Lottie from "lottie-react";
 import gameWin from "../../../../assets/lottie/game (2).json";
+import lostGame from "../../../../assets/lottie/lostGame.json";
 
 const WinModule = ({ winModule, setWinModule }) => {
   const [amount, betAmount, me] = winModule;
@@ -19,11 +20,21 @@ const WinModule = ({ winModule, setWinModule }) => {
       >
         <div className="absolute w-full flex justify-center top-0 left-0">
           <div className="-mt-[60px] p-3 shadow-lg border border-purple-300 bg-purple-100 rounded-full">
-            <Lottie
-              animationData={gameWin}
-              loop={true}
-              style={{ height: "80px" }}
-            />
+            {amount > 0 ? (
+              <Lottie
+                animationData={gameWin}
+                loop={true}
+                style={{ height: "80px" }}
+              />
+            ) : (
+              <div className="w-[80px] h-[80px]">
+                <Lottie
+                  animationData={lostGame}
+                  loop={true}
+                  style={{ height: "80px" }}
+                />
+              </div>
+            )}
           </div>
         </div>
         <h3 className="font-bold mt-5 text-2xl text-center text-purple-700">
