@@ -109,7 +109,7 @@ export function BetActions({ onRunBet, onChangeLines, inGameBallsCount, me }) {
           >
             {linesOptions.map((line) => (
               <option key={line} value={line}>
-                {line} Linhas
+                {line} Line
               </option>
             ))}
           </select>

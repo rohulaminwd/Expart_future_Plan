@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Lottie from "lottie-react";
-import { sortGameData } from "../../data/gameData";
+import { bigGameData, sortGameData } from "../../data/gameData";
 import { Link } from "react-router-dom";
 
 const TradSecondary = () => {
@@ -16,13 +16,27 @@ const TradSecondary = () => {
             </div>
             <div className="mt-5 flex justify-center items-center gap-x-3">
               {sortGameData?.map((game, index) => (
-                <div className="p-1 border-2 bg-[#d2f8fb] border-[#b1f3fc] rounded-xl w-[100px] h-[100px] ">
-                  <Lottie
-                    animationData={game?.img}
-                    loop={true}
-                    style={{ height: "90px" }}
-                  />
-                </div>
+                <Link
+                  to={game?.path}
+                  key={index}
+                  className="p-1 border-2 bg-[#d2f8fb] border-[#b1f3fc] rounded-xl w-[100px] h-[100px] "
+                >
+                  {game.name === "Plinko" ? (
+                    <div>
+                      <img
+                        src={game?.img}
+                        className="w-full h-full"
+                        alt="logo"
+                      />
+                    </div>
+                  ) : (
+                    <Lottie
+                      animationData={game?.img}
+                      loop={true}
+                      style={{ height: "90px" }}
+                    />
+                  )}
+                </Link>
               ))}
             </div>
           </div>
@@ -39,24 +53,20 @@ const TradSecondary = () => {
               </h2>
             </div>
             <div className="mt-5 flex justify-center items-center gap-x-3">
-              {sortGameData?.map((game, index) => (
+              {bigGameData?.map((game, index) => (
                 <Link
                   to={game?.path}
                   key={index}
-                  className="p-1 border-2 bg-[#eed2fb] border-[#ddb1fc] rounded-xl w-[100px] h-[100px] "
+                  className="border-2 overflow-hidden bg-[#eed2fb] border-[#ddb1fc] rounded-xl w-[100px] h-[100px] "
                 >
-                  <Lottie
-                    animationData={game?.img}
-                    loop={true}
-                    style={{ height: "90px" }}
-                  />
+                  <img src={game?.img} className="w-full h-full" alt="logo" />
                 </Link>
               ))}
             </div>
           </div>
           <div className="sm:w-32 sm:h-32 w-24 h-24 absolute rounded-full bg-purple-200 -left-10 -top-10"></div>
           <div className="sm:w-32 sm:h-32 w-24 h-24 absolute rounded-full bg-purple-200 -bottom-10 -right-10"></div>
-          {/* <div className="sm:w-20 sm:h-20 w-16 h-16 absolute opacity-50 rounded-full bg-purple-300 left-5 top-5"></div> */}
+          
         </div>
 
         <div className=" bg-white overflow-hidden mt-5 relative rounded-2xl">

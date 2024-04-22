@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import Loading from "../Share/Loading";
+
 import create1 from "../assets/icons/create (1).png";
 import create2 from "../assets/icons/create (2).png";
 import axios from "../Utils/Axios.config";

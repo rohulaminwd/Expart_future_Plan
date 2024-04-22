@@ -16,6 +16,8 @@ import {
   MdOutlineDashboardCustomize,
   MdOutlineManageAccounts,
 } from "react-icons/md";
+import { RiMenuFoldFill } from "react-icons/ri";
+import SidebarMenu from "./ui/SidebarMenu";
 
 const Navbar = ({ userClass }) => {
   const usertoken = localStorage.getItem("accessToken");
@@ -25,7 +27,7 @@ const Navbar = ({ userClass }) => {
 
   function stickNavbar() {
     let windowHeight = window.scrollY;
-    windowHeight > 500 ? setStickyClass("sticky-nav") : setStickyClass("");
+    windowHeight > 200 ? setStickyClass("sticky-nav") : setStickyClass("");
   }
 
   useEffect(() => {
@@ -49,8 +51,8 @@ const Navbar = ({ userClass }) => {
           to="/"
           className={({ isActive }) =>
             isActive
-              ? "bg-transparent border-b-2 border-primary text-primary px-1 rounded-none mx-1 sm:mx-3"
-              : "px-1 rounded-none mx-1 sm:mx-3 text-white"
+              ? "bg-transparent text-primary px-3 rounded-none"
+              : "px-1 hover:bg-transparent rounded-none mx-3 text-white"
           }
         >
           <div className="sm:flex justify-center sm:items-center">
@@ -68,8 +70,8 @@ const Navbar = ({ userClass }) => {
           to="/about"
           className={({ isActive }) =>
             isActive
-              ? "bg-transparent border-b-2 border-primary text-primary px-1 rounded-none mx-1 sm:mx-3"
-              : "px-1 rounded-none mx-1 sm:mx-3 text-white"
+              ? "bg-transparent text-primary px-3 rounded-none "
+              : "px-1 hover:bg-transparent rounded-none mx-3 text-white"
           }
         >
           <div className="sm:flex justify-center sm:items-center">
@@ -87,8 +89,8 @@ const Navbar = ({ userClass }) => {
           to="/blog"
           className={({ isActive }) =>
             isActive
-              ? "bg-transparent border-b-2 border-primary text-primary px-1 rounded-none mx-1 sm:mx-3"
-              : "px-1 rounded-none mx-1 sm:mx-3 text-white"
+              ? "bg-transparent text-primary  px-3 rounded-none "
+              : "px-1 hover:bg-transparent rounded-none mx-3 text-white"
           }
         >
           <div className="sm:flex justify-center sm:items-center">
@@ -216,7 +218,7 @@ const Navbar = ({ userClass }) => {
             <NavLink className="" to="/signIn">
               <div className="sm:flex justify-center sm:items-center">
                 <span className="ml-1 mt-0 block text-white sm:text-[18px] text-sm">
-                  Login
+                  Sign In
                 </span>
               </div>
             </NavLink>
@@ -226,23 +228,30 @@ const Navbar = ({ userClass }) => {
     </>
   );
   return (
-    <div
-      className={` ${stickyClass} duration-300 z-50 font-bold bg-slate-700 text-cyan-900 w-full`}
-    >
-      <div className="navbar px-xl max-w-7xl flex items-center justify-between mx-auto">
-        <div className="">
-          {/* <h1 className='text-xl text-white uppercase font-bold'>E.F.p USA</h1> */}
-          <img src={logo} className="w-[80px]" alt="logo" />
-        </div>
-        <div className="">
-          <div className="flex">
-            <ul className="menu menu-horizontal font-bold p-0">{menuItems}</ul>
+    <>
+      <div
+        className={` ${stickyClass} absolute top-0 left-0 duration-300 z-50 font-bold bg-transparent backdrop-blur-sm text-cyan-900 w-full`}
+      >
+        <div className="navbar px-4 max-w-7xl flex items-center justify-between mx-auto">
+          <div className="">
+            <img src={logo} className="w-[80px]" alt="logo" />
           </div>
+          <div className="hidden md:flex">
+            <div className="flex">
+              <ul className="menu menu-horizontal mr-5 font-bold p-0">
+                {menuItems}
+              </ul>
+            </div>
+            <div>{ProfileItems}</div>
+          </div>
+          <label htmlFor="sidebar-menu" className=" text-white md:hidden">
+            <RiMenuFoldFill size={28} />
+          </label>
         </div>
-        <div>{ProfileItems}</div>
       </div>
       {logout && <LogOutModule logout={logout} setLogout={setLogout} />}
-    </div>
+      <SidebarMenu me={me} usertoken={usertoken} setLogout={setLogout} />
+    </>
   );
 };
 

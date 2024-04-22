@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import ballAudio from "../../../assets/sounds/ball.wav";
 import {
   Bodies,
@@ -57,6 +58,7 @@ export function Plinko() {
     engine.gravity.y = engineConfig.engineGravity;
     const element = document.getElementById("plinko");
     const render = Render.create({
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       element: element,
       bounds: {
         max: {
@@ -77,6 +79,7 @@ export function Plinko() {
       },
       engine,
     });
+
     const runner = Runner.create();
     Runner.run(runner, engine);
     Render.run(render);
@@ -143,10 +146,10 @@ export function Plinko() {
       const ballColor = ballValue <= 0 ? colors.text : colors.purple;
       const ball = Bodies.circle(ballX, 20, ballConfig.ballSize, {
         restitution: 1,
-        friction: 0.5,
+        friction: 0.6,
         label: `ball-${ballValue}`,
         id: new Date().getTime(),
-        frictionAir: 0.03,
+        frictionAir: 0.05,
         collisionFilter: {
           group: -1,
         },
@@ -273,7 +276,7 @@ export function Plinko() {
   Events.on(engine, "collisionActive", onBodyCollision);
 
   return (
-    <div className="flex w-full bg-zinc-900 h-screen flex-col-reverse items-center justify-center gap-4">
+    <div className="flex w-full text-[#fff0] bg-zinc-900 h-screen flex-col-reverse items-center justify-center gap-4">
       <BetActions
         inGameBallsCount={inGameBallsCount}
         onChangeLines={setLines}
